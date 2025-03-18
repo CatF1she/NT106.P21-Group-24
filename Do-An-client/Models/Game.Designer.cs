@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panelChessBoard = new Panel();
+            button1 = new Button();
             SuspendLayout();
             // 
             // panelChessBoard
@@ -39,11 +40,21 @@
             panelChessBoard.Size = new Size(751, 751);
             panelChessBoard.TabIndex = 0;
             // 
+            // button1
+            // 
+            button1.Location = new Point(872, 132);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 1;
+            button1.Text = "LMAO";
+            button1.UseVisualStyleBackColor = true;
+            // 
             // Game
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1024, 768);
+            Controls.Add(button1);
             Controls.Add(panelChessBoard);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Game";
@@ -53,5 +64,6 @@
 
         #endregion
         public Panel panelChessBoard;
+        private Button button1;
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4oQ5Te8Vadc=",
+  "dgSpecHash": "C7LSfIevniQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\CatFishe\\Documents\\Lap trinh mang can ban\\Do-An-client\\Do-An-client.csproj",
+  "projectFilePath": "C:\\Users\\CatFishe\\Documents\\Lap trinh mang can ban\\Do-An\\Do-An-client\\Do-An-client.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\CatFishe\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\CatFishe\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",

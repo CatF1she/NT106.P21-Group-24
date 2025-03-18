@@ -803,11 +803,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\CatFishe\\Documents\\Lap trinh mang can ban\\Do-An-client\\Do-An-client.csproj",
+      "projectUniqueName": "C:\\Users\\CatFishe\\Documents\\Lap trinh mang can ban\\Do-An\\Do-An-client\\Do-An-client.csproj",
       "projectName": "Do-An-client",
-      "projectPath": "C:\\Users\\CatFishe\\Documents\\Lap trinh mang can ban\\Do-An-client\\Do-An-client.csproj",
+      "projectPath": "C:\\Users\\CatFishe\\Documents\\Lap trinh mang can ban\\Do-An\\Do-An-client\\Do-An-client.csproj",
       "packagesPath": "C:\\Users\\CatFishe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\CatFishe\\Documents\\Lap trinh mang can ban\\Do-An-client\\obj\\",
+      "outputPath": "C:\\Users\\CatFishe\\Documents\\Lap trinh mang can ban\\Do-An\\Do-An-client\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
