@@ -1,3 +1,5 @@
+using Do_An.Resources;
+
 namespace Do_An.Models
 {
     internal static class Program
@@ -11,7 +13,7 @@ namespace Do_An.Models
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Game());
+            Application.Run(new Login());
         }
     }
 }

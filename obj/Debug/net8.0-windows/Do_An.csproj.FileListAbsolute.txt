@@ -31,3 +31,39 @@ C:\Users\CatFishe\Documents\Lap trinh mang can ban\Do-An-client\obj\Debug\net8.0
 C:\Users\CatFishe\Documents\Lap trinh mang can ban\Do-An-client\obj\Debug\net8.0-windows\Do_An.pdb
 C:\Users\CatFishe\Documents\Lap trinh mang can ban\Do-An-client\obj\Debug\net8.0-windows\Do_An.genruntimeconfig.cache
 C:\Users\CatFishe\Documents\Lap trinh mang can ban\Do-An-client\obj\Debug\net8.0-windows\ref\Do_An.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\Do_An.exe
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\Do_An.deps.json
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\Do_An.runtimeconfig.json
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\Do_An.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\Do_An.pdb
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\AWSSDK.Core.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\AWSSDK.SecurityToken.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\DnsClient.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\MongoDB.Bson.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\MongoDB.Driver.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\MongoDB.Driver.Core.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\MongoDB.Libmongocrypt.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\SharpCompress.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\Snappier.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\ZstdSharp.dll
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\runtimes\linux\native\libmongocrypt.so
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\runtimes\osx\native\libmongocrypt.dylib
+E:\HK4\LTMCB\Project\bin\Debug\net8.0-windows\runtimes\win\native\mongocrypt.dll
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.csproj.AssemblyReference.cache
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.Properties.Resources.resources
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.Game.resources
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.Resources.MainMenu.resources
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.csproj.GenerateResource.cache
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.GeneratedMSBuildEditorConfig.editorconfig
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.AssemblyInfoInputs.cache
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.AssemblyInfo.cs
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.csproj.CoreCompileInputs.cache
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.sourcelink.json
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.csproj.Up2Date
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.dll
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\refint\Do_An.dll
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.pdb
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.genruntimeconfig.cache
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\ref\Do_An.dll
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.Resources.Login.resources
