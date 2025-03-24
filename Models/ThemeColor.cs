@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Do_An
+namespace Do_An.Models
 {
     public static class ThemeColor
     {
