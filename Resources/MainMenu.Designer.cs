@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             panelMenu = new Panel();
+            btnFriends = new Button();
             btnSettings = new Button();
             btnProfile = new Button();
             btnLeaderboard = new Button();
@@ -40,6 +42,7 @@
             btnMaximize = new Button();
             btnMinimize = new Button();
             label1 = new Label();
+            panelDesktopPane = new Panel();
             panelMenu.SuspendLayout();
             panelLogo.SuspendLayout();
             panelTitleBar.SuspendLayout();
@@ -48,6 +51,7 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.FromArgb(51, 51, 76);
+            panelMenu.Controls.Add(btnFriends);
             panelMenu.Controls.Add(btnSettings);
             panelMenu.Controls.Add(btnProfile);
             panelMenu.Controls.Add(btnLeaderboard);
@@ -59,6 +63,25 @@
             panelMenu.Size = new Size(160, 450);
             panelMenu.TabIndex = 0;
             // 
+            // btnFriends
+            // 
+            btnFriends.Dock = DockStyle.Top;
+            btnFriends.FlatAppearance.BorderSize = 0;
+            btnFriends.FlatStyle = FlatStyle.Flat;
+            btnFriends.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnFriends.ForeColor = Color.Gainsboro;
+            btnFriends.Image = (Image)resources.GetObject("btnFriends.Image");
+            btnFriends.ImageAlign = ContentAlignment.MiddleLeft;
+            btnFriends.Location = new Point(0, 195);
+            btnFriends.Name = "btnFriends";
+            btnFriends.Padding = new Padding(6, 0, 0, 0);
+            btnFriends.Size = new Size(160, 45);
+            btnFriends.TabIndex = 5;
+            btnFriends.Text = "Friends";
+            btnFriends.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnFriends.UseVisualStyleBackColor = true;
+            btnFriends.Click += btnFriends_Click;
+            // 
             // btnSettings
             // 
             btnSettings.Dock = DockStyle.Bottom;
@@ -66,7 +89,7 @@
             btnSettings.FlatStyle = FlatStyle.Flat;
             btnSettings.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSettings.ForeColor = Color.Gainsboro;
-            btnSettings.Image = Properties.Resources.play2;
+            btnSettings.Image = Properties.Resources.setting;
             btnSettings.ImageAlign = ContentAlignment.MiddleLeft;
             btnSettings.Location = new Point(0, 405);
             btnSettings.Name = "btnSettings";
@@ -85,7 +108,7 @@
             btnProfile.FlatStyle = FlatStyle.Flat;
             btnProfile.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnProfile.ForeColor = Color.Gainsboro;
-            btnProfile.Image = Properties.Resources.play2;
+            btnProfile.Image = (Image)resources.GetObject("btnProfile.Image");
             btnProfile.ImageAlign = ContentAlignment.MiddleLeft;
             btnProfile.Location = new Point(0, 150);
             btnProfile.Name = "btnProfile";
@@ -104,7 +127,7 @@
             btnLeaderboard.FlatStyle = FlatStyle.Flat;
             btnLeaderboard.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnLeaderboard.ForeColor = Color.Gainsboro;
-            btnLeaderboard.Image = Properties.Resources.play2;
+            btnLeaderboard.Image = (Image)resources.GetObject("btnLeaderboard.Image");
             btnLeaderboard.ImageAlign = ContentAlignment.MiddleLeft;
             btnLeaderboard.Location = new Point(0, 105);
             btnLeaderboard.Name = "btnLeaderboard";
@@ -123,7 +146,7 @@
             btnPlay.FlatStyle = FlatStyle.Flat;
             btnPlay.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnPlay.ForeColor = Color.Gainsboro;
-            btnPlay.Image = Properties.Resources.play2;
+            btnPlay.Image = (Image)resources.GetObject("btnPlay.Image");
             btnPlay.ImageAlign = ContentAlignment.MiddleLeft;
             btnPlay.Location = new Point(0, 60);
             btnPlay.Name = "btnPlay";
@@ -227,11 +250,21 @@
             label1.TabIndex = 2;
             label1.Text = "HOME";
             // 
+            // panelDesktopPane
+            // 
+            panelDesktopPane.Dock = DockStyle.Fill;
+            panelDesktopPane.Location = new Point(160, 60);
+            panelDesktopPane.Name = "panelDesktopPane";
+            panelDesktopPane.Size = new Size(640, 390);
+            panelDesktopPane.TabIndex = 2;
+            // 
             // MainMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            ControlBox = false;
+            Controls.Add(panelDesktopPane);
             Controls.Add(panelTitleBar);
             Controls.Add(panelMenu);
             Name = "MainMenu";
@@ -258,5 +291,7 @@
         private Button btnMinimize;
         private Button btnClose;
         private Button btnMaximize;
+        private Button btnFriends;
+        private Panel panelDesktopPane;
     }
 }

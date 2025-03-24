@@ -18,6 +18,7 @@ namespace Do_An.Resources
         private Button currentButton;
         private Random random;
         private int tempIndex;
+        private Form activateForm;
 
         // Constructor
         public MainMenu()
@@ -77,9 +78,27 @@ namespace Do_An.Resources
             }
         }
 
+        private void OpenChildForm(Form childForm, object btnSender)
+        {
+            if (ActiveForm != null)
+            {
+                ActiveForm.Close();
+            }
+            ActivateButton(btnSender);
+            activateForm = childForm;
+            childForm.TopLevel = false;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.Dock = DockStyle.Fill;
+            this.panelDesktopPane.Controls.Add(childForm);
+            this.panelDesktopPane.Tag = childForm;
+            childForm.BringToFront();
+            childForm.Show();
+            lbTitle.Text = childForm.Text;
+        }
+
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender);
+            OpenChildForm(new Game(), sender);
         }
 
         private void btnLeaderboard_Click(object sender, EventArgs e)
@@ -96,7 +115,10 @@ namespace Do_An.Resources
         {
             ActivateButton(sender);
         }
-
+        private void btnFriends_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender);
+        }
         private void btnClose_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -124,5 +146,7 @@ namespace Do_An.Resources
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
+
+
     }
 }
