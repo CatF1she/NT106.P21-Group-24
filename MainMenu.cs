@@ -99,7 +99,12 @@ namespace Do_An.Resources
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new Game(), sender);
+            this.Hide();
+            using (Game form = new Game())
+            {
+                form.ShowDialog();
+            }
+            this.Show();
         }
 
         private void btnLeaderboard_Click(object sender, EventArgs e)
