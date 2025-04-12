@@ -40,6 +40,8 @@
             label3 = new Label();
             txtUsername = new TextBox();
             txtpassword = new TextBox();
+            label4 = new Label();
+            ForgetPassword = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -70,7 +72,7 @@
             // pictureBox2
             // 
             pictureBox2.Image = Properties.Resources.user;
-            pictureBox2.Location = new Point(30, 188);
+            pictureBox2.Location = new Point(30, 158);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(21, 31);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -80,7 +82,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(0, 64, 64);
-            panel1.Location = new Point(30, 225);
+            panel1.Location = new Point(30, 195);
             panel1.Name = "panel1";
             panel1.Size = new Size(236, 1);
             panel1.TabIndex = 3;
@@ -88,7 +90,7 @@
             // pictureBox3
             // 
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(30, 255);
+            pictureBox3.Location = new Point(30, 225);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(21, 31);
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
@@ -98,7 +100,7 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(0, 64, 64);
-            panel2.Location = new Point(30, 292);
+            panel2.Location = new Point(30, 262);
             panel2.Name = "panel2";
             panel2.Size = new Size(236, 1);
             panel2.TabIndex = 3;
@@ -110,7 +112,7 @@
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.Font = new Font("Bahnschrift", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(30, 326);
+            btnLogin.Location = new Point(30, 340);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(236, 35);
             btnLogin.TabIndex = 4;
@@ -123,7 +125,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(0, 64, 64);
-            label2.Location = new Point(180, 307);
+            label2.Location = new Point(180, 279);
             label2.Name = "label2";
             label2.Size = new Size(86, 16);
             label2.TabIndex = 5;
@@ -145,7 +147,7 @@
             txtUsername.BorderStyle = BorderStyle.None;
             txtUsername.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtUsername.ForeColor = Color.FromArgb(0, 64, 64);
-            txtUsername.Location = new Point(57, 188);
+            txtUsername.Location = new Point(57, 165);
             txtUsername.Multiline = true;
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(209, 24);
@@ -156,11 +158,35 @@
             txtpassword.BorderStyle = BorderStyle.None;
             txtpassword.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtpassword.ForeColor = Color.FromArgb(0, 64, 64);
-            txtpassword.Location = new Point(57, 255);
+            txtpassword.Location = new Point(57, 232);
             txtpassword.Multiline = true;
             txtpassword.Name = "txtpassword";
             txtpassword.Size = new Size(209, 24);
             txtpassword.TabIndex = 6;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.ForeColor = Color.FromArgb(0, 64, 64);
+            label4.Location = new Point(47, 295);
+            label4.Name = "label4";
+            label4.Size = new Size(219, 16);
+            label4.TabIndex = 7;
+            label4.Text = "Don't have an account? Sign in";
+            label4.Click += label4_Click;
+            // 
+            // ForgetPassword
+            // 
+            ForgetPassword.AutoSize = true;
+            ForgetPassword.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ForgetPassword.ForeColor = Color.FromArgb(0, 64, 64);
+            ForgetPassword.Location = new Point(143, 311);
+            ForgetPassword.Name = "ForgetPassword";
+            ForgetPassword.Size = new Size(123, 16);
+            ForgetPassword.TabIndex = 8;
+            ForgetPassword.Text = "Forget pasword?";
+            ForgetPassword.Click += ForgetPassword_Click;
             // 
             // Login
             // 
@@ -168,6 +194,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(292, 429);
+            Controls.Add(ForgetPassword);
+            Controls.Add(label4);
             Controls.Add(txtpassword);
             Controls.Add(txtUsername);
             Controls.Add(label3);
@@ -203,5 +231,7 @@
         private Label label3;
         private TextBox txtUsername;
         private TextBox txtpassword;
+        private Label label4;
+        private Label ForgetPassword;
     }
 }

@@ -267,6 +267,7 @@
             Controls.Add(panelDesktopPane);
             Controls.Add(panelTitleBar);
             Controls.Add(panelMenu);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "MainMenu";
             Text = "MainMenu";
             panelMenu.ResumeLayout(false);

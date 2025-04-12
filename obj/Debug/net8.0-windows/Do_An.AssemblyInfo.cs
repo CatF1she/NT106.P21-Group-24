@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Do_An")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c1d4c107511afb4d6b385b365f920433b73242c7")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c90e91c436134ae238deb085f521da1d6c05cf39")]
->>>>>>> game logic updategame logic update 2nd push
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ec1b719d0afa7fa2bd45cfb150fe6a7150fb3bb")]
 [assembly: System.Reflection.AssemblyProductAttribute("Do_An")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Do_An")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

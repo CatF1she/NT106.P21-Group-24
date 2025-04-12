@@ -22,5 +22,17 @@ namespace Do_An.Resources
             new MainMenu().Show();
             this.Hide();
         }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+            new Signin().Show();
+            this.Hide();
+        }
+
+        private void ForgetPassword_Click(object sender, EventArgs e)
+        {
+            new ForgetPassword().Show();
+            this.Hide();
+        }
     }
 }

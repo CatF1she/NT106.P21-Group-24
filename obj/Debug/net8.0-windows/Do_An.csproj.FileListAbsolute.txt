@@ -103,3 +103,7 @@ D:\23621176\Lap trinh mang can ban\Do_An\obj\Debug\net8.0-windows\refint\Do_An.d
 D:\23621176\Lap trinh mang can ban\Do_An\obj\Debug\net8.0-windows\Do_An.pdb
 D:\23621176\Lap trinh mang can ban\Do_An\obj\Debug\net8.0-windows\Do_An.genruntimeconfig.cache
 D:\23621176\Lap trinh mang can ban\Do_An\obj\Debug\net8.0-windows\ref\Do_An.dll
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.Signin.resources
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.ForgetPassword.resources
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.Change_Password.resources
+E:\HK4\LTMCB\Project\obj\Debug\net8.0-windows\Do_An.UserProfile.resources

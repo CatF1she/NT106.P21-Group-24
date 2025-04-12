@@ -1,27 +1,42 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\23621176\\Lap trinh mang can ban\\Do_An\\",
+  "WorkspaceRootPath": "E:\\HK4\\LTMCB\\Project\\",
   "Documents": [
     {
-<<<<<<< HEAD
-      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|e:\\hk4\\ltmcb\\project\\resources\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:resources\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-=======
-      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|d:\\23621176\\lap trinh mang can ban\\do_an\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|e:\\hk4\\ltmcb\\project\\change password.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:change password.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|d:\\23621176\\lap trinh mang can ban\\do_an\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|e:\\hk4\\ltmcb\\project\\change password.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:change password.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|d:\\23621176\\lap trinh mang can ban\\do_an\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|e:\\hk4\\ltmcb\\project\\login.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:login.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|d:\\23621176\\lap trinh mang can ban\\do_an\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
->>>>>>> game logic update 2nd push
+      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|e:\\hk4\\ltmcb\\project\\login.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:login.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|E:\\HK4\\LTMCB\\Project\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|e:\\hk4\\ltmcb\\project\\forgetpassword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:forgetpassword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|E:\\HK4\\LTMCB\\Project\\forgetpassword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:forgetpassword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|e:\\hk4\\ltmcb\\project\\forgetpassword.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:forgetpassword.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|E:\\HK4\\LTMCB\\Project\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F80B2C75-F743-4334-B174-E3403DFC0129}|Do_An.csproj|solutionrelative:mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,69 +46,113 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-<<<<<<< HEAD
-              "Title": "MainMenu.cs",
-              "DocumentMoniker": "E:\\HK4\\LTMCB\\Project\\Resources\\MainMenu.cs",
-              "RelativeDocumentMoniker": "Resources\\MainMenu.cs",
-              "ToolTip": "E:\\HK4\\LTMCB\\Project\\Resources\\MainMenu.cs",
-              "RelativeToolTip": "Resources\\MainMenu.cs",
-              "ViewState": "AgIAAG0AAAAAAAAAAAAmwGQAAAALAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "Login.Designer.cs",
+              "DocumentMoniker": "E:\\HK4\\LTMCB\\Project\\Login.Designer.cs",
+              "RelativeDocumentMoniker": "Login.Designer.cs",
+              "ToolTip": "E:\\HK4\\LTMCB\\Project\\Login.Designer.cs",
+              "RelativeToolTip": "Login.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T02:25:02.18Z",
-=======
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\23621176\\Lap trinh mang can ban\\Do_An\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\23621176\\Lap trinh mang can ban\\Do_An\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAmAAAAAAAAAA==",
+              "WhenOpened": "2025-04-06T16:45:32.327Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Login.resx",
+              "DocumentMoniker": "E:\\HK4\\LTMCB\\Project\\Login.resx",
+              "RelativeDocumentMoniker": "Login.resx",
+              "ToolTip": "E:\\HK4\\LTMCB\\Project\\Login.resx",
+              "RelativeToolTip": "Login.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-04-06T16:45:30.836Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ForgetPassword.cs",
+              "DocumentMoniker": "E:\\HK4\\LTMCB\\Project\\ForgetPassword.cs",
+              "RelativeDocumentMoniker": "ForgetPassword.cs",
+              "ToolTip": "E:\\HK4\\LTMCB\\Project\\ForgetPassword.cs",
+              "RelativeToolTip": "ForgetPassword.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAlwBUAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T02:27:21.498Z",
+              "WhenOpened": "2025-04-06T16:44:27.666Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Game.cs [Design]",
-              "DocumentMoniker": "D:\\23621176\\Lap trinh mang can ban\\Do_An\\Game.cs",
-              "RelativeDocumentMoniker": "Game.cs",
-              "ToolTip": "D:\\23621176\\Lap trinh mang can ban\\Do_An\\Game.cs [Design]",
-              "RelativeToolTip": "Game.cs [Design]",
+              "Title": "Change Password.Designer.cs",
+              "DocumentMoniker": "E:\\HK4\\LTMCB\\Project\\Change Password.Designer.cs",
+              "RelativeDocumentMoniker": "Change Password.Designer.cs",
+              "ToolTip": "E:\\HK4\\LTMCB\\Project\\Change Password.Designer.cs",
+              "RelativeToolTip": "Change Password.Designer.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T02:26:17.986Z",
+              "WhenOpened": "2025-04-06T16:43:15.159Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ForgetPassword.Designer.cs",
+              "DocumentMoniker": "E:\\HK4\\LTMCB\\Project\\ForgetPassword.Designer.cs",
+              "RelativeDocumentMoniker": "ForgetPassword.Designer.cs",
+              "ToolTip": "E:\\HK4\\LTMCB\\Project\\ForgetPassword.Designer.cs",
+              "RelativeToolTip": "ForgetPassword.Designer.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAA1wAQAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-06T16:42:11.2Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ForgetPassword.cs [Design]",
+              "DocumentMoniker": "E:\\HK4\\LTMCB\\Project\\ForgetPassword.cs",
+              "RelativeDocumentMoniker": "ForgetPassword.cs",
+              "ToolTip": "E:\\HK4\\LTMCB\\Project\\ForgetPassword.cs [Design]*",
+              "RelativeToolTip": "ForgetPassword.cs [Design]*",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-06T16:40:35.346Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Change Password.cs [Design]",
+              "DocumentMoniker": "E:\\HK4\\LTMCB\\Project\\Change Password.cs",
+              "RelativeDocumentMoniker": "Change Password.cs",
+              "ToolTip": "E:\\HK4\\LTMCB\\Project\\Change Password.cs [Design]",
+              "RelativeToolTip": "Change Password.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-06T16:40:11.254Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Game.cs",
-              "DocumentMoniker": "D:\\23621176\\Lap trinh mang can ban\\Do_An\\Game.cs",
-              "RelativeDocumentMoniker": "Game.cs",
-              "ToolTip": "D:\\23621176\\Lap trinh mang can ban\\Do_An\\Game.cs",
-              "RelativeToolTip": "Game.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABTAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "MainMenu.cs [Design]",
+              "DocumentMoniker": "E:\\HK4\\LTMCB\\Project\\MainMenu.cs",
+              "RelativeDocumentMoniker": "MainMenu.cs",
+              "ToolTip": "E:\\HK4\\LTMCB\\Project\\MainMenu.cs [Design]",
+              "RelativeToolTip": "MainMenu.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T02:10:44.516Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-06T16:26:00.045Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Login.cs",
-              "DocumentMoniker": "D:\\23621176\\Lap trinh mang can ban\\Do_An\\Login.cs",
+              "DocumentIndex": 4,
+              "Title": "Login.cs [Design]",
+              "DocumentMoniker": "E:\\HK4\\LTMCB\\Project\\Login.cs",
               "RelativeDocumentMoniker": "Login.cs",
-              "ToolTip": "D:\\23621176\\Lap trinh mang can ban\\Do_An\\Login.cs",
-              "RelativeToolTip": "Login.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAqwBYAAAAYAAAAAAAAAA==",
+              "ToolTip": "E:\\HK4\\LTMCB\\Project\\Login.cs [Design]",
+              "RelativeToolTip": "Login.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T17:31:57.304Z",
->>>>>>> game logic update 2nd push
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-06T13:38:25.301Z"
             }
           ]
         }
