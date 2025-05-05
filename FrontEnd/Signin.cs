@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrontEnd.Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +21,13 @@ namespace FrontEnd
         private void btnSignin_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void lbExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Login form = new Login();
+            form.Show();
         }
     }
 }

@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Signin));
             txtUsername = new TextBox();
-            label3 = new Label();
+            lbExit = new Label();
             label2 = new Label();
             btnSignin = new Button();
             panel1 = new Panel();
@@ -65,16 +65,17 @@
             txtUsername.TabIndex = 19;
             txtUsername.Text = "Your username";
             // 
-            // label3
+            // lbExit
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.FromArgb(0, 64, 64);
-            label3.Location = new Point(126, 444);
-            label3.Name = "label3";
-            label3.Size = new Size(32, 16);
-            label3.TabIndex = 16;
-            label3.Text = "Exit";
+            lbExit.AutoSize = true;
+            lbExit.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbExit.ForeColor = Color.FromArgb(0, 64, 64);
+            lbExit.Location = new Point(126, 444);
+            lbExit.Name = "lbExit";
+            lbExit.Size = new Size(32, 16);
+            lbExit.TabIndex = 16;
+            lbExit.Text = "Exit";
+            lbExit.Click += lbExit_Click;
             // 
             // label2
             // 
@@ -112,7 +113,7 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = Properties.Resources.user;
+            pictureBox2.Image = Do_An.Properties.Resources.user;
             pictureBox2.Location = new Point(28, 158);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(21, 31);
@@ -134,7 +135,7 @@
             // pictureBox1
             // 
             pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox1.Image = Properties.Resources.logo;
+            pictureBox1.Image = Do_An.Properties.Resources.logo;
             pictureBox1.Location = new Point(62, -1);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(151, 143);
@@ -144,7 +145,7 @@
             // 
             // pictureBox5
             // 
-            pictureBox5.Image = Properties.Resources.user;
+            pictureBox5.Image = Do_An.Properties.Resources.user;
             pictureBox5.Location = new Point(28, 211);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(21, 31);
@@ -246,7 +247,7 @@
             Controls.Add(pictureBox3);
             Controls.Add(textBox2);
             Controls.Add(txtUsername);
-            Controls.Add(label3);
+            Controls.Add(lbExit);
             Controls.Add(label2);
             Controls.Add(btnSignin);
             Controls.Add(panel4);
@@ -257,6 +258,7 @@
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Signin";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Signin";
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -269,7 +271,7 @@
 
         #endregion
         private TextBox txtUsername;
-        private Label label3;
+        private Label lbExit;
         private Label label2;
         private Button btnSignin;
         private Panel panel1;

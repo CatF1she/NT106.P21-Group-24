@@ -36,11 +36,11 @@
             pictureBox3 = new PictureBox();
             panel2 = new Panel();
             btnLogin = new Button();
-            label2 = new Label();
-            label3 = new Label();
+            lbClear = new Label();
+            lbExit = new Label();
             txtUsername = new TextBox();
             txtpassword = new TextBox();
-            label4 = new Label();
+            lbSignIn = new Label();
             ForgetPassword = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -50,7 +50,7 @@
             // pictureBox1
             // 
             pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox1.Image = Properties.Resources.logo;
+            pictureBox1.Image = Do_An.Properties.Resources.logo;
             pictureBox1.Location = new Point(64, -1);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(151, 143);
@@ -71,7 +71,7 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = Properties.Resources.user;
+            pictureBox2.Image = Do_An.Properties.Resources.user;
             pictureBox2.Location = new Point(30, 158);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(21, 31);
@@ -120,27 +120,29 @@
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
             // 
-            // label2
+            // lbClear
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.FromArgb(0, 64, 64);
-            label2.Location = new Point(180, 279);
-            label2.Name = "label2";
-            label2.Size = new Size(86, 16);
-            label2.TabIndex = 5;
-            label2.Text = "Clear fields";
+            lbClear.AutoSize = true;
+            lbClear.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbClear.ForeColor = Color.FromArgb(0, 64, 64);
+            lbClear.Location = new Point(180, 279);
+            lbClear.Name = "lbClear";
+            lbClear.Size = new Size(86, 16);
+            lbClear.TabIndex = 5;
+            lbClear.Text = "Clear fields";
+            lbClear.Click += lbClear_Click;
             // 
-            // label3
+            // lbExit
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.FromArgb(0, 64, 64);
-            label3.Location = new Point(128, 378);
-            label3.Name = "label3";
-            label3.Size = new Size(32, 16);
-            label3.TabIndex = 5;
-            label3.Text = "Exit";
+            lbExit.AutoSize = true;
+            lbExit.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbExit.ForeColor = Color.FromArgb(0, 64, 64);
+            lbExit.Location = new Point(128, 378);
+            lbExit.Name = "lbExit";
+            lbExit.Size = new Size(32, 16);
+            lbExit.TabIndex = 5;
+            lbExit.Text = "Exit";
+            lbExit.Click += lbExit_Click;
             // 
             // txtUsername
             // 
@@ -161,20 +163,21 @@
             txtpassword.Location = new Point(57, 232);
             txtpassword.Multiline = true;
             txtpassword.Name = "txtpassword";
+            txtpassword.PasswordChar = '*';
             txtpassword.Size = new Size(209, 24);
             txtpassword.TabIndex = 6;
             // 
-            // label4
+            // lbSignIn
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.ForeColor = Color.FromArgb(0, 64, 64);
-            label4.Location = new Point(47, 295);
-            label4.Name = "label4";
-            label4.Size = new Size(219, 16);
-            label4.TabIndex = 7;
-            label4.Text = "Don't have an account? Sign in";
-            label4.Click += label4_Click;
+            lbSignIn.AutoSize = true;
+            lbSignIn.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbSignIn.ForeColor = Color.FromArgb(0, 64, 64);
+            lbSignIn.Location = new Point(47, 295);
+            lbSignIn.Name = "lbSignIn";
+            lbSignIn.Size = new Size(219, 16);
+            lbSignIn.TabIndex = 7;
+            lbSignIn.Text = "Don't have an account? Sign in";
+            lbSignIn.Click += lbSignIn_Click;
             // 
             // ForgetPassword
             // 
@@ -195,11 +198,11 @@
             BackColor = Color.White;
             ClientSize = new Size(292, 429);
             Controls.Add(ForgetPassword);
-            Controls.Add(label4);
+            Controls.Add(lbSignIn);
             Controls.Add(txtpassword);
             Controls.Add(txtUsername);
-            Controls.Add(label3);
-            Controls.Add(label2);
+            Controls.Add(lbExit);
+            Controls.Add(lbClear);
             Controls.Add(btnLogin);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -227,11 +230,11 @@
         private PictureBox pictureBox3;
         private Panel panel2;
         private Button btnLogin;
-        private Label label2;
-        private Label label3;
+        private Label lbClear;
+        private Label lbExit;
         private TextBox txtUsername;
         private TextBox txtpassword;
-        private Label label4;
+        private Label lbSignIn;
         private Label ForgetPassword;
     }
 }

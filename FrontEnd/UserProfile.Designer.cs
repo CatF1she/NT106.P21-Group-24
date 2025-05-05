@@ -134,7 +134,7 @@
             listView1.Columns.AddRange(new ColumnHeader[] { Date, Opponent, Type, Result, Replay });
             listView1.Location = new Point(53, 180);
             listView1.Name = "listView1";
-            listView1.Size = new Size(441, 97);
+            listView1.Size = new Size(550, 183);
             listView1.TabIndex = 9;
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.View = View.Details;
@@ -166,7 +166,8 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.White;
+            ClientSize = new Size(640, 390);
             Controls.Add(listView1);
             Controls.Add(label7);
             Controls.Add(label6);
@@ -176,8 +177,9 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "UserProfile";
-            Text = "UserProfile";
+            Text = "Profile";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

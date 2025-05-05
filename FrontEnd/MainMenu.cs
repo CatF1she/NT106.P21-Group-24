@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Do_An;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
@@ -61,6 +62,8 @@ namespace FrontEnd.Resources
                     currentButton.Font = new Font("Segoe UI", 13.5F, FontStyle.Bold);
                     panelTitleBar.BackColor = color;
                     panelLogo.BackColor = ThemeColor.ChangeColorBrightness(color, -0.3);
+                    ThemeColor.PrimaryColor = color;
+                    ThemeColor.SecondaryColor = ThemeColor.ChangeColorBrightness(color, -0.3);
                 }
             }
         }
@@ -80,9 +83,9 @@ namespace FrontEnd.Resources
 
         private void OpenChildForm(Form childForm, object btnSender)
         {
-            if (ActiveForm != null)
+            if (activateForm != null)
             {
-                ActiveForm.Close();
+                activateForm.Close();
             }
             ActivateButton(btnSender);
             activateForm = childForm;
@@ -98,12 +101,7 @@ namespace FrontEnd.Resources
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            using (Game form = new Game())
-            {
-                form.ShowDialog();
-            }
-            this.Show();
+            OpenChildForm(new Game(), sender);
         }
 
         private void btnLeaderboard_Click(object sender, EventArgs e)
@@ -113,7 +111,7 @@ namespace FrontEnd.Resources
 
         private void btnProfile_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender);
+            OpenChildForm(new UserProfile(), sender);
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
@@ -122,7 +120,7 @@ namespace FrontEnd.Resources
         }
         private void btnFriends_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender);
+            OpenChildForm(new FriendPage(), sender);
         }
         private void btnClose_Click(object sender, EventArgs e)
         {

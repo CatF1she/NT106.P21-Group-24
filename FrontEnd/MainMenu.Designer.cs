@@ -30,19 +30,20 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             panelMenu = new Panel();
-            btnFriends = new Button();
             btnSettings = new Button();
             btnProfile = new Button();
             btnLeaderboard = new Button();
             btnPlay = new Button();
             panelLogo = new Panel();
-            lbTitle = new Label();
+            lbGameName = new Label();
             panelTitleBar = new Panel();
             btnClose = new Button();
             btnMaximize = new Button();
             btnMinimize = new Button();
-            label1 = new Label();
+            lbTitle = new Label();
             panelDesktopPane = new Panel();
+            btnFriends = new Button();
+            btnNotification = new Button();
             panelMenu.SuspendLayout();
             panelLogo.SuspendLayout();
             panelTitleBar.SuspendLayout();
@@ -51,6 +52,7 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.FromArgb(51, 51, 76);
+            panelMenu.Controls.Add(btnNotification);
             panelMenu.Controls.Add(btnFriends);
             panelMenu.Controls.Add(btnSettings);
             panelMenu.Controls.Add(btnProfile);
@@ -63,25 +65,6 @@
             panelMenu.Size = new Size(160, 450);
             panelMenu.TabIndex = 0;
             // 
-            // btnFriends
-            // 
-            btnFriends.Dock = DockStyle.Top;
-            btnFriends.FlatAppearance.BorderSize = 0;
-            btnFriends.FlatStyle = FlatStyle.Flat;
-            btnFriends.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnFriends.ForeColor = Color.Gainsboro;
-            btnFriends.Image = (Image)resources.GetObject("btnFriends.Image");
-            btnFriends.ImageAlign = ContentAlignment.MiddleLeft;
-            btnFriends.Location = new Point(0, 195);
-            btnFriends.Name = "btnFriends";
-            btnFriends.Padding = new Padding(6, 0, 0, 0);
-            btnFriends.Size = new Size(160, 45);
-            btnFriends.TabIndex = 5;
-            btnFriends.Text = "Friends";
-            btnFriends.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnFriends.UseVisualStyleBackColor = true;
-            btnFriends.Click += btnFriends_Click;
-            // 
             // btnSettings
             // 
             btnSettings.Dock = DockStyle.Bottom;
@@ -89,7 +72,7 @@
             btnSettings.FlatStyle = FlatStyle.Flat;
             btnSettings.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSettings.ForeColor = Color.Gainsboro;
-            btnSettings.Image = Properties.Resources.setting;
+            btnSettings.Image = Do_An.Properties.Resources.setting;
             btnSettings.ImageAlign = ContentAlignment.MiddleLeft;
             btnSettings.Location = new Point(0, 405);
             btnSettings.Name = "btnSettings";
@@ -161,23 +144,24 @@
             // panelLogo
             // 
             panelLogo.BackColor = Color.FromArgb(39, 39, 58);
-            panelLogo.Controls.Add(lbTitle);
+            panelLogo.Controls.Add(lbGameName);
             panelLogo.Dock = DockStyle.Top;
             panelLogo.Location = new Point(0, 0);
             panelLogo.Name = "panelLogo";
             panelLogo.Size = new Size(160, 60);
             panelLogo.TabIndex = 0;
             // 
-            // lbTitle
+            // lbGameName
             // 
-            lbTitle.AutoSize = true;
-            lbTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbTitle.ForeColor = Color.LightGray;
-            lbTitle.Location = new Point(52, 25);
-            lbTitle.Name = "lbTitle";
-            lbTitle.Size = new Size(43, 21);
-            lbTitle.TabIndex = 2;
-            lbTitle.Text = "Caro";
+            lbGameName.Dock = DockStyle.Fill;
+            lbGameName.Font = new Font("Bauhaus 93", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbGameName.ForeColor = Color.LightGray;
+            lbGameName.Location = new Point(0, 0);
+            lbGameName.Name = "lbGameName";
+            lbGameName.Size = new Size(160, 60);
+            lbGameName.TabIndex = 2;
+            lbGameName.Text = "Caro";
+            lbGameName.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panelTitleBar
             // 
@@ -185,7 +169,7 @@
             panelTitleBar.Controls.Add(btnClose);
             panelTitleBar.Controls.Add(btnMaximize);
             panelTitleBar.Controls.Add(btnMinimize);
-            panelTitleBar.Controls.Add(label1);
+            panelTitleBar.Controls.Add(lbTitle);
             panelTitleBar.Dock = DockStyle.Top;
             panelTitleBar.Location = new Point(160, 0);
             panelTitleBar.Name = "panelTitleBar";
@@ -238,25 +222,62 @@
             btnMinimize.UseVisualStyleBackColor = true;
             btnMinimize.Click += btnMinimize_Click;
             // 
-            // label1
+            // lbTitle
             // 
-            label1.Anchor = AnchorStyles.None;
-            label1.AutoSize = true;
-            label1.Font = new Font("Montserrat Black", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(302, 20);
-            label1.Name = "label1";
-            label1.Size = new Size(74, 26);
-            label1.TabIndex = 2;
-            label1.Text = "HOME";
+            lbTitle.Anchor = AnchorStyles.None;
+            lbTitle.AutoSize = true;
+            lbTitle.Font = new Font("Montserrat Black", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbTitle.ForeColor = Color.White;
+            lbTitle.Location = new Point(302, 20);
+            lbTitle.Name = "lbTitle";
+            lbTitle.Size = new Size(74, 26);
+            lbTitle.TabIndex = 2;
+            lbTitle.Text = "HOME";
             // 
             // panelDesktopPane
             // 
-            panelDesktopPane.Dock = DockStyle.Fill;
+            panelDesktopPane.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelDesktopPane.Location = new Point(160, 60);
             panelDesktopPane.Name = "panelDesktopPane";
             panelDesktopPane.Size = new Size(640, 390);
             panelDesktopPane.TabIndex = 2;
+            // 
+            // btnFriends
+            // 
+            btnFriends.Dock = DockStyle.Top;
+            btnFriends.FlatAppearance.BorderSize = 0;
+            btnFriends.FlatStyle = FlatStyle.Flat;
+            btnFriends.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnFriends.ForeColor = Color.Gainsboro;
+            btnFriends.Image = (Image)resources.GetObject("btnFriends.Image");
+            btnFriends.ImageAlign = ContentAlignment.MiddleLeft;
+            btnFriends.Location = new Point(0, 195);
+            btnFriends.Name = "btnFriends";
+            btnFriends.Padding = new Padding(6, 0, 0, 0);
+            btnFriends.Size = new Size(160, 45);
+            btnFriends.TabIndex = 5;
+            btnFriends.Text = "Friends";
+            btnFriends.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnFriends.UseVisualStyleBackColor = true;
+            btnFriends.Click += btnFriends_Click;
+            // 
+            // btnNotification
+            // 
+            btnNotification.Dock = DockStyle.Top;
+            btnNotification.FlatAppearance.BorderSize = 0;
+            btnNotification.FlatStyle = FlatStyle.Flat;
+            btnNotification.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnNotification.ForeColor = Color.Gainsboro;
+            btnNotification.Image = Do_An.Properties.Resources.bell;
+            btnNotification.ImageAlign = ContentAlignment.MiddleLeft;
+            btnNotification.Location = new Point(0, 240);
+            btnNotification.Name = "btnNotification";
+            btnNotification.Padding = new Padding(6, 0, 0, 0);
+            btnNotification.Size = new Size(160, 45);
+            btnNotification.TabIndex = 6;
+            btnNotification.Text = "Notification";
+            btnNotification.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnNotification.UseVisualStyleBackColor = true;
             // 
             // MainMenu
             // 
@@ -268,11 +289,11 @@
             Controls.Add(panelTitleBar);
             Controls.Add(panelMenu);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainMenu";
             Text = "MainMenu";
             panelMenu.ResumeLayout(false);
             panelLogo.ResumeLayout(false);
-            panelLogo.PerformLayout();
             panelTitleBar.ResumeLayout(false);
             panelTitleBar.PerformLayout();
             ResumeLayout(false);
@@ -287,12 +308,13 @@
         private Button btnProfile;
         private Button btnLeaderboard;
         private Panel panelTitleBar;
-        private Label label1;
         private Label lbTitle;
+        private Label lbGameName;
         private Button btnMinimize;
         private Button btnClose;
         private Button btnMaximize;
-        private Button btnFriends;
         private Panel panelDesktopPane;
+        private Button btnNotification;
+        private Button btnFriends;
     }
 }

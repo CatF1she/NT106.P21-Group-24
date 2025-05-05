@@ -1,6 +1,6 @@
 ﻿namespace FrontEnd
 {
-    using FrontEnd.Properties;
+    using FrontEnd.Resources;
     partial class ForgetPassword
     {
         /// <summary>
@@ -59,7 +59,7 @@
             // pictureBox1
             // 
             pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox1.Image = Properties.Resources.logo;
+            pictureBox1.Image = Do_An.Properties.Resources.logo;
             pictureBox1.Location = new Point(157, 12);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(87, 71);
@@ -88,7 +88,7 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = Properties.Resources.user;
+            pictureBox2.Image = Do_An.Properties.Resources.user;
             pictureBox2.Location = new Point(59, 105);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(21, 31);
