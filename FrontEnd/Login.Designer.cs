@@ -115,7 +115,7 @@
             btnLogin.Location = new Point(30, 340);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(236, 35);
-            btnLogin.TabIndex = 4;
+            btnLogin.TabIndex = 12;
             btnLogin.Text = "LOG IN";
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
@@ -153,7 +153,8 @@
             txtUsername.Multiline = true;
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(209, 24);
-            txtUsername.TabIndex = 6;
+            txtUsername.TabIndex = 10;
+            txtUsername.KeyDown += txtUsername_KeyDown;
             // 
             // txtpassword
             // 
@@ -165,7 +166,8 @@
             txtpassword.Name = "txtpassword";
             txtpassword.PasswordChar = '*';
             txtpassword.Size = new Size(209, 24);
-            txtpassword.TabIndex = 6;
+            txtpassword.TabIndex = 11;
+            txtpassword.KeyDown += txtpassword_KeyDown;
             // 
             // lbSignIn
             // 

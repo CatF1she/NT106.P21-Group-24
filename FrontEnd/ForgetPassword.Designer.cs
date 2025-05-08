@@ -40,6 +40,7 @@
             pictureBox3 = new PictureBox();
             btnLogin = new Button();
             button1 = new Button();
+            lbBack = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -72,7 +73,7 @@
             txtUsername.BorderStyle = BorderStyle.None;
             txtUsername.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtUsername.ForeColor = Color.FromArgb(0, 64, 64);
-            txtUsername.Location = new Point(86, 112);
+            txtUsername.Location = new Point(85, 100);
             txtUsername.Multiline = true;
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(251, 24);
@@ -81,7 +82,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(0, 64, 64);
-            panel1.Location = new Point(59, 142);
+            panel1.Location = new Point(58, 130);
             panel1.Name = "panel1";
             panel1.Size = new Size(278, 1);
             panel1.TabIndex = 8;
@@ -89,7 +90,7 @@
             // pictureBox2
             // 
             pictureBox2.Image = Do_An.Properties.Resources.user;
-            pictureBox2.Location = new Point(59, 105);
+            pictureBox2.Location = new Point(58, 93);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(21, 31);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -101,7 +102,7 @@
             txtpassword.BorderStyle = BorderStyle.None;
             txtpassword.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtpassword.ForeColor = Color.FromArgb(0, 64, 64);
-            txtpassword.Location = new Point(86, 158);
+            txtpassword.Location = new Point(85, 146);
             txtpassword.Multiline = true;
             txtpassword.Name = "txtpassword";
             txtpassword.Size = new Size(140, 24);
@@ -110,7 +111,7 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(0, 64, 64);
-            panel2.Location = new Point(59, 188);
+            panel2.Location = new Point(58, 176);
             panel2.Name = "panel2";
             panel2.Size = new Size(167, 1);
             panel2.TabIndex = 11;
@@ -118,7 +119,7 @@
             // pictureBox3
             // 
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(59, 151);
+            pictureBox3.Location = new Point(58, 139);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(21, 31);
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
@@ -132,7 +133,7 @@
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.Font = new Font("Bahnschrift", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(232, 158);
+            btnLogin.Location = new Point(231, 146);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(105, 24);
             btnLogin.TabIndex = 16;
@@ -146,12 +147,23 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Bahnschrift", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(116, 204);
+            button1.Location = new Point(108, 188);
             button1.Name = "button1";
             button1.Size = new Size(171, 25);
             button1.TabIndex = 17;
             button1.Text = "CHANGE PASSWORD";
             button1.UseVisualStyleBackColor = false;
+            // 
+            // lbBack
+            // 
+            lbBack.AutoSize = true;
+            lbBack.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbBack.ForeColor = Color.FromArgb(0, 64, 64);
+            lbBack.Location = new Point(173, 216);
+            lbBack.Name = "lbBack";
+            lbBack.Size = new Size(52, 25);
+            lbBack.TabIndex = 18;
+            lbBack.Text = "Back";
             // 
             // ForgetPassword
             // 
@@ -159,6 +171,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(400, 250);
+            Controls.Add(lbBack);
             Controls.Add(button1);
             Controls.Add(btnLogin);
             Controls.Add(txtpassword);
@@ -191,5 +204,6 @@
         private PictureBox pictureBox3;
         private Button btnLogin;
         private Button button1;
+        private Label lbBack;
     }
 }
