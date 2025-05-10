@@ -43,10 +43,14 @@
             txtConfirmedPassword = new TextBox();
             panel3 = new Panel();
             pictureBox4 = new PictureBox();
+            pictureBox5 = new PictureBox();
+            panel4 = new Panel();
+            txtEmail = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             SuspendLayout();
             // 
             // txtUsername
@@ -54,7 +58,7 @@
             txtUsername.BorderStyle = BorderStyle.None;
             txtUsername.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtUsername.ForeColor = Color.FromArgb(0, 64, 64);
-            txtUsername.Location = new Point(55, 165);
+            txtUsername.Location = new Point(55, 171);
             txtUsername.Multiline = true;
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(209, 24);
@@ -66,7 +70,7 @@
             lbExit.AutoSize = true;
             lbExit.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lbExit.ForeColor = Color.FromArgb(0, 64, 64);
-            lbExit.Location = new Point(126, 402);
+            lbExit.Location = new Point(126, 466);
             lbExit.Name = "lbExit";
             lbExit.Size = new Size(32, 16);
             lbExit.TabIndex = 16;
@@ -78,7 +82,7 @@
             lbClear.AutoSize = true;
             lbClear.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lbClear.ForeColor = Color.FromArgb(0, 64, 64);
-            lbClear.Location = new Point(178, 336);
+            lbClear.Location = new Point(178, 400);
             lbClear.Name = "lbClear";
             lbClear.Size = new Size(86, 16);
             lbClear.TabIndex = 17;
@@ -92,7 +96,7 @@
             btnSignin.FlatStyle = FlatStyle.Flat;
             btnSignin.Font = new Font("Bahnschrift", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSignin.ForeColor = Color.White;
-            btnSignin.Location = new Point(28, 364);
+            btnSignin.Location = new Point(28, 428);
             btnSignin.Name = "btnSignin";
             btnSignin.Size = new Size(236, 35);
             btnSignin.TabIndex = 15;
@@ -103,7 +107,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(0, 64, 64);
-            panel1.Location = new Point(28, 195);
+            panel1.Location = new Point(28, 201);
             panel1.Name = "panel1";
             panel1.Size = new Size(236, 1);
             panel1.TabIndex = 14;
@@ -111,7 +115,7 @@
             // pictureBox2
             // 
             pictureBox2.Image = Do_An.Properties.Resources.user;
-            pictureBox2.Location = new Point(28, 158);
+            pictureBox2.Location = new Point(28, 164);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(21, 31);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -145,7 +149,7 @@
             txtpassword.BorderStyle = BorderStyle.None;
             txtpassword.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtpassword.ForeColor = Color.FromArgb(0, 64, 64);
-            txtpassword.Location = new Point(55, 217);
+            txtpassword.Location = new Point(55, 287);
             txtpassword.Multiline = true;
             txtpassword.Name = "txtpassword";
             txtpassword.PasswordChar = '*';
@@ -156,7 +160,7 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(0, 64, 64);
-            panel2.Location = new Point(28, 247);
+            panel2.Location = new Point(28, 317);
             panel2.Name = "panel2";
             panel2.Size = new Size(236, 1);
             panel2.TabIndex = 21;
@@ -164,7 +168,7 @@
             // pictureBox3
             // 
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(28, 210);
+            pictureBox3.Location = new Point(28, 280);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(21, 31);
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
@@ -176,7 +180,7 @@
             txtConfirmedPassword.BorderStyle = BorderStyle.None;
             txtConfirmedPassword.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtConfirmedPassword.ForeColor = Color.FromArgb(0, 64, 64);
-            txtConfirmedPassword.Location = new Point(55, 276);
+            txtConfirmedPassword.Location = new Point(55, 346);
             txtConfirmedPassword.Multiline = true;
             txtConfirmedPassword.Name = "txtConfirmedPassword";
             txtConfirmedPassword.PasswordChar = '*';
@@ -187,7 +191,7 @@
             // panel3
             // 
             panel3.BackColor = Color.FromArgb(0, 64, 64);
-            panel3.Location = new Point(28, 306);
+            panel3.Location = new Point(28, 376);
             panel3.Name = "panel3";
             panel3.Size = new Size(236, 1);
             panel3.TabIndex = 24;
@@ -195,30 +199,63 @@
             // pictureBox4
             // 
             pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new Point(28, 269);
+            pictureBox4.Location = new Point(28, 339);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(21, 31);
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 23;
             pictureBox4.TabStop = false;
             // 
+            // pictureBox5
+            // 
+            pictureBox5.Image = Do_An.Properties.Resources.email;
+            pictureBox5.Location = new Point(28, 222);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(21, 31);
+            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox5.TabIndex = 12;
+            pictureBox5.TabStop = false;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.FromArgb(0, 64, 64);
+            panel4.Location = new Point(28, 259);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(236, 1);
+            panel4.TabIndex = 14;
+            // 
+            // txtEmail
+            // 
+            txtEmail.BorderStyle = BorderStyle.None;
+            txtEmail.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtEmail.ForeColor = Color.FromArgb(0, 64, 64);
+            txtEmail.Location = new Point(55, 229);
+            txtEmail.Multiline = true;
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(209, 24);
+            txtEmail.TabIndex = 19;
+            txtEmail.KeyPress += txtUsername_KeyPress;
+            // 
             // Signin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(292, 425);
+            ClientSize = new Size(292, 500);
             Controls.Add(txtConfirmedPassword);
             Controls.Add(panel3);
             Controls.Add(pictureBox4);
             Controls.Add(txtpassword);
             Controls.Add(panel2);
             Controls.Add(pictureBox3);
+            Controls.Add(txtEmail);
             Controls.Add(txtUsername);
             Controls.Add(lbExit);
             Controls.Add(lbClear);
             Controls.Add(btnSignin);
+            Controls.Add(panel4);
             Controls.Add(panel1);
+            Controls.Add(pictureBox5);
             Controls.Add(pictureBox2);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
@@ -230,6 +267,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -249,5 +287,8 @@
         private TextBox txtConfirmedPassword;
         private Panel panel3;
         private PictureBox pictureBox4;
+        private PictureBox pictureBox5;
+        private Panel panel4;
+        private TextBox txtEmail;
     }
 }

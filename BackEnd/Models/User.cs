@@ -14,5 +14,6 @@
         public int MatchPlayed { get; set; }
         public int MatchWon { get; set; }
         public double WinRate { get; set; }
+        public string email { get; set; } = null!;
     }
 }

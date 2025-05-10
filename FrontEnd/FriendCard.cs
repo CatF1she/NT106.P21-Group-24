@@ -1,6 +1,7 @@
 ﻿using BackEnd.Models;
 using BackEnd.Services;
 using FrontEnd;
+using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -24,7 +25,7 @@ namespace Do_An
 
         private ObjectId currentUserId;
         private ObjectId targetUserId;
-        private bool isFriend;
+        private string friendshipStatus = "none";
         public event Action<string, bool>? FriendActionClicked; // string: targetId, bool: isFriend
 
         public void SetFriendData(User user, ObjectId currentUserId)
@@ -47,13 +48,13 @@ namespace Do_An
             );
 
             var existing = friendships.Find(filter).FirstOrDefault();
-            if (existing != null && existing.Contains("status") && existing["status"].AsString == "accepted")
+            if (existing != null && existing.Contains("status"))
             {
-                isFriend = true;
+                friendshipStatus = existing["status"].AsString;
             }
             else
             {
-                isFriend = false;
+                friendshipStatus = "none";
             }
 
             UserName.Text = $"{user.Username}";
@@ -61,10 +62,19 @@ namespace Do_An
             MatchWon.Text = $"Matches Won: {user.MatchWon}";
             WinRate.Text = $"Win Rate: {user.WinRate}%";
 
-            btnAction.Text = isFriend ? "Unfriend" : "Add Friend";
+            switch (friendshipStatus)
+            {
+                case "none":
+                    btnAction.Text = "Add Friend";
+                    break;
+                case "pending":
+                    btnAction.Text = "Pending";
+                    break;
+                case "accepted":
+                    btnAction.Text = "Unfriend";
+                    break;
+            }    
         }
-
-
 
         private void btnAction_Click(object sender, EventArgs e)
         {
@@ -84,43 +94,39 @@ namespace Do_An
 
             var existing = friendships.Find(filter).FirstOrDefault();
 
-            if (existing == null)
+            switch (friendshipStatus)
             {
-                var newFriend = new BsonDocument
-                {
-                    { "User1Id", currentUserId },
-                    { "User2Id", targetUserId },
-                    { "status", "pending" }
-                };
-                friendships.InsertOne(newFriend);
-                MessageBox.Show("Friend requested successfully!");
-                btnAction.Text = "Unfriend";
-                isFriend = false;
-            }
-            else
-            {
-                friendships.DeleteOne(Builders<BsonDocument>.Filter.Eq("_id", existing["_id"]));
-                MessageBox.Show("Unfriended successfully!");
-                btnAction.Text = "Add Friend";
-                isFriend = false;
+                case "none":
+                    var newFriend = new BsonDocument
+                    {
+                        { "User1Id", currentUserId },
+                        { "User2Id", targetUserId },
+                        { "status", "pending" }
+                    };
+                    friendships.InsertOne(newFriend);
+                    friendshipStatus = "pending";
+                    btnAction.Text = "Pending";
+                    break;
+                case "accepted":
+                    friendships.DeleteOne(Builders<BsonDocument>.Filter.Eq("_id", existing["_id"]));
+                    btnAction.Text = "Add Friend";
+                    friendshipStatus = "none";
+                    break;
+                case "pending":
+                    friendships.DeleteOne(Builders<BsonDocument>.Filter.Eq("_id", existing["_id"]));
+                    btnAction.Text = "Add Friend";
+                    friendshipStatus = "none";
+                    break;
             }
 
             // Gửi event để form cha biết thay đổi
-            FriendActionClicked?.Invoke(targetUserId.ToString(), isFriend);
+            FriendActionClicked?.Invoke(targetUserId.ToString(), friendshipStatus == "accepted");
         }
 
 
         private void FriendCard_Load(object sender, EventArgs e)
         {
             LoadTheme();
-            if (isFriend == true)
-            {
-                btnAction.Text = "Unfriend";
-            }
-            else
-            {
-                btnAction.Text = "Add Friend";
-            }
         }
         private void LoadTheme()
         {

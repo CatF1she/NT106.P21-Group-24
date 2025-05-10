@@ -26,8 +26,9 @@ namespace FrontEnd
             string username = txtUsername.Text.Trim();
             string password = txtpassword.Text;
             string confirm = txtConfirmedPassword.Text;
+            string email = txtEmail.Text.Trim();
 
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirm))
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirm) || string.IsNullOrEmpty(email))
             {
                 MessageBox.Show("Please fill in all fields");
                 return;
@@ -45,7 +46,8 @@ namespace FrontEnd
                 {"password", password},
                 {"MatchPlayed", 0 },
                 {"MatchWon", 0 },
-                {"ELO", 0 }
+                {"ELO", 0 },
+                {"email", email}
             };
             try
             {
@@ -59,8 +61,15 @@ namespace FrontEnd
                     return;
                 }
 
+                existingUser = users.Find(Builders<BsonDocument>.Filter.Eq("email", email)).FirstOrDefault();
+                if (existingUser != null)
+                {
+                    MessageBox.Show("Email already exists!");
+                    return;
+                }
+
                 users.InsertOne(user);
-                MessageBox.Show("Sign up successful!");
+                MessageBox.Show("Sign up successfully!");
                 this.Close();
                 new Login().Show();
             }

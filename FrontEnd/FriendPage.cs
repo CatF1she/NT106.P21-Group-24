@@ -25,6 +25,7 @@ namespace Do_An
         }
 
         private List<User> allUsers = new List<User>();
+        private System.Windows.Forms.Timer searchDelayTimer;
 
         private void LoadUsers()
         {
@@ -75,7 +76,20 @@ namespace Do_An
         {
             LoadUsers();
             LoadTheme();
+            searchDelayTimer = new System.Windows.Forms.Timer();
+            searchDelayTimer.Interval = 1000;
+            searchDelayTimer.Tick += SearchDelayTimer_Tick;
         }
+
+        private void SearchDelayTimer_Tick(object? sender, EventArgs e)
+        {
+            searchDelayTimer.Stop(); // Dừng timer
+
+            string keyword = SearchBar.Text.Trim().ToLower();
+            var filteredUsers = allUsers.Where(u => u.Username.ToLower().Contains(keyword)).ToList();
+            DisplayUsers(filteredUsers);
+        }
+
         private void FriendList_Resize(object sender, EventArgs e)
         {
             foreach (FriendCard card in FriendList.Controls)
@@ -100,9 +114,8 @@ namespace Do_An
 
         private void SearchBar_TextChanged(object sender, EventArgs e)
         {
-            string keyword = SearchBar.Text.Trim().ToLower();
-            var filteredUsers = allUsers.Where(u => u.Username.ToLower().Contains(keyword)).ToList();
-            DisplayUsers(filteredUsers);
+            searchDelayTimer.Stop();
+            searchDelayTimer.Start();
         }
     }
 }
