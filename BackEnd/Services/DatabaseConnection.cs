@@ -28,5 +28,10 @@ namespace BackEnd.Services
         {
             return database.GetCollection<BsonDocument>("Users");
         }
+
+        public IMongoCollection<BsonDocument> GetFriendShipsCollection()
+        {
+            return database.GetCollection<BsonDocument>("Friendships");
+        }
     }
 }

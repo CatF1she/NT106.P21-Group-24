@@ -10,98 +10,51 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MongoDB.Driver;
 using FrontEnd;
+using BackEnd.Services;
+using MongoDB.Bson;
 
 namespace Do_An
 {
     public partial class FriendPage : Form
     {
-        private readonly string currentUserId;
-
-        public FriendPage()
+        private readonly ObjectId currentUserId;
+        public FriendPage(ObjectId userID)
         {
             InitializeComponent();
+            currentUserId = userID;
         }
 
-        // DATABASE TEST, NHỚ XÓA SAU KHI LÀM
-        public List<User> Users()
-        {
-            return new List<User>
-            {
-                new User
-                {
-                    Id = "1",
-                    Username = "Isla",
-                    WinRate = 0,
-                    MatchWon = 0,
-                    MatchPlayed = 0,
-
-                },
-                new User
-                {
-                    Id = "2",
-                    Username = "Helena",
-                    WinRate = 0,
-                    MatchWon = 0,
-                    MatchPlayed = 0,
-                },
-                new User
-                {
-                    Id = "3",
-                    Username = "Shimakaze",
-                    WinRate = 0,
-                    MatchWon = 0,
-                    MatchPlayed = 0,
-                },
-                new User
-                {
-                    Id = "4",
-                    Username = "London",
-                    WinRate = 0,
-                    MatchWon = 0,
-                    MatchPlayed = 0,
-                },
-                new User
-                {
-                    Id = "5",
-                    Username = "Javelin",
-                    WinRate = 0,
-                    MatchWon = 0,
-                    MatchPlayed = 0,
-                },
-                new User
-                {
-                    Id="6",
-                    Username = "Jessica",
-                    WinRate = 0,
-                    MatchWon = 0,
-                    MatchPlayed = 0,
-                },
-                new User
-                {
-                    Id="6",
-                    Username = "Miku",
-                    WinRate = 0,
-                    MatchWon = 0,
-                    MatchPlayed = 0,
-                },
-                new User
-                {
-                    Id="6",
-                    Username = "Hina",
-                    WinRate = 0,
-                    MatchWon = 0,
-                    MatchPlayed = 0,
-                },
-            };
-        }
-        // KẾT THÚC DATABASE TEST, NHỚ XÓA SAU KHI TEST
         private List<User> allUsers = new List<User>();
 
         private void LoadUsers()
         {
-            allUsers = Users(); // Dữ liệu mẫu
-            DisplayUsers(allUsers);
+            try
+            {
+                var db = new DatabaseConnection();
+                var userCollection = db.GetUsersCollection();
+
+                // Lấy toàn bộ người dùng trừ chính mình
+                var filter = Builders<BsonDocument>.Filter.Ne("_id", currentUserId);
+                var bsonUsers = userCollection.Find(filter).ToList();
+
+                // Chuyển từ BsonDocument sang User model
+                allUsers = bsonUsers.Select(doc => new User
+                {
+                    Id = (ObjectId)doc["_id"],
+                    Username = doc["username"].AsString,
+                    MatchPlayed = doc.GetValue("MatchPlayed", 0).ToInt32(),
+                    MatchWon = doc.GetValue("MatchWon", 0).ToInt32(),
+                    WinRate = doc.GetValue("ELO", 0).ToInt32()
+                }).ToList();
+
+                DisplayUsers(allUsers);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading users: " + ex.Message);
+            }
         }
+
 
         private void DisplayUsers(List<User> users)
         {
@@ -109,7 +62,7 @@ namespace Do_An
             for (int i = 0; i < users.Count; i++)
             {
                 var card = new FriendCard();
-                card.SetFriendData(users[i], currentUserId, false);
+                card.SetFriendData(users[i], currentUserId);
                 card.Width = FriendList.Width - 25;
                 // Xen kẽ màu nền
                 card.BackColor = (i % 2 == 0) ? Color.LightGray : Color.White;

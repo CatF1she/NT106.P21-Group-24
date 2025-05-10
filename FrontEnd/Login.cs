@@ -30,14 +30,20 @@ namespace FrontEnd.Resources
                 usersCollection = dbConnection.GetUsersCollection();
             }
 
-            public bool AuthenticateUser(string username, string password)
+            public ObjectId AuthenticateUser(string username, string password)
             {
                 var filter = Builders<BsonDocument>.Filter.Eq("username", username) &
                              Builders<BsonDocument>.Filter.Eq("password", password);
 
                 var user = usersCollection.Find(filter).FirstOrDefault();
-                return user != null;
+                if (user != null && user.Contains("_id"))
+                {
+                    return user["_id"].AsObjectId;
+                }
+
+                return ObjectId.Empty;
             }
+
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -46,9 +52,11 @@ namespace FrontEnd.Resources
             string username = txtUsername.Text;
             string password = txtpassword.Text;
 
-            if (auth.AuthenticateUser(username, password))
+            ObjectId userId = auth.AuthenticateUser(username, password);
+
+            if (userId != ObjectId.Empty)
             {
-                new MainMenu().Show();
+                new MainMenu(userId).Show(); 
                 this.Hide();
             }
             else
@@ -56,6 +64,8 @@ namespace FrontEnd.Resources
                 MessageBox.Show("Username or password is incorrect!");
             }
         }
+
+
 
 
         private void ForgetPassword_Click(object sender, EventArgs e)

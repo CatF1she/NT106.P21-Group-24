@@ -1,4 +1,5 @@
 ﻿using Do_An;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,15 +21,16 @@ namespace FrontEnd.Resources
         private Random random;
         private int tempIndex;
         private Form activateForm;
-
+        private ObjectId currentUserId;
         // Constructor
-        public MainMenu()
+        public MainMenu(ObjectId userID)
         {
             InitializeComponent();
             random = new Random();
             this.Text = string.Empty;
             this.ControlBox = false;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+            this.currentUserId = userID;
         }
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
@@ -120,7 +122,7 @@ namespace FrontEnd.Resources
         }
         private void btnFriends_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FriendPage(), sender);
+            OpenChildForm(new FriendPage(currentUserId), sender);
         }
         private void btnClose_Click(object sender, EventArgs e)
         {

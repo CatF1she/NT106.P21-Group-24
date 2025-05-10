@@ -6,12 +6,15 @@
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; } = null!;
+        public ObjectId Id { get; set; } = ObjectId.Empty;
 
         [BsonRepresentation(BsonType.ObjectId)]
-        public string User1Id { get; set; } = null!;
+        public ObjectId User1Id { get; set; } = ObjectId.Empty;
 
         [BsonRepresentation(BsonType.ObjectId)]
-        public string User2Id { get; set; } = null!;
+        public ObjectId User2Id { get; set; } = ObjectId.Empty;
+
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string status { get; set; } = null!;
     }
 }

@@ -1,5 +1,8 @@
 ﻿using BackEnd.Models;
+using BackEnd.Services;
 using FrontEnd;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,16 +22,39 @@ namespace Do_An
             InitializeComponent();
         }
 
-        private string currentUserId;
-        private string targetUserId;
+        private ObjectId currentUserId;
+        private ObjectId targetUserId;
         private bool isFriend;
         public event Action<string, bool>? FriendActionClicked; // string: targetId, bool: isFriend
 
-        public void SetFriendData(User user, string currentUserId, bool isFriend)
+        public void SetFriendData(User user, ObjectId currentUserId)
         {
             this.currentUserId = currentUserId;
             this.targetUserId = user.Id;
-            this.isFriend = isFriend;
+
+            var db = new DatabaseConnection();
+            var friendships = db.GetFriendShipsCollection();
+
+            var filter = Builders<BsonDocument>.Filter.Or(
+                Builders<BsonDocument>.Filter.And(
+                    Builders<BsonDocument>.Filter.Eq("User1Id", currentUserId),
+                    Builders<BsonDocument>.Filter.Eq("User2Id", targetUserId)
+                ),
+                Builders<BsonDocument>.Filter.And(
+                    Builders<BsonDocument>.Filter.Eq("User1Id", targetUserId),
+                    Builders<BsonDocument>.Filter.Eq("User2Id", currentUserId)
+                )
+            );
+
+            var existing = friendships.Find(filter).FirstOrDefault();
+            if (existing != null && existing.Contains("status") && existing["status"].AsString == "accepted")
+            {
+                isFriend = true;
+            }
+            else
+            {
+                isFriend = false;
+            }
 
             UserName.Text = $"{user.Username}";
             MatchPlayed.Text = $"Matches Played: {user.MatchPlayed}";
@@ -39,14 +65,62 @@ namespace Do_An
         }
 
 
+
         private void btnAction_Click(object sender, EventArgs e)
         {
-            FriendActionClicked?.Invoke(targetUserId, isFriend);
+            var db = new DatabaseConnection();
+            var friendships = db.GetFriendShipsCollection();
+
+            var filter = Builders<BsonDocument>.Filter.Or(
+                Builders<BsonDocument>.Filter.And(
+                    Builders<BsonDocument>.Filter.Eq("User1Id", currentUserId),
+                    Builders<BsonDocument>.Filter.Eq("User2Id", targetUserId)
+                ),
+                Builders<BsonDocument>.Filter.And(
+                    Builders<BsonDocument>.Filter.Eq("User1Id", targetUserId),
+                    Builders<BsonDocument>.Filter.Eq("User2Id", currentUserId)
+                )
+            );
+
+            var existing = friendships.Find(filter).FirstOrDefault();
+
+            if (existing == null)
+            {
+                var newFriend = new BsonDocument
+                {
+                    { "User1Id", currentUserId },
+                    { "User2Id", targetUserId },
+                    { "status", "pending" }
+                };
+                friendships.InsertOne(newFriend);
+                MessageBox.Show("Friend requested successfully!");
+                btnAction.Text = "Unfriend";
+                isFriend = false;
+            }
+            else
+            {
+                friendships.DeleteOne(Builders<BsonDocument>.Filter.Eq("_id", existing["_id"]));
+                MessageBox.Show("Unfriended successfully!");
+                btnAction.Text = "Add Friend";
+                isFriend = false;
+            }
+
+            // Gửi event để form cha biết thay đổi
+            FriendActionClicked?.Invoke(targetUserId.ToString(), isFriend);
         }
+
 
         private void FriendCard_Load(object sender, EventArgs e)
         {
             LoadTheme();
+            if (isFriend == true)
+            {
+                btnAction.Text = "Unfriend";
+            }
+            else
+            {
+                btnAction.Text = "Add Friend";
+            }
         }
         private void LoadTheme()
         {
