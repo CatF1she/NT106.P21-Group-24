@@ -1,42 +1,57 @@
+﻿using Microsoft.AspNetCore.SignalR.Client;
+using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace FrontEnd
 {
-
     public partial class Game : Form
     {
-        private bool isPlayerX = true; // X goes first
+        private HubConnection? connection;
+        private string gameId = "test-room";
+        private string playerId = "PlayerX"; // You could ask user or get from login
         private Image xImage;
         private Image oImage;
-        private int[,] board;
-        private const int EMPTY = 0;
-        private const int PLAYER_X_ID = 1;
-        private const int PLAYER_O_ID = 2;
+
         public Game()
         {
             InitializeComponent();
             DrawChessBoard();
             LoadImages();
-            board = new int[Constants.chessboard_height, Constants.chessboard_width];
+            ConnectToSignalR();
         }
+
         private void LoadImages()
         {
             xImage = Image.FromFile("Resources/x.png");
             oImage = Image.FromFile("Resources/o.png");
         }
-        void DrawChessBoard() {
+
+        private void DrawChessBoard()
+        {
+            panelChessBoard.Controls.Clear();
             Button oldButton = new Button() { Height = 0, Width = 0, Location = new Point(0, 0) };
-            for (int i = 0; i <Constants.chessboard_height;i++) {
-                for (int j = 0; j < Constants.chessboard_width;j ++)
+
+            for (int i = 0; i < Constants.chessboard_height; i++)
+            {
+                for (int j = 0; j < Constants.chessboard_width; j++)
                 {
-                    Button btn = new Button()
+                    Button btn = new Button
                     {
                         Width = Constants.chess_width,
                         Height = Constants.chess_height,
                         Location = new Point(oldButton.Location.X + oldButton.Width, oldButton.Location.Y),
                         Tag = new Point(j, i)
                     };
-                    btn.Click += btn_Click; 
+                    btn.Click += async (sender, e) =>
+                    {
+                        var clicked = sender as Button;
+                        if (clicked != null && clicked.BackgroundImage == null && connection?.State == HubConnectionState.Connected)
+                        {
+                            Point pos = (Point)clicked.Tag;
+                            await connection.InvokeAsync("MakeMove", gameId, pos.X, pos.Y, playerId);
+                        }
+                    };
                     panelChessBoard.Controls.Add(btn);
                     oldButton = btn;
                 }
@@ -44,69 +59,63 @@ namespace FrontEnd
                 oldButton.Width = 0;
                 oldButton.Height = 0;
             }
-            MessageBox.Show("Chessboard initialized!");
+            MessageBox.Show("Chessboard initalized!");
         }
-        private void btn_Click(object sender, EventArgs e)
+
+        private async void ConnectToSignalR()
         {
-            Button clickedButton = sender as Button;
+            connection = new HubConnectionBuilder()
+                .WithUrl("http://localhost:8000/gamehub") // your backend IP or domain
+                .WithAutomaticReconnect()
+                .Build();
 
-            if (clickedButton != null && clickedButton.BackgroundImage == null)
+            connection.On<int, int, string>("ReceiveMove", (x, y, player) =>
             {
-                Point pos = (Point)clickedButton.Tag;
-                int currentPlayer = isPlayerX ? PLAYER_X_ID : PLAYER_O_ID;
-
-                //update button image
-                clickedButton.BackgroundImage = isPlayerX ? xImage : oImage;
-                clickedButton.BackgroundImageLayout = ImageLayout.Stretch; // Scale the image
-                clickedButton.Enabled = false;
-
-                // Update board
-                board[pos.Y, pos.X] = currentPlayer;
-
-                // Win check
-                if (CheckWin(pos.X, pos.Y, currentPlayer))
+                Invoke(new Action(() =>
                 {
-                    MessageBox.Show($"Player {(isPlayerX ? "X" : "O")} wins!");
-                    DisableAllButtons();
-                    return;
-                }
+                    Button? btn = GetButtonAt(x, y);
+                    if (btn != null && btn.BackgroundImage == null)
+                    {
+                        btn.BackgroundImage = (player == "PlayerX") ? xImage : oImage;
+                        btn.BackgroundImageLayout = ImageLayout.Stretch;
+                        btn.Enabled = false;
+                    }
+                }));
+            });
 
-                isPlayerX = !isPlayerX;
-                //stop focusing on the next button
-                this.ActiveControl = null;
-            }
-        }
-        private bool CheckWin(int x, int y, int player)
-        {
-            return (CountDirection(x, y, 1, 0, player) + CountDirection(x, y, -1, 0, player) + 1 >= 5) || // Horizontal
-                   (CountDirection(x, y, 0, 1, player) + CountDirection(x, y, 0, -1, player) + 1 >= 5) || // Vertical
-                   (CountDirection(x, y, 1, 1, player) + CountDirection(x, y, -1, -1, player) + 1 >= 5) || // Diagonal \
-                   (CountDirection(x, y, 1, -1, player) + CountDirection(x, y, -1, 1, player) + 1 >= 5);   // Diagonal /
-        }
-
-        private int CountDirection(int x, int y, int dx, int dy, int player)
-        {
-            int count = 0;
-            int i = 1;
-
-            while (true)
+            connection.On<string>("GameWon", winnerId =>
             {
-                int newX = x + dx * i;
-                int newY = y + dy * i;
+                Invoke(() =>
+                {
+                    MessageBox.Show($"{winnerId} wins!");
+                    DisableAllButtons();
+                });
+            });
 
-                if (newX < 0 || newY < 0 || newX >= Constants.chessboard_width || newY >= Constants.chessboard_height)
-                    break;
-
-                if (board[newY, newX] == player)
-                    count++;
-                else
-                    break;
-
-                i++;
+            try
+            {
+                await connection.StartAsync();
+                await connection.InvokeAsync("JoinGame", gameId);
+                MessageBox.Show("Connected to SignalR Hub");
             }
-
-            return count;
+            catch (Exception ex)
+            {
+                MessageBox.Show("Connection error: " + ex.Message);
+            }
         }
+
+        private Button? GetButtonAt(int x, int y)
+        {
+            foreach (Control ctrl in panelChessBoard.Controls)
+            {
+                if (ctrl is Button btn && btn.Tag is Point pt && pt.X == x && pt.Y == y)
+                {
+                    return btn;
+                }
+            }
+            return null;
+        }
+
         private void DisableAllButtons()
         {
             foreach (Control ctrl in panelChessBoard.Controls)
