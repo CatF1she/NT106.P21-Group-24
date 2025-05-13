@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using MongoDB.Bson;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,13 +9,14 @@ namespace FrontEnd
     public partial class Game : Form
     {
         private HubConnection? connection;
-        private string gameId = "test-room";
-        private string playerId = "PlayerX"; // You could ask user or get from login
+        private string gameId = "123456";
+        private string playerId = "error";
         private Image xImage;
         private Image oImage;
 
-        public Game()
+        public Game(ObjectId _playerId)
         {
+            playerId = _playerId.ToString();
             InitializeComponent();
             DrawChessBoard();
             LoadImages();
@@ -65,22 +67,23 @@ namespace FrontEnd
         private async void ConnectToSignalR()
         {
             connection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:8000/gamehub") // your backend IP or domain
+                .WithUrl($"http://localhost:8000/gamehub?userId={playerId}")
                 .WithAutomaticReconnect()
                 .Build();
 
             connection.On<int, int, string>("ReceiveMove", (x, y, player) =>
             {
-                Invoke(new Action(() =>
+                Invoke(() =>
                 {
-                    Button? btn = GetButtonAt(x, y);
+                    var btn = GetButtonAt(x, y);
                     if (btn != null && btn.BackgroundImage == null)
                     {
                         btn.BackgroundImage = (player == "PlayerX") ? xImage : oImage;
                         btn.BackgroundImageLayout = ImageLayout.Stretch;
                         btn.Enabled = false;
+                        Console.WriteLine($"[ReceiveMove] {player} moved to ({x}, {y})");
                     }
-                }));
+                });
             });
 
             connection.On<string>("GameWon", winnerId =>
@@ -95,14 +98,16 @@ namespace FrontEnd
             try
             {
                 await connection.StartAsync();
+                MessageBox.Show("Connected to SignalR Hub!");
                 await connection.InvokeAsync("JoinGame", gameId);
-                MessageBox.Show("Connected to SignalR Hub");
+                MessageBox.Show("JoinGame invoked successfully.");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Connection error: " + ex.Message);
             }
         }
+
 
         private Button? GetButtonAt(int x, int y)
         {

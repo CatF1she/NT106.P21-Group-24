@@ -103,7 +103,9 @@ namespace FrontEnd.Resources
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new Game(), sender);
+            var gameForm = new Game(currentUserId);
+            gameForm.Show();
+            this.Hide();
         }
 
         private void btnLeaderboard_Click(object sender, EventArgs e)
