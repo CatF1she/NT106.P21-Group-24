@@ -11,42 +11,53 @@ namespace BackEnd.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; } = null!;
 
-        // Store the MongoDB ObjectIds of registered users
+        [BsonElement("playerXId")]
         [BsonRepresentation(BsonType.ObjectId)]
         public string PlayerXId { get; set; } = null!;
 
+        [BsonElement("playerOId")]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string PlayerOId { get; set; } = null!;
+        public string? PlayerOId { get; set; } // Nullable — Player O may not exist initially
 
-        // true = X's turn, false = O's turn
-        public bool CurrentTurn { get; set; } = true;
+        [BsonElement("currentTurn")]
+        public bool CurrentTurn { get; set; } = true; // true = X's turn
 
+        [BsonElement("isFinished")]
         public bool IsFinished { get; set; } = false;
 
+        [BsonElement("winnerPlayerId")]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? WinnerPlayerId { get; set; }
 
-        // The game board; 0 = empty, 1 = X, 2 = O
+        [BsonElement("board")]
         public int[,] Board { get; set; } = new int[Constants.chessboard_height, Constants.chessboard_width];
 
-        // Optional: move history (can help with replays, debugging, auditing)
-        public List<Move> Moves { get; set; } = new List<Move>();
+        [BsonElement("moves")]
+        public List<Move> Moves { get; set; } = new();
 
+        [BsonElement("createdAt")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // A short code players use to join the game (e.g. ABC123)
+        [BsonElement("updatedAt")]
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+
+        [BsonElement("gameCode")]
         public string GameCode { get; set; } = Guid.NewGuid().ToString().Substring(0, 6).ToUpper();
     }
 
     public class Move
     {
+        [BsonElement("x")]
         public int X { get; set; }
+
+        [BsonElement("y")]
         public int Y { get; set; }
 
-        // The player who made the move
+        [BsonElement("playerId")]
         [BsonRepresentation(BsonType.ObjectId)]
         public string PlayerId { get; set; } = null!;
 
+        [BsonElement("time")]
         public DateTime Time { get; set; } = DateTime.UtcNow;
     }
 }

@@ -8,10 +8,11 @@ namespace BackEnd.Hubs
     public class GameHub : Hub
     {
         private readonly GameSessionService _gameService;
-
-        public GameHub(GameSessionService gameService)
+        private readonly UserService _userService;
+        public GameHub(GameSessionService gameService, UserService userService)
         {
             _gameService = gameService;
+            _userService = userService;
         }
 
         private string? GetUserId()
@@ -97,6 +98,9 @@ namespace BackEnd.Hubs
                 game.WinnerPlayerId = playerId;
                 await Clients.Group(gameCode).SendAsync("GameWon", game.CurrentTurn ? "PlayerX" : "PlayerO");
                 Console.WriteLine($"[MakeMove] Game won by {playerId}");
+                var loserId = game.CurrentTurn ? game.PlayerOId : game.PlayerXId;
+                await _userService.IncrementMatchStatsAsync(playerId, true);     // Winner
+                await _userService.IncrementMatchStatsAsync(loserId, false);     // Loser
             }
             else
             {
