@@ -32,7 +32,7 @@ builder.Services.AddSingleton(sp =>
 
 // Register custom services
 builder.Services.AddSingleton<GameSessionService>();
-
+builder.Services.AddSingleton<UserService>();
 // Register SignalR
 builder.Services.AddSignalR();
 
