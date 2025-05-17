@@ -37,27 +37,16 @@ namespace FrontEnd.Resources
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        //Methods
-        private Color SelectThemeColor()
-        {
-            int index = random.Next(ThemeColor.ColorList.Count);
-            while (tempIndex == index)
-            {
-                index = random.Next(ThemeColor.ColorList.Count);
-            }
-            tempIndex = index;
-            string color = ThemeColor.ColorList[index];
-            return ColorTranslator.FromHtml(color);
-        }
+        //Method
 
-        private void ActivateButton(object btnSender)
+        private void ActivateButton(object btnSender, string functionName)
         {
             if (btnSender != null)
             {
                 if (currentButton != (Button)btnSender)
                 {
                     DisableButton();
-                    Color color = SelectThemeColor();
+                    Color color = ThemeColor.GetFunctionColor(functionName);
                     currentButton = (Button)btnSender;
                     currentButton.BackColor = color;
                     currentButton.ForeColor = Color.White;
@@ -69,6 +58,7 @@ namespace FrontEnd.Resources
                 }
             }
         }
+
 
         private void DisableButton()
         {
@@ -89,7 +79,7 @@ namespace FrontEnd.Resources
             {
                 activateForm.Close();
             }
-            ActivateButton(btnSender);
+            ActivateButton(btnSender, childForm.Text);
             activateForm = childForm;
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
@@ -103,6 +93,7 @@ namespace FrontEnd.Resources
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
+            ActivateButton(sender, "Play");
             var gameForm = new Game(currentUserId);
             gameForm.Show();
             this.Hide();
@@ -110,17 +101,17 @@ namespace FrontEnd.Resources
 
         private void btnLeaderboard_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender);
+            ActivateButton(sender, "Leaderboard");
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new UserProfile(), sender);
+            OpenChildForm(new UserProfile(currentUserId), sender);
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender);
+            ActivateButton(sender, "Settings");
         }
         private void btnFriends_Click(object sender, EventArgs e)
         {
@@ -154,6 +145,9 @@ namespace FrontEnd.Resources
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
-
+        private void btnNotification_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new NotificationPage(currentUserId), sender);
+        }
     }
 }

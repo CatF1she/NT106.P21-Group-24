@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace FrontEnd
 {
@@ -10,40 +7,31 @@ namespace FrontEnd
     {
         public static Color PrimaryColor { get; set; }
         public static Color SecondaryColor { get; set; }
-        public static List<string> ColorList = new List<string>() { "#3F51B5",
-                                                                    "#009688",
-                                                                    "#F57F22",
-                                                                    "#607D8B",
-                                                                    "#FF9800",
-                                                                    "#9C27B0",
-                                                                    "#2196F3",
-                                                                    "#E4676C",
-                                                                    "#E4144A",
-                                                                    "#59788B",
-                                                                    "#E01797",
-                                                                    "#0E3441",
-                                                                    "#008D4C",
-                                                                    "#7A1D47",
-                                                                    "#E4B833",
-                                                                    "#FF973E",
-                                                                    "#F37521",
-                                                                    "#A12059",
-                                                                    "#116281",
-                                                                    "#88C248",
-                                                                    "#364D5B",
-                                                                    "#C7DC5B",
-                                                                    "#0E949C",
-                                                                    "#E4126E",
-                                                                    "#43B76E",
-                                                                    "#7BCFE9",
-                                                                    "#B71C46"};
+
+        // Màu cố định cho từng chức năng
+        public static readonly Dictionary<string, string> FunctionColorMap = new()
+        {
+            { "Play", "#3F51B5" },
+            { "Leaderboard", "#009688" },
+            { "Profile", "#F57F22" },
+            { "Settings", "#607D8B" },
+            { "Friends", "#E4144A" },
+            { "Notification", "#9C27B0" }
+        };
+
+        public static Color GetFunctionColor(string functionName)
+        {
+            if (FunctionColorMap.TryGetValue(functionName, out var hex))
+                return ColorTranslator.FromHtml(hex);
+            return Color.Gray; // fallback
+        }
+
         public static Color ChangeColorBrightness(Color color, double correctionfactor)
         {
             double red = color.R;
             double green = color.G;
             double blue = color.B;
 
-            // Nếu correctionfactor < 0 --> màu tối hơn
             if (correctionfactor < 0)
             {
                 correctionfactor = 1 + correctionfactor;

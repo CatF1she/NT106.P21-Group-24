@@ -31,18 +31,14 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserProfile));
             pictureBox1 = new PictureBox();
             label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
+            lbUsername = new Label();
+            Winrate = new Label();
+            lbMatchWonNum = new Label();
             label5 = new Label();
-            label6 = new Label();
-            label7 = new Label();
-            listView1 = new ListView();
-            Date = new ColumnHeader();
-            Opponent = new ColumnHeader();
-            Type = new ColumnHeader();
-            Result = new ColumnHeader();
-            Replay = new ColumnHeader();
+            lbMatchNum = new Label();
+            lbMatchWon = new Label();
+            lbEmail = new Label();
+            lbELO = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -61,106 +57,91 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            label1.Location = new Point(250, 47);
+            label1.Location = new Point(202, 37);
             label1.Name = "label1";
             label1.Size = new Size(103, 25);
             label1.TabIndex = 1;
             label1.Text = "Username:";
             // 
-            // label2
+            // lbUsername
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            label2.Location = new Point(359, 47);
-            label2.Name = "label2";
-            label2.Size = new Size(135, 25);
-            label2.TabIndex = 2;
-            label2.Text = "Nguyen Van A";
+            lbUsername.AutoSize = true;
+            lbUsername.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lbUsername.Location = new Point(396, 37);
+            lbUsername.Name = "lbUsername";
+            lbUsername.Size = new Size(124, 25);
+            lbUsername.TabIndex = 2;
+            lbUsername.Text = "<Username>";
             // 
-            // label3
+            // Winrate
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            label3.Location = new Point(304, 98);
-            label3.Name = "label3";
-            label3.Size = new Size(49, 25);
-            label3.TabIndex = 3;
-            label3.Text = "ELO:";
+            Winrate.AutoSize = true;
+            Winrate.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            Winrate.Location = new Point(202, 113);
+            Winrate.Name = "Winrate";
+            Winrate.Size = new Size(49, 25);
+            Winrate.TabIndex = 3;
+            Winrate.Text = "ELO:";
             // 
-            // label4
+            // lbMatchWonNum
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            label4.Location = new Point(359, 98);
-            label4.Name = "label4";
-            label4.Size = new Size(56, 25);
-            label4.TabIndex = 4;
-            label4.Text = "2000";
+            lbMatchWonNum.AutoSize = true;
+            lbMatchWonNum.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lbMatchWonNum.Location = new Point(396, 88);
+            lbMatchWonNum.Name = "lbMatchWonNum";
+            lbMatchWonNum.Size = new Size(23, 25);
+            lbMatchWonNum.TabIndex = 4;
+            lbMatchWonNum.Text = "0";
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            label5.Location = new Point(165, 73);
+            label5.Location = new Point(202, 63);
             label5.Name = "label5";
             label5.Size = new Size(188, 25);
             label5.TabIndex = 5;
             label5.Text = "Number of matches:";
             // 
-            // label6
+            // lbMatchNum
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            label6.Location = new Point(359, 73);
-            label6.Name = "label6";
-            label6.Size = new Size(45, 25);
-            label6.TabIndex = 6;
-            label6.Text = "200";
+            lbMatchNum.AutoSize = true;
+            lbMatchNum.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lbMatchNum.Location = new Point(396, 63);
+            lbMatchNum.Name = "lbMatchNum";
+            lbMatchNum.Size = new Size(23, 25);
+            lbMatchNum.TabIndex = 6;
+            lbMatchNum.Text = "0";
             // 
-            // label7
+            // lbMatchWon
             // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            label7.Location = new Point(53, 152);
-            label7.Name = "label7";
-            label7.Size = new Size(135, 25);
-            label7.TabIndex = 8;
-            label7.Text = "Match History";
+            lbMatchWon.AutoSize = true;
+            lbMatchWon.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lbMatchWon.Location = new Point(202, 88);
+            lbMatchWon.Name = "lbMatchWon";
+            lbMatchWon.Size = new Size(118, 25);
+            lbMatchWon.TabIndex = 8;
+            lbMatchWon.Text = "Match won: ";
             // 
-            // listView1
+            // lbEmail
             // 
-            listView1.AllowColumnReorder = true;
-            listView1.AutoArrange = false;
-            listView1.Columns.AddRange(new ColumnHeader[] { Date, Opponent, Type, Result, Replay });
-            listView1.Location = new Point(53, 180);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(550, 183);
-            listView1.TabIndex = 9;
-            listView1.UseCompatibleStateImageBehavior = false;
-            listView1.View = View.Details;
+            lbEmail.AutoSize = true;
+            lbEmail.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lbEmail.Location = new Point(53, 158);
+            lbEmail.Name = "lbEmail";
+            lbEmail.Size = new Size(139, 25);
+            lbEmail.TabIndex = 9;
+            lbEmail.Text = "Email address: ";
             // 
-            // Date
+            // lbELO
             // 
-            Date.Text = "Date";
-            Date.Width = 150;
-            // 
-            // Opponent
-            // 
-            Opponent.Text = "Opponent";
-            Opponent.Width = 120;
-            // 
-            // Type
-            // 
-            Type.Text = "X/O";
-            Type.Width = 46;
-            // 
-            // Result
-            // 
-            Result.Text = "Result";
-            // 
-            // Replay
-            // 
-            Replay.Text = "Replay";
+            lbELO.AutoSize = true;
+            lbELO.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lbELO.Location = new Point(396, 113);
+            lbELO.Name = "lbELO";
+            lbELO.Size = new Size(23, 25);
+            lbELO.TabIndex = 10;
+            lbELO.Text = "0";
             // 
             // UserProfile
             // 
@@ -168,18 +149,20 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(640, 390);
-            Controls.Add(listView1);
-            Controls.Add(label7);
-            Controls.Add(label6);
+            Controls.Add(lbELO);
+            Controls.Add(lbEmail);
+            Controls.Add(lbMatchWon);
+            Controls.Add(lbMatchNum);
             Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(label2);
+            Controls.Add(lbMatchWonNum);
+            Controls.Add(Winrate);
+            Controls.Add(lbUsername);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "UserProfile";
             Text = "Profile";
+            Load += UserProfile_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -189,17 +172,13 @@
 
         private PictureBox pictureBox1;
         private Label label1;
-        private Label label2;
-        private Label label3;
-        private Label label4;
+        private Label lbUsername;
+        private Label Winrate;
+        private Label lbMatchWonNum;
         private Label label5;
-        private Label label6;
-        private Label label7;
-        private ListView listView1;
-        private ColumnHeader Date;
-        private ColumnHeader Opponent;
-        private ColumnHeader Type;
-        private ColumnHeader Result;
-        private ColumnHeader Replay;
+        private Label lbMatchNum;
+        private Label lbMatchWon;
+        private Label lbEmail;
+        private Label lbELO;
     }
 }

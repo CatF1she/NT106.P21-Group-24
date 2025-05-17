@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             panelMenu = new Panel();
+            btnNotification = new Button();
+            btnFriends = new Button();
             btnSettings = new Button();
             btnProfile = new Button();
             btnLeaderboard = new Button();
@@ -42,8 +44,6 @@
             btnMinimize = new Button();
             lbTitle = new Label();
             panelDesktopPane = new Panel();
-            btnFriends = new Button();
-            btnNotification = new Button();
             panelMenu.SuspendLayout();
             panelLogo.SuspendLayout();
             panelTitleBar.SuspendLayout();
@@ -64,6 +64,44 @@
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(160, 450);
             panelMenu.TabIndex = 0;
+            // 
+            // btnNotification
+            // 
+            btnNotification.Dock = DockStyle.Top;
+            btnNotification.FlatAppearance.BorderSize = 0;
+            btnNotification.FlatStyle = FlatStyle.Flat;
+            btnNotification.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnNotification.ForeColor = Color.Gainsboro;
+            btnNotification.Image = Do_An.Properties.Resources.bell;
+            btnNotification.ImageAlign = ContentAlignment.MiddleLeft;
+            btnNotification.Location = new Point(0, 240);
+            btnNotification.Name = "btnNotification";
+            btnNotification.Padding = new Padding(6, 0, 0, 0);
+            btnNotification.Size = new Size(160, 45);
+            btnNotification.TabIndex = 6;
+            btnNotification.Text = "Notification";
+            btnNotification.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnNotification.UseVisualStyleBackColor = true;
+            btnNotification.Click += btnNotification_Click;
+            // 
+            // btnFriends
+            // 
+            btnFriends.Dock = DockStyle.Top;
+            btnFriends.FlatAppearance.BorderSize = 0;
+            btnFriends.FlatStyle = FlatStyle.Flat;
+            btnFriends.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnFriends.ForeColor = Color.Gainsboro;
+            btnFriends.Image = (Image)resources.GetObject("btnFriends.Image");
+            btnFriends.ImageAlign = ContentAlignment.MiddleLeft;
+            btnFriends.Location = new Point(0, 195);
+            btnFriends.Name = "btnFriends";
+            btnFriends.Padding = new Padding(6, 0, 0, 0);
+            btnFriends.Size = new Size(160, 45);
+            btnFriends.TabIndex = 5;
+            btnFriends.Text = "Friends";
+            btnFriends.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnFriends.UseVisualStyleBackColor = true;
+            btnFriends.Click += btnFriends_Click;
             // 
             // btnSettings
             // 
@@ -241,43 +279,6 @@
             panelDesktopPane.Name = "panelDesktopPane";
             panelDesktopPane.Size = new Size(640, 390);
             panelDesktopPane.TabIndex = 2;
-            // 
-            // btnFriends
-            // 
-            btnFriends.Dock = DockStyle.Top;
-            btnFriends.FlatAppearance.BorderSize = 0;
-            btnFriends.FlatStyle = FlatStyle.Flat;
-            btnFriends.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnFriends.ForeColor = Color.Gainsboro;
-            btnFriends.Image = (Image)resources.GetObject("btnFriends.Image");
-            btnFriends.ImageAlign = ContentAlignment.MiddleLeft;
-            btnFriends.Location = new Point(0, 195);
-            btnFriends.Name = "btnFriends";
-            btnFriends.Padding = new Padding(6, 0, 0, 0);
-            btnFriends.Size = new Size(160, 45);
-            btnFriends.TabIndex = 5;
-            btnFriends.Text = "Friends";
-            btnFriends.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnFriends.UseVisualStyleBackColor = true;
-            btnFriends.Click += btnFriends_Click;
-            // 
-            // btnNotification
-            // 
-            btnNotification.Dock = DockStyle.Top;
-            btnNotification.FlatAppearance.BorderSize = 0;
-            btnNotification.FlatStyle = FlatStyle.Flat;
-            btnNotification.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnNotification.ForeColor = Color.Gainsboro;
-            btnNotification.Image = Do_An.Properties.Resources.bell;
-            btnNotification.ImageAlign = ContentAlignment.MiddleLeft;
-            btnNotification.Location = new Point(0, 240);
-            btnNotification.Name = "btnNotification";
-            btnNotification.Padding = new Padding(6, 0, 0, 0);
-            btnNotification.Size = new Size(160, 45);
-            btnNotification.TabIndex = 6;
-            btnNotification.Text = "Notification";
-            btnNotification.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnNotification.UseVisualStyleBackColor = true;
             // 
             // MainMenu
             // 
