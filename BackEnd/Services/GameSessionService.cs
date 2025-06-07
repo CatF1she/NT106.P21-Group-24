@@ -14,10 +14,10 @@ namespace BackEnd.Services
             _games = database.GetCollection<GameSession>("GameSessions");
         }
 
-        public async Task<GameSession?> GetByGameCodeAsync(string gameCode)
+        public async Task<GameSession?> GetByIdAsync(string gameCode)
         {
-            var game = await _games.Find(g => g.GameCode == gameCode && g.IsFinished != true).FirstOrDefaultAsync();
-            Console.WriteLine($"[MongoDB] GetByGameCodeAsync: {(game == null ? "not found" : "found")}, GameCode: {gameCode}");
+            var game = await _games.Find(g => g.Id == gameCode && g.IsFinished != true).FirstOrDefaultAsync();
+            Console.WriteLine($"[MongoDB] GetByIdAsync: {(game == null ? "not found" : "found")}, Id: {gameCode}");
             return game;
         }
 

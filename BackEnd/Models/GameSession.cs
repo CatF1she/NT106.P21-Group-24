@@ -40,9 +40,6 @@ namespace BackEnd.Models
 
         [BsonElement("updatedAt")]
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-
-        [BsonElement("gameCode")]
-        public string GameCode { get; set; } = Guid.NewGuid().ToString().Substring(0, 6).ToUpper();
     }
 
     public class Move

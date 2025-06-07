@@ -14,7 +14,7 @@ namespace FrontEnd
         private Image xImage;
         private Image oImage;
 
-        public Game(ObjectId _playerId)
+        public Game(string gameCode, ObjectId _playerId, HubConnection sharedConnection)
         {
             playerId = _playerId.ToString();
             InitializeComponent();
