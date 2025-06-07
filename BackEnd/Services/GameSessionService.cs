@@ -16,7 +16,7 @@ namespace BackEnd.Services
 
         public async Task<GameSession?> GetByGameCodeAsync(string gameCode)
         {
-            var game = await _games.Find(g => g.GameCode == gameCode).FirstOrDefaultAsync();
+            var game = await _games.Find(g => g.GameCode == gameCode && g.IsFinished != true).FirstOrDefaultAsync();
             Console.WriteLine($"[MongoDB] GetByGameCodeAsync: {(game == null ? "not found" : "found")}, GameCode: {gameCode}");
             return game;
         }
@@ -27,7 +27,7 @@ namespace BackEnd.Services
             {
                 session.UpdatedAt = DateTime.UtcNow;
                 var result = await _games.ReplaceOneAsync(
-                    g => g.GameCode == session.GameCode,
+                    g => g.Id == session.Id,
                     session,
                     new ReplaceOptions { IsUpsert = true });
 

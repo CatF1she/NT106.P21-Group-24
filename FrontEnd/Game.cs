@@ -9,7 +9,7 @@ namespace FrontEnd
     public partial class Game : Form
     {
         private HubConnection? connection;
-        private string gameId = "123456";
+        private string gameId = "654321";
         private string playerId = "error";
         private Image xImage;
         private Image oImage;
