@@ -15,8 +15,8 @@ namespace FrontEnd
         private HubConnection? connection;
         private string gameId;
         private string playerId;
-        private Image xImage;
-        private Image oImage;
+        private Image? xImage;
+        private Image? oImage;
 
         public Game(string sessionId, ObjectId _playerId)
         {

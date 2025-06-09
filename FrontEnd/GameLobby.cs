@@ -12,34 +12,29 @@ namespace Do_An
 {
     public partial class GameLobby : Form
     {
-        private HubConnection? _connection;
-        private ObjectId? _userId;
-        private string? _currentGameCode;
-        private string? _selectedGameCode;
+        private HubConnection? connection;
+        private ObjectId? userId;
+        private string? currentGameCode;
+        private string? selectedGameCode;
 
-        public GameLobby(ObjectId userId)
+        public GameLobby(ObjectId _userId)
         {
-            _userId = userId;
+            userId = _userId;
             InitializeComponent();
+            ConnectToSignalR();
         }
-
-        protected override async void OnLoad(EventArgs e)
+        private async void ConnectToSignalR()
         {
-            base.OnLoad(e);
-            await ConnectToSignalR();
-        }
-        private async Task ConnectToSignalR()
-        {
-            _connection = new HubConnectionBuilder()
-                .WithUrl($"http://localhost:8000/gamehub?userId={_userId}")
+            connection = new HubConnectionBuilder()
+                .WithUrl($"http://localhost:8000/gamehub?userId={userId}")
                 .WithAutomaticReconnect()
                 .Build();
-
             RegisterHandlers();
-
             try
             {
-                await _connection.StartAsync();
+                await connection.StartAsync();
+                var rooms = await connection.InvokeAsync<List<string>>("GetActiveRooms");
+                UpdateRoomList(rooms);
             }
             catch (Exception ex)
             {
@@ -49,17 +44,17 @@ namespace Do_An
 
         private void RegisterHandlers()
         {
-            _connection.On<string>("StartGame", sessionId =>
+            connection.On<string>("StartGame", sessionId =>
             {
                 Invoke(() =>
                 {
-                    var gameForm = new Game(sessionId, _userId!.Value);
+                    var gameForm = new Game(sessionId, userId!.Value);
                     gameForm.Show();
                     Hide();
                 });
             });
 
-            _connection.On<Dictionary<string, bool>>("UpdateReadyStatus", playerStatus =>
+            connection.On<Dictionary<string, bool>>("UpdateReadyStatus", playerStatus =>
             {
                 Invoke(() =>
                 {
@@ -76,38 +71,64 @@ namespace Do_An
                     }
                 });
             });
+            connection.On<string>("RoomCreated", roomCode =>
+            {
+                Invoke(() => AddRoomToList(roomCode));
+            });
+            connection.On<string>("RoomRemoved", roomCode =>
+            {
+                Invoke(() =>
+                {
+                    foreach (Control panel in RoomList.Controls)
+                    {
+                        if (panel.Tag?.ToString() == roomCode)
+                        {
+                            RoomList.Controls.Remove(panel);
+                            break;
+                        }
+                    }
+
+                    if (selectedGameCode == roomCode)
+                    {
+                        selectedGameCode = null;
+                        RoomCode.Text = "";
+                        PlayerList.Controls.Clear();
+                    }
+                });
+            });
+
         }
 
         private async void btnCreateRoom_Click(object sender, EventArgs e)
         {
             if (!IsConnected) return;
-            var code = await _connection.InvokeAsync<string>("CreateRoom");
+            var code = await connection.InvokeAsync<string>("CreateRoom");
             if (code != null)
             {
-                _currentGameCode = code;
+                currentGameCode = code;
                 RoomCode.Text = code;
             }
         }
 
         private async void buttonJoinRoom_Click(object sender, EventArgs e)
         {
-            if (!IsConnected || _selectedGameCode == null) return;
-            _currentGameCode = _selectedGameCode;
-            RoomCode.Text = _selectedGameCode;
-            await _connection.InvokeAsync("JoinWaitingRoom", _selectedGameCode);
+            if (!IsConnected || selectedGameCode == null) return;
+            currentGameCode = selectedGameCode;
+            RoomCode.Text = selectedGameCode;
+            await connection.InvokeAsync("JoinWaitingRoom", selectedGameCode);
         }
 
         private async void buttonToggleReady_Click(object sender, EventArgs e)
         {
-            if (!IsConnected || string.IsNullOrEmpty(_currentGameCode)) return;
-            await _connection.InvokeAsync("ToggleReady", _currentGameCode);
+            if (!IsConnected || string.IsNullOrEmpty(currentGameCode)) return;
+            await connection.InvokeAsync("ToggleReady", currentGameCode);
         }
 
         private async void buttonLeaveRoom_Click(object sender, EventArgs e)
         {
-            if (!IsConnected || string.IsNullOrEmpty(_currentGameCode)) return;
-            await _connection.InvokeAsync("LeaveWaitingRoom", _currentGameCode);
-            _currentGameCode = null;
+            if (!IsConnected || string.IsNullOrEmpty(currentGameCode)) return;
+            await connection.InvokeAsync("LeaveWaitingRoom", currentGameCode);
+            currentGameCode = null;
             RoomCode.Text = "";
             PlayerList.Controls.Clear();
         }
@@ -117,7 +138,7 @@ namespace Do_An
             foreach (Control panel in RoomList.Controls)
                 panel.BackColor = SystemColors.Control;
             roomPanel.BackColor = Color.LightBlue;
-            _selectedGameCode = gameCode;
+            selectedGameCode = gameCode;
         }
 
         private void AddRoomToList(string gameCode)
@@ -129,7 +150,46 @@ namespace Do_An
             label.Click += (_, __) => HighlightRoom(panel, gameCode);
             RoomList.Controls.Add(panel);
         }
+        private void UpdateRoomList(List<string> roomCodes)
+        {
+            RoomList.Controls.Clear();
+            foreach (var code in roomCodes)
+            {
+                AddRoomToList(code);
+            }
+        }
 
-        public bool IsConnected => _connection?.State == HubConnectionState.Connected;
+        private void picbtnSearch_Click(object sender, EventArgs e)
+        {
+            string searchCode = SearchBar.Text.Trim();
+
+            if (string.IsNullOrEmpty(searchCode))
+            {
+                // Optionally show all rooms again or clear highlight
+                MessageBox.Show("Please enter a room code to search.");
+                return;
+            }
+
+            bool found = false;
+
+            foreach (Control panel in RoomList.Controls)
+            {
+                string roomCode = panel.Tag?.ToString() ?? "";
+                if (roomCode == searchCode)
+                {
+                    HighlightRoom(panel, roomCode);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                MessageBox.Show($"No room found with code: {searchCode}");
+            }
+        }
+
+
+        public bool IsConnected => connection?.State == HubConnectionState.Connected;
     }
 }

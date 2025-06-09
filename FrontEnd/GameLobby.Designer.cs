@@ -53,8 +53,8 @@
             // 
             panelSearchBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelSearchBar.BackColor = Color.White;
-            panelSearchBar.Controls.Add(picbtnSearch);
             panelSearchBar.Controls.Add(SearchBar);
+            panelSearchBar.Controls.Add(picbtnSearch);
             panelSearchBar.Location = new Point(6, 12);
             panelSearchBar.Name = "panelSearchBar";
             panelSearchBar.Size = new Size(439, 30);
@@ -62,11 +62,11 @@
             // 
             // SearchBar
             // 
-            SearchBar.BorderStyle = BorderStyle.None;
+            SearchBar.BorderStyle = BorderStyle.FixedSingle;
             SearchBar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            SearchBar.Location = new Point(119, 5);
+            SearchBar.Location = new Point(119, 0);
             SearchBar.Name = "SearchBar";
-            SearchBar.Size = new Size(281, 22);
+            SearchBar.Size = new Size(283, 29);
             SearchBar.TabIndex = 0;
             // 
             // picbtnSearch
@@ -80,6 +80,7 @@
             picbtnSearch.SizeMode = PictureBoxSizeMode.CenterImage;
             picbtnSearch.TabIndex = 10;
             picbtnSearch.TabStop = false;
+            picbtnSearch.Click += picbtnSearch_Click;
             // 
             // panelRoomList
             // 
@@ -94,6 +95,7 @@
             // RoomList
             // 
             RoomList.AutoScroll = true;
+            RoomList.BorderStyle = BorderStyle.FixedSingle;
             RoomList.FlowDirection = FlowDirection.TopDown;
             RoomList.Location = new Point(0, 0);
             RoomList.Name = "RoomList";

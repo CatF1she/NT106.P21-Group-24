@@ -27,6 +27,10 @@ namespace BackEnd.Hubs
             Console.WriteLine($"[Debug] Extracted userId: {userId}");
             return userId;
         }
+        public async Task<List<string>> GetActiveRooms()
+        {
+            return RoomPlayers.Keys.ToList();
+        }
         public async Task<string?> CreateRoom()
         {
             var userId = GetUserId();
@@ -47,6 +51,7 @@ namespace BackEnd.Hubs
             RoomPlayers[gameCode] = new Dictionary<string, bool> { [userId] = false };
             await Groups.AddToGroupAsync(Context.ConnectionId, gameCode);
             await SendReadyStatusUpdate(gameCode);
+            await Clients.All.SendAsync("RoomCreated", gameCode);
             return gameCode;
         }
         public async Task JoinWaitingRoom(string gameCode)
@@ -67,14 +72,22 @@ namespace BackEnd.Hubs
             var userId = GetUserId();
             if (userId == null) return;
 
-            if (RoomPlayers.ContainsKey(gameCode))
+            if (RoomPlayers.TryGetValue(gameCode, out var players))
             {
-                RoomPlayers[gameCode].Remove(userId);
-                if (RoomPlayers[gameCode].Count == 0)
+                players.Remove(userId);
+
+                if (players.Count == 0)
+                {
                     RoomPlayers.Remove(gameCode);
-                await SendReadyStatusUpdate(gameCode);
+                    await Clients.All.SendAsync("RoomRemoved", gameCode);
+                }
+                else
+                {
+                    await SendReadyStatusUpdate(gameCode);
+                }
+
+                await Groups.RemoveFromGroupAsync(Context.ConnectionId, gameCode);
             }
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, gameCode);
         }
 
 
@@ -85,15 +98,25 @@ namespace BackEnd.Hubs
 
             if (!RoomPlayers.ContainsKey(gameCode) || !RoomPlayers[gameCode].ContainsKey(userId)) return;
 
+            // Toggle the ready status
             RoomPlayers[gameCode][userId] = !RoomPlayers[gameCode][userId];
+
+            // Update all clients in the group
             await SendReadyStatusUpdate(gameCode);
 
-            if (RoomPlayers[gameCode].Values.Count(r => r) == 2)
+            // Check if there are exactly 2 players AND both are ready
+            var players = RoomPlayers[gameCode];
+            if (players.Count == 2 && players.All(p => p.Value))
             {
+                // Start the game
                 await CreateGameSession(gameCode);
+
+                // Notify lobby to remove the room
                 RoomPlayers.Remove(gameCode);
+                await Clients.All.SendAsync("RoomRemoved", gameCode);
             }
         }
+
         private async Task SendReadyStatusUpdate(string gameCode)
         {
             if (!RoomPlayers.ContainsKey(gameCode)) return;
@@ -109,6 +132,7 @@ namespace BackEnd.Hubs
             await Clients.Group(gameCode).SendAsync("UpdateReadyStatus", status);
         }
 
+
         private async Task CreateGameSession(string gameCode)
         {
             var players = RoomPlayers[gameCode].Keys.ToList();
@@ -121,13 +145,20 @@ namespace BackEnd.Hubs
                 CurrentTurn = true,
                 IsFinished = false,
                 Board = new int[Constants.chessboard_height, Constants.chessboard_width],
-                Moves = new List<Move>()
+                Moves = []
             };
 
             await _gameService.SaveAsync(session);
 
             foreach (var playerId in players)
-                await Clients.User(playerId).SendAsync("StartGame", session.Id.ToString());
+            {
+                var connectionIds = Context.UserIdentifier == playerId
+                ? new[] { Context.ConnectionId }
+                : new string[0]; // fallback in case you want to ensure delivery
+
+                Console.WriteLine($"[CreateGameSession] Notifying group {gameCode}");
+            }
+            await Clients.Group(gameCode).SendAsync("StartGame", session.Id.ToString());
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)
@@ -140,9 +171,16 @@ namespace BackEnd.Hubs
                 if (RoomPlayers[room].ContainsKey(userId))
                 {
                     RoomPlayers[room].Remove(userId);
+
                     if (RoomPlayers[room].Count == 0)
+                    {
                         RoomPlayers.Remove(room);
-                    await SendReadyStatusUpdate(room);
+                        await Clients.All.SendAsync("RoomRemoved", room);
+                    }
+                    else
+                    {
+                        await SendReadyStatusUpdate(room);
+                    }
                 }
             }
 
@@ -236,5 +274,6 @@ namespace BackEnd.Hubs
 
             return count;
         }
+
     }
 }
