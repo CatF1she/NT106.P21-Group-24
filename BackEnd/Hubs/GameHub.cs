@@ -12,8 +12,8 @@ namespace BackEnd.Hubs
         private readonly GameSessionService _gameService;
         private readonly UserService _userService;
 
-        // Tracks which players are ready in a waiting room (keyed by temporary gameCode)
-        static Dictionary<string, HashSet<string>> ReadyPlayers = new();
+        static Dictionary<string, Dictionary<string, bool>> RoomPlayers = new(); /*gamecode, playerId, readystatus*/
+
 
         public GameHub(GameSessionService gameService, UserService userService)
         {
@@ -27,18 +27,39 @@ namespace BackEnd.Hubs
             Console.WriteLine($"[Debug] Extracted userId: {userId}");
             return userId;
         }
+        public async Task<string?> CreateRoom()
+        {
+            var userId = GetUserId();
+            if (userId == null) return null;
 
+            var random = new Random();
+            string gameCode;
+            int maxAttempts = 10;
+
+            do
+            {
+                gameCode = random.Next(10000000, 99999999).ToString();
+                if (!RoomPlayers.ContainsKey(gameCode)) break;
+            } while (--maxAttempts > 0);
+
+            if (RoomPlayers.ContainsKey(gameCode)) return null;
+
+            RoomPlayers[gameCode] = new Dictionary<string, bool> { [userId] = false };
+            await Groups.AddToGroupAsync(Context.ConnectionId, gameCode);
+            await SendReadyStatusUpdate(gameCode);
+            return gameCode;
+        }
         public async Task JoinWaitingRoom(string gameCode)
         {
             var userId = GetUserId();
-            if (string.IsNullOrEmpty(userId))
-            {
-                Console.WriteLine("[JoinWaitingRoom] No userId found in query string.");
-                return;
-            }
+            if (userId == null) return;
 
+            if (!RoomPlayers.ContainsKey(gameCode))
+                RoomPlayers[gameCode] = new Dictionary<string, bool>();
+
+            RoomPlayers[gameCode][userId] = false;
             await Groups.AddToGroupAsync(Context.ConnectionId, gameCode);
-            Console.WriteLine($"[JoinWaitingRoom] User {userId} joined waiting room {gameCode}");
+            await SendReadyStatusUpdate(gameCode);
         }
 
         public async Task LeaveWaitingRoom(string gameCode)
@@ -46,54 +67,57 @@ namespace BackEnd.Hubs
             var userId = GetUserId();
             if (userId == null) return;
 
-            if (ReadyPlayers.ContainsKey(gameCode))
+            if (RoomPlayers.ContainsKey(gameCode))
             {
-                ReadyPlayers[gameCode].Remove(userId);
-                Console.WriteLine($"[LeaveWaitingRoom] {userId} left room {gameCode}");
-
-                await Clients.Group(gameCode).SendAsync("UpdateReadyStatus", ReadyPlayers[gameCode]);
+                RoomPlayers[gameCode].Remove(userId);
+                if (RoomPlayers[gameCode].Count == 0)
+                    RoomPlayers.Remove(gameCode);
+                await SendReadyStatusUpdate(gameCode);
             }
-
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, gameCode);
         }
+
 
         public async Task ToggleReady(string gameCode)
         {
             var userId = GetUserId();
             if (userId == null) return;
 
-            if (!ReadyPlayers.ContainsKey(gameCode)) 
-                ReadyPlayers[gameCode] = new HashSet<string>();
+            if (!RoomPlayers.ContainsKey(gameCode) || !RoomPlayers[gameCode].ContainsKey(userId)) return;
 
-            if (ReadyPlayers[gameCode].Contains(userId))
-            {
-                ReadyPlayers[gameCode].Remove(userId);
-                Console.WriteLine($"[ToggleReady] {userId} is now UNREADY in {gameCode}");
-            }
-            else
-            {
-                ReadyPlayers[gameCode].Add(userId);
-                Console.WriteLine($"[ToggleReady] {userId} is now READY in {gameCode}");
-            }
+            RoomPlayers[gameCode][userId] = !RoomPlayers[gameCode][userId];
+            await SendReadyStatusUpdate(gameCode);
 
-            await Clients.Group(gameCode).SendAsync("UpdateReadyStatus", ReadyPlayers[gameCode]);
-
-            if (ReadyPlayers[gameCode].Count == 2)
+            if (RoomPlayers[gameCode].Values.Count(r => r) == 2)
             {
-                await CreateGameSession(gameCode, ReadyPlayers[gameCode]);
-                ReadyPlayers.Remove(gameCode);
+                await CreateGameSession(gameCode);
+                RoomPlayers.Remove(gameCode);
             }
         }
-
-        private async Task CreateGameSession(string gameCode, HashSet<string> players)
+        private async Task SendReadyStatusUpdate(string gameCode)
         {
-            var playerList = new List<string>(players);
-            if (playerList.Count != 2) return;
+            if (!RoomPlayers.ContainsKey(gameCode)) return;
+            var status = new Dictionary<string, bool>();
+
+            foreach (var (userId, isReady) in RoomPlayers[gameCode])
+            {
+                var user = await _userService.GetByIdAsync(userId);
+                if (user != null)
+                    status[user.Username] = isReady;
+            }
+
+            await Clients.Group(gameCode).SendAsync("UpdateReadyStatus", status);
+        }
+
+        private async Task CreateGameSession(string gameCode)
+        {
+            var players = RoomPlayers[gameCode].Keys.ToList();
+            if (players.Count != 2) return;
 
             var session = new GameSession
             {
-                PlayerXId = playerList[0],
-                PlayerOId = playerList[1],
+                PlayerXId = players[0],
+                PlayerOId = players[1],
                 CurrentTurn = true,
                 IsFinished = false,
                 Board = new int[Constants.chessboard_height, Constants.chessboard_width],
@@ -103,11 +127,26 @@ namespace BackEnd.Hubs
             await _gameService.SaveAsync(session);
 
             foreach (var playerId in players)
-            {
                 await Clients.User(playerId).SendAsync("StartGame", session.Id.ToString());
+        }
+
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            var userId = GetUserId();
+            if (userId == null) return;
+
+            foreach (var room in RoomPlayers.Keys.ToList())
+            {
+                if (RoomPlayers[room].ContainsKey(userId))
+                {
+                    RoomPlayers[room].Remove(userId);
+                    if (RoomPlayers[room].Count == 0)
+                        RoomPlayers.Remove(room);
+                    await SendReadyStatusUpdate(room);
+                }
             }
 
-            Console.WriteLine($"[CreateGameSession] GameSession created with ID {session.Id} for players {session.PlayerXId} and {session.PlayerOId}");
+            await base.OnDisconnectedAsync(exception);
         }
 
         public async Task JoinGame(string sessionId)
@@ -171,24 +210,6 @@ namespace BackEnd.Hubs
             }
 
             await _gameService.SaveAsync(game);
-        }
-
-        public override async Task OnDisconnectedAsync(Exception? exception)
-        {
-            var userId = GetUserId();
-            if (userId == null) return;
-
-            foreach (var entry in ReadyPlayers)
-            {
-                if (entry.Value.Contains(userId))
-                {
-                    entry.Value.Remove(userId);
-                    Console.WriteLine($"[OnDisconnected] Removed {userId} from ReadyPlayers in {entry.Key}");
-                    await Clients.Group(entry.Key).SendAsync("UpdateReadyStatus", entry.Value);
-                }
-            }
-
-            await base.OnDisconnectedAsync(exception);
         }
 
         private bool CheckWin(int[,] board, int x, int y, int player)

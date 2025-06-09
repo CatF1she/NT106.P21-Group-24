@@ -27,5 +27,9 @@ namespace BackEnd.Services
                 update
             );
         }
+        public async Task<User?> GetByIdAsync(string id)
+        {
+            return await _users.Find(u => u.Id == ObjectId.Parse(id)).FirstOrDefaultAsync();
+        }
     }
 }

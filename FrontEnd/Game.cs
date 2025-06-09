@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿// =======================
+// Updated Game.cs
+// =======================
+
+using Microsoft.AspNetCore.SignalR.Client;
 using MongoDB.Bson;
 using System;
 using System.Drawing;
@@ -9,13 +13,14 @@ namespace FrontEnd
     public partial class Game : Form
     {
         private HubConnection? connection;
-        private string gameId = "654321";
-        private string playerId = "error";
+        private string gameId;
+        private string playerId;
         private Image xImage;
         private Image oImage;
 
-        public Game(string gameCode, ObjectId _playerId, HubConnection sharedConnection)
+        public Game(string sessionId, ObjectId _playerId)
         {
+            gameId = sessionId;
             playerId = _playerId.ToString();
             InitializeComponent();
             DrawChessBoard();
@@ -32,8 +37,6 @@ namespace FrontEnd
         private void DrawChessBoard()
         {
             panelChessBoard.Controls.Clear();
-            Button oldButton = new Button() { Height = 0, Width = 0, Location = new Point(0, 0) };
-
             for (int i = 0; i < Constants.chessboard_height; i++)
             {
                 for (int j = 0; j < Constants.chessboard_width; j++)
@@ -42,7 +45,7 @@ namespace FrontEnd
                     {
                         Width = Constants.chess_width,
                         Height = Constants.chess_height,
-                        Location = new Point(oldButton.Location.X + oldButton.Width, oldButton.Location.Y),
+                        Location = new Point(j * Constants.chess_width, i * Constants.chess_height),
                         Tag = new Point(j, i)
                     };
                     btn.Click += async (sender, e) =>
@@ -55,13 +58,8 @@ namespace FrontEnd
                         }
                     };
                     panelChessBoard.Controls.Add(btn);
-                    oldButton = btn;
                 }
-                oldButton.Location = new Point(0, oldButton.Location.Y + Constants.chess_height);
-                oldButton.Width = 0;
-                oldButton.Height = 0;
             }
-            MessageBox.Show("Chessboard initalized!");
         }
 
         private async void ConnectToSignalR()
@@ -81,16 +79,15 @@ namespace FrontEnd
                         btn.BackgroundImage = (player == "PlayerX") ? xImage : oImage;
                         btn.BackgroundImageLayout = ImageLayout.Stretch;
                         btn.Enabled = false;
-                        Console.WriteLine($"[ReceiveMove] {player} moved to ({x}, {y})");
                     }
                 });
             });
 
-            connection.On<string>("GameWon", winnerId =>
+            connection.On<string>("GameWon", winner =>
             {
                 Invoke(() =>
                 {
-                    MessageBox.Show($"{winnerId} wins!");
+                    MessageBox.Show($"{winner} wins!", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     DisableAllButtons();
                 });
             });
@@ -98,16 +95,13 @@ namespace FrontEnd
             try
             {
                 await connection.StartAsync();
-                MessageBox.Show("Connected to SignalR Hub!");
                 await connection.InvokeAsync("JoinGame", gameId);
-                MessageBox.Show("JoinGame invoked successfully.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Connection error: " + ex.Message);
+                MessageBox.Show("Failed to connect: " + ex.Message, "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
 
         private Button? GetButtonAt(int x, int y)
         {

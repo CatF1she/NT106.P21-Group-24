@@ -33,35 +33,40 @@
             picbtnSearch = new PictureBox();
             panelRoomList = new Panel();
             RoomList = new FlowLayoutPanel();
-            btnCreateGame = new Button();
-            panel1 = new Panel();
-            button1 = new Button();
+            btnCreateRoom = new Button();
+            panelInfo = new Panel();
+            PlayerList = new FlowLayoutPanel();
+            label2 = new Label();
+            RoomCode = new TextBox();
+            label3 = new Label();
+            buttonLeaveRoom = new Button();
             buttonToggleReady = new Button();
             buttonJoinRoom = new Button();
-            lbTitle = new Label();
+            label1 = new Label();
             panelSearchBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picbtnSearch).BeginInit();
             panelRoomList.SuspendLayout();
-            panel1.SuspendLayout();
+            panelInfo.SuspendLayout();
             SuspendLayout();
             // 
             // panelSearchBar
             // 
             panelSearchBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelSearchBar.BackColor = Color.White;
+            panelSearchBar.Controls.Add(picbtnSearch);
             panelSearchBar.Controls.Add(SearchBar);
-            panelSearchBar.Location = new Point(135, 12);
+            panelSearchBar.Location = new Point(6, 12);
             panelSearchBar.Name = "panelSearchBar";
-            panelSearchBar.Size = new Size(274, 30);
+            panelSearchBar.Size = new Size(439, 30);
             panelSearchBar.TabIndex = 11;
             // 
             // SearchBar
             // 
             SearchBar.BorderStyle = BorderStyle.None;
             SearchBar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            SearchBar.Location = new Point(3, 5);
+            SearchBar.Location = new Point(119, 5);
             SearchBar.Name = "SearchBar";
-            SearchBar.Size = new Size(268, 22);
+            SearchBar.Size = new Size(281, 22);
             SearchBar.TabIndex = 0;
             // 
             // picbtnSearch
@@ -69,9 +74,9 @@
             picbtnSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             picbtnSearch.BackColor = SystemColors.ActiveCaption;
             picbtnSearch.Image = Properties.Resources.search_minimized;
-            picbtnSearch.Location = new Point(415, 12);
+            picbtnSearch.Location = new Point(408, -2);
             picbtnSearch.Name = "picbtnSearch";
-            picbtnSearch.Size = new Size(30, 30);
+            picbtnSearch.Size = new Size(31, 32);
             picbtnSearch.SizeMode = PictureBoxSizeMode.CenterImage;
             picbtnSearch.TabIndex = 10;
             picbtnSearch.TabStop = false;
@@ -96,46 +101,97 @@
             RoomList.TabIndex = 5;
             RoomList.WrapContents = false;
             // 
-            // btnCreateGame
+            // btnCreateRoom
             // 
-            btnCreateGame.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCreateGame.BackColor = Color.FromArgb(51, 51, 76);
-            btnCreateGame.FlatAppearance.BorderSize = 0;
-            btnCreateGame.FlatStyle = FlatStyle.Flat;
-            btnCreateGame.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCreateGame.ForeColor = Color.Gainsboro;
-            btnCreateGame.Location = new Point(3, 376);
-            btnCreateGame.Name = "btnCreateGame";
-            btnCreateGame.Size = new Size(162, 47);
-            btnCreateGame.TabIndex = 12;
-            btnCreateGame.Text = "Create Game";
-            btnCreateGame.UseVisualStyleBackColor = false;
+            btnCreateRoom.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCreateRoom.BackColor = Color.FromArgb(51, 51, 76);
+            btnCreateRoom.FlatAppearance.BorderSize = 0;
+            btnCreateRoom.FlatStyle = FlatStyle.Flat;
+            btnCreateRoom.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCreateRoom.ForeColor = Color.Gainsboro;
+            btnCreateRoom.Location = new Point(168, 323);
+            btnCreateRoom.Name = "btnCreateRoom";
+            btnCreateRoom.Size = new Size(165, 47);
+            btnCreateRoom.TabIndex = 12;
+            btnCreateRoom.Text = "Create Room";
+            btnCreateRoom.UseVisualStyleBackColor = false;
+            btnCreateRoom.Click += btnCreateRoom_Click;
             // 
-            // panel1
+            // panelInfo
             // 
-            panel1.Controls.Add(button1);
-            panel1.Controls.Add(buttonToggleReady);
-            panel1.Controls.Add(buttonJoinRoom);
-            panel1.Controls.Add(btnCreateGame);
-            panel1.Location = new Point(451, 12);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(337, 426);
-            panel1.TabIndex = 13;
+            panelInfo.Controls.Add(PlayerList);
+            panelInfo.Controls.Add(label2);
+            panelInfo.Controls.Add(RoomCode);
+            panelInfo.Controls.Add(label3);
+            panelInfo.Controls.Add(buttonLeaveRoom);
+            panelInfo.Controls.Add(buttonToggleReady);
+            panelInfo.Controls.Add(buttonJoinRoom);
+            panelInfo.Controls.Add(btnCreateRoom);
+            panelInfo.Location = new Point(451, 12);
+            panelInfo.Name = "panelInfo";
+            panelInfo.Size = new Size(337, 426);
+            panelInfo.TabIndex = 13;
             // 
-            // button1
+            // PlayerList
             // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button1.BackColor = Color.FromArgb(51, 51, 76);
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.Gainsboro;
-            button1.Location = new Point(171, 323);
-            button1.Name = "button1";
-            button1.Size = new Size(165, 47);
-            button1.TabIndex = 16;
-            button1.Text = "Leave room";
-            button1.UseVisualStyleBackColor = false;
+            PlayerList.AutoScroll = true;
+            PlayerList.BorderStyle = BorderStyle.FixedSingle;
+            PlayerList.FlowDirection = FlowDirection.TopDown;
+            PlayerList.Location = new Point(136, 268);
+            PlayerList.Name = "PlayerList";
+            PlayerList.Size = new Size(201, 49);
+            PlayerList.TabIndex = 25;
+            PlayerList.WrapContents = false;
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.None;
+            label2.AutoSize = true;
+            label2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.Black;
+            label2.Location = new Point(3, 268);
+            label2.Name = "label2";
+            label2.Size = new Size(78, 24);
+            label2.TabIndex = 23;
+            label2.Text = "Players";
+            // 
+            // RoomCode
+            // 
+            RoomCode.BorderStyle = BorderStyle.FixedSingle;
+            RoomCode.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            RoomCode.Location = new Point(136, 237);
+            RoomCode.Name = "RoomCode";
+            RoomCode.ReadOnly = true;
+            RoomCode.Size = new Size(201, 29);
+            RoomCode.TabIndex = 18;
+            // 
+            // label3
+            // 
+            label3.Anchor = AnchorStyles.None;
+            label3.AutoSize = true;
+            label3.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.ForeColor = Color.Black;
+            label3.Location = new Point(3, 242);
+            label3.Name = "label3";
+            label3.Size = new Size(121, 24);
+            label3.TabIndex = 17;
+            label3.Text = "Room Code";
+            // 
+            // buttonLeaveRoom
+            // 
+            buttonLeaveRoom.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonLeaveRoom.BackColor = Color.FromArgb(51, 51, 76);
+            buttonLeaveRoom.FlatAppearance.BorderSize = 0;
+            buttonLeaveRoom.FlatStyle = FlatStyle.Flat;
+            buttonLeaveRoom.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonLeaveRoom.ForeColor = Color.Gainsboro;
+            buttonLeaveRoom.Location = new Point(168, 376);
+            buttonLeaveRoom.Name = "buttonLeaveRoom";
+            buttonLeaveRoom.Size = new Size(165, 47);
+            buttonLeaveRoom.TabIndex = 16;
+            buttonLeaveRoom.Text = "Leave room";
+            buttonLeaveRoom.UseVisualStyleBackColor = false;
+            buttonLeaveRoom.Click += buttonLeaveRoom_Click;
             // 
             // buttonToggleReady
             // 
@@ -145,12 +201,13 @@
             buttonToggleReady.FlatStyle = FlatStyle.Flat;
             buttonToggleReady.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buttonToggleReady.ForeColor = Color.Gainsboro;
-            buttonToggleReady.Location = new Point(171, 376);
+            buttonToggleReady.Location = new Point(3, 376);
             buttonToggleReady.Name = "buttonToggleReady";
             buttonToggleReady.Size = new Size(162, 47);
             buttonToggleReady.TabIndex = 15;
             buttonToggleReady.Text = "Ready";
             buttonToggleReady.UseVisualStyleBackColor = false;
+            buttonToggleReady.Click += buttonToggleReady_Click;
             // 
             // buttonJoinRoom
             // 
@@ -166,28 +223,28 @@
             buttonJoinRoom.TabIndex = 14;
             buttonJoinRoom.Text = "Join Room";
             buttonJoinRoom.UseVisualStyleBackColor = false;
+            buttonJoinRoom.Click += buttonJoinRoom_Click;
             // 
-            // lbTitle
+            // label1
             // 
-            lbTitle.Anchor = AnchorStyles.None;
-            lbTitle.AutoSize = true;
-            lbTitle.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbTitle.ForeColor = Color.Black;
-            lbTitle.Location = new Point(6, 15);
-            lbTitle.Name = "lbTitle";
-            lbTitle.Size = new Size(123, 24);
-            lbTitle.TabIndex = 14;
-            lbTitle.Text = "Find Games";
+            label1.Anchor = AnchorStyles.None;
+            label1.AutoSize = true;
+            label1.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.Black;
+            label1.Location = new Point(6, 15);
+            label1.Name = "label1";
+            label1.Size = new Size(113, 24);
+            label1.TabIndex = 14;
+            label1.Text = "Find Room";
             // 
             // GameLobby
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(lbTitle);
-            Controls.Add(panel1);
+            Controls.Add(label1);
+            Controls.Add(panelInfo);
             Controls.Add(panelSearchBar);
-            Controls.Add(picbtnSearch);
             Controls.Add(panelRoomList);
             FormBorderStyle = FormBorderStyle.None;
             Name = "GameLobby";
@@ -196,7 +253,8 @@
             panelSearchBar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picbtnSearch).EndInit();
             panelRoomList.ResumeLayout(false);
-            panel1.ResumeLayout(false);
+            panelInfo.ResumeLayout(false);
+            panelInfo.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -208,11 +266,15 @@
         private PictureBox picbtnSearch;
         private Panel panelRoomList;
         private FlowLayoutPanel RoomList;
-        private Button btnCreateGame;
-        private Panel panel1;
+        private Button btnCreateRoom;
+        private Panel panelInfo;
         private Button buttonJoinRoom;
-        private Label lbTitle;
+        private Label label1;
         private Button buttonToggleReady;
-        private Button button1;
+        private Button buttonLeaveRoom;
+        private Label label3;
+        private TextBox RoomCode;
+        private Label label2;
+        private FlowLayoutPanel PlayerList;
     }
 }

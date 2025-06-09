@@ -8,12 +8,18 @@
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id { get; set; } = ObjectId.Empty;
 
+        [BsonElement("username")]
         public string Username { get; set; } = null!;
+
+        [BsonElement("password")]
         public string Password { get; set; } = null!;
 
         public int MatchPlayed { get; set; }
         public int MatchWon { get; set; }
+        [BsonElement("ELO")]
         public double WinRate { get; set; }
-        public string email { get; set; } = null!;
+
+        [BsonElement("email")]
+        public string Email { get; set; } = null!;
     }
 }
