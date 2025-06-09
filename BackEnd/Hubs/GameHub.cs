@@ -149,15 +149,6 @@ namespace BackEnd.Hubs
             };
 
             await _gameService.SaveAsync(session);
-
-            foreach (var playerId in players)
-            {
-                var connectionIds = Context.UserIdentifier == playerId
-                ? new[] { Context.ConnectionId }
-                : new string[0]; // fallback in case you want to ensure delivery
-
-                Console.WriteLine($"[CreateGameSession] Notifying group {gameCode}");
-            }
             await Clients.Group(gameCode).SendAsync("StartGame", session.Id.ToString());
         }
 

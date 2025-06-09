@@ -10,13 +10,13 @@ using FrontEnd;
 
 namespace Do_An
 {
-    public partial class GameLobby : Form
+    public partial class GameLobby : UserControl
     {
         private HubConnection? connection;
         private ObjectId? userId;
         private string? currentGameCode;
         private string? selectedGameCode;
-
+        private bool isInGame = false;
         public GameLobby(ObjectId _userId)
         {
             userId = _userId;
@@ -46,13 +46,35 @@ namespace Do_An
         {
             connection.On<string>("StartGame", sessionId =>
             {
+                if (isInGame) return; // prevent duplicates
+                isInGame = true;
+
                 Invoke(() =>
                 {
+                    var mainMenu = this.FindForm();
+                    mainMenu?.Hide();
+
                     var gameForm = new Game(sessionId, userId!.Value);
+                    gameForm.FormClosed += async (_, __) =>
+                    {
+                        isInGame = false;
+                        mainMenu?.Show();
+                        this.ResetLobby();
+                        try
+                        {
+                            var rooms = await connection.InvokeAsync<List<string>>("GetActiveRooms");
+                            UpdateRoomList(rooms);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Failed to refresh rooms: " + ex.Message);
+                        }
+                    };
+
                     gameForm.Show();
-                    Hide();
                 });
-            });
+            }); ;
+
 
             connection.On<Dictionary<string, bool>>("UpdateReadyStatus", playerStatus =>
             {
@@ -97,6 +119,13 @@ namespace Do_An
                 });
             });
 
+        }
+        public void ResetLobby()
+        {
+            currentGameCode = null;
+            selectedGameCode = null;
+            RoomCode.Text = "";
+            PlayerList.Controls.Clear();
         }
 
         private async void btnCreateRoom_Click(object sender, EventArgs e)

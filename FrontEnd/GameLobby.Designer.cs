@@ -53,20 +53,22 @@
             // 
             panelSearchBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelSearchBar.BackColor = Color.White;
+            panelSearchBar.Controls.Add(label1);
             panelSearchBar.Controls.Add(SearchBar);
             panelSearchBar.Controls.Add(picbtnSearch);
             panelSearchBar.Location = new Point(6, 12);
             panelSearchBar.Name = "panelSearchBar";
-            panelSearchBar.Size = new Size(439, 30);
+            panelSearchBar.Size = new Size(778, 30);
             panelSearchBar.TabIndex = 11;
             // 
             // SearchBar
             // 
+            SearchBar.Anchor = AnchorStyles.Top;
             SearchBar.BorderStyle = BorderStyle.FixedSingle;
             SearchBar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            SearchBar.Location = new Point(119, 0);
+            SearchBar.Location = new Point(119, 1);
             SearchBar.Name = "SearchBar";
-            SearchBar.Size = new Size(283, 29);
+            SearchBar.Size = new Size(629, 29);
             SearchBar.TabIndex = 0;
             // 
             // picbtnSearch
@@ -74,7 +76,7 @@
             picbtnSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             picbtnSearch.BackColor = SystemColors.ActiveCaption;
             picbtnSearch.Image = Properties.Resources.search_minimized;
-            picbtnSearch.Location = new Point(408, -2);
+            picbtnSearch.Location = new Point(747, -2);
             picbtnSearch.Name = "picbtnSearch";
             picbtnSearch.Size = new Size(31, 32);
             picbtnSearch.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -89,7 +91,7 @@
             panelRoomList.Controls.Add(RoomList);
             panelRoomList.Location = new Point(6, 48);
             panelRoomList.Name = "panelRoomList";
-            panelRoomList.Size = new Size(439, 390);
+            panelRoomList.Size = new Size(781, 269);
             panelRoomList.TabIndex = 9;
             // 
             // RoomList
@@ -99,19 +101,19 @@
             RoomList.FlowDirection = FlowDirection.TopDown;
             RoomList.Location = new Point(0, 0);
             RoomList.Name = "RoomList";
-            RoomList.Size = new Size(439, 390);
+            RoomList.Size = new Size(778, 266);
             RoomList.TabIndex = 5;
             RoomList.WrapContents = false;
             // 
             // btnCreateRoom
             // 
-            btnCreateRoom.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCreateRoom.Anchor = AnchorStyles.Bottom;
             btnCreateRoom.BackColor = Color.FromArgb(51, 51, 76);
             btnCreateRoom.FlatAppearance.BorderSize = 0;
             btnCreateRoom.FlatStyle = FlatStyle.Flat;
             btnCreateRoom.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCreateRoom.ForeColor = Color.Gainsboro;
-            btnCreateRoom.Location = new Point(168, 323);
+            btnCreateRoom.Location = new Point(613, 15);
             btnCreateRoom.Name = "btnCreateRoom";
             btnCreateRoom.Size = new Size(165, 47);
             btnCreateRoom.TabIndex = 12;
@@ -129,29 +131,31 @@
             panelInfo.Controls.Add(buttonToggleReady);
             panelInfo.Controls.Add(buttonJoinRoom);
             panelInfo.Controls.Add(btnCreateRoom);
-            panelInfo.Location = new Point(451, 12);
+            panelInfo.Location = new Point(6, 320);
             panelInfo.Name = "panelInfo";
-            panelInfo.Size = new Size(337, 426);
+            panelInfo.Size = new Size(782, 118);
             panelInfo.TabIndex = 13;
             // 
             // PlayerList
             // 
+            PlayerList.Anchor = AnchorStyles.Bottom;
             PlayerList.AutoScroll = true;
             PlayerList.BorderStyle = BorderStyle.FixedSingle;
             PlayerList.FlowDirection = FlowDirection.TopDown;
-            PlayerList.Location = new Point(136, 268);
+            PlayerList.Font = new Font("Segoe UI", 14.25F);
+            PlayerList.Location = new Point(280, 68);
             PlayerList.Name = "PlayerList";
-            PlayerList.Size = new Size(201, 49);
+            PlayerList.Size = new Size(162, 47);
             PlayerList.TabIndex = 25;
             PlayerList.WrapContents = false;
             // 
             // label2
             // 
-            label2.Anchor = AnchorStyles.None;
+            label2.Anchor = AnchorStyles.Bottom;
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.Black;
-            label2.Location = new Point(3, 268);
+            label2.Location = new Point(196, 80);
             label2.Name = "label2";
             label2.Size = new Size(78, 24);
             label2.TabIndex = 23;
@@ -159,21 +163,22 @@
             // 
             // RoomCode
             // 
+            RoomCode.Anchor = AnchorStyles.Bottom;
             RoomCode.BorderStyle = BorderStyle.FixedSingle;
-            RoomCode.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            RoomCode.Location = new Point(136, 237);
+            RoomCode.Font = new Font("Segoe UI", 14.25F);
+            RoomCode.Location = new Point(280, 24);
             RoomCode.Name = "RoomCode";
             RoomCode.ReadOnly = true;
-            RoomCode.Size = new Size(201, 29);
+            RoomCode.Size = new Size(162, 33);
             RoomCode.TabIndex = 18;
             // 
             // label3
             // 
-            label3.Anchor = AnchorStyles.None;
+            label3.Anchor = AnchorStyles.Bottom;
             label3.AutoSize = true;
             label3.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.Black;
-            label3.Location = new Point(3, 242);
+            label3.Location = new Point(153, 27);
             label3.Name = "label3";
             label3.Size = new Size(121, 24);
             label3.TabIndex = 17;
@@ -181,13 +186,13 @@
             // 
             // buttonLeaveRoom
             // 
-            buttonLeaveRoom.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonLeaveRoom.Anchor = AnchorStyles.Bottom;
             buttonLeaveRoom.BackColor = Color.FromArgb(51, 51, 76);
             buttonLeaveRoom.FlatAppearance.BorderSize = 0;
             buttonLeaveRoom.FlatStyle = FlatStyle.Flat;
             buttonLeaveRoom.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buttonLeaveRoom.ForeColor = Color.Gainsboro;
-            buttonLeaveRoom.Location = new Point(168, 376);
+            buttonLeaveRoom.Location = new Point(613, 68);
             buttonLeaveRoom.Name = "buttonLeaveRoom";
             buttonLeaveRoom.Size = new Size(165, 47);
             buttonLeaveRoom.TabIndex = 16;
@@ -197,13 +202,13 @@
             // 
             // buttonToggleReady
             // 
-            buttonToggleReady.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonToggleReady.Anchor = AnchorStyles.Bottom;
             buttonToggleReady.BackColor = Color.FromArgb(51, 51, 76);
             buttonToggleReady.FlatAppearance.BorderSize = 0;
             buttonToggleReady.FlatStyle = FlatStyle.Flat;
             buttonToggleReady.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buttonToggleReady.ForeColor = Color.Gainsboro;
-            buttonToggleReady.Location = new Point(3, 376);
+            buttonToggleReady.Location = new Point(448, 68);
             buttonToggleReady.Name = "buttonToggleReady";
             buttonToggleReady.Size = new Size(162, 47);
             buttonToggleReady.TabIndex = 15;
@@ -213,13 +218,13 @@
             // 
             // buttonJoinRoom
             // 
-            buttonJoinRoom.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonJoinRoom.Anchor = AnchorStyles.Bottom;
             buttonJoinRoom.BackColor = Color.FromArgb(51, 51, 76);
             buttonJoinRoom.FlatAppearance.BorderSize = 0;
             buttonJoinRoom.FlatStyle = FlatStyle.Flat;
             buttonJoinRoom.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buttonJoinRoom.ForeColor = Color.Gainsboro;
-            buttonJoinRoom.Location = new Point(3, 323);
+            buttonJoinRoom.Location = new Point(448, 15);
             buttonJoinRoom.Name = "buttonJoinRoom";
             buttonJoinRoom.Size = new Size(162, 47);
             buttonJoinRoom.TabIndex = 14;
@@ -229,11 +234,10 @@
             // 
             // label1
             // 
-            label1.Anchor = AnchorStyles.None;
             label1.AutoSize = true;
             label1.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.Black;
-            label1.Location = new Point(6, 15);
+            label1.Location = new Point(6, 1);
             label1.Name = "label1";
             label1.Size = new Size(113, 24);
             label1.TabIndex = 14;
@@ -244,11 +248,10 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(label1);
             Controls.Add(panelInfo);
             Controls.Add(panelSearchBar);
             Controls.Add(panelRoomList);
-            FormBorderStyle = FormBorderStyle.None;
+            
             Name = "GameLobby";
             Text = "GameLobby";
             panelSearchBar.ResumeLayout(false);
@@ -258,7 +261,6 @@
             panelInfo.ResumeLayout(false);
             panelInfo.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
