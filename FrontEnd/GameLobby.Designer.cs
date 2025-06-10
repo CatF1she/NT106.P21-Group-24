@@ -42,7 +42,6 @@
             buttonLeaveRoom = new Button();
             buttonToggleReady = new Button();
             buttonJoinRoom = new Button();
-            label1 = new Label();
             panelSearchBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picbtnSearch).BeginInit();
             panelRoomList.SuspendLayout();
@@ -53,12 +52,11 @@
             // 
             panelSearchBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelSearchBar.BackColor = Color.White;
-            panelSearchBar.Controls.Add(label1);
             panelSearchBar.Controls.Add(SearchBar);
-            panelSearchBar.Controls.Add(picbtnSearch);
-            panelSearchBar.Location = new Point(6, 12);
+            panelSearchBar.Location = new Point(6, 10);
+            panelSearchBar.Margin = new Padding(0);
             panelSearchBar.Name = "panelSearchBar";
-            panelSearchBar.Size = new Size(778, 30);
+            panelSearchBar.Size = new Size(751, 32);
             panelSearchBar.TabIndex = 11;
             // 
             // SearchBar
@@ -66,9 +64,10 @@
             SearchBar.Anchor = AnchorStyles.Top;
             SearchBar.BorderStyle = BorderStyle.FixedSingle;
             SearchBar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            SearchBar.Location = new Point(119, 1);
+            SearchBar.Location = new Point(0, 1);
+            SearchBar.Margin = new Padding(0);
             SearchBar.Name = "SearchBar";
-            SearchBar.Size = new Size(629, 29);
+            SearchBar.Size = new Size(751, 29);
             SearchBar.TabIndex = 0;
             // 
             // picbtnSearch
@@ -76,7 +75,8 @@
             picbtnSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             picbtnSearch.BackColor = SystemColors.ActiveCaption;
             picbtnSearch.Image = Properties.Resources.search_minimized;
-            picbtnSearch.Location = new Point(747, -2);
+            picbtnSearch.Location = new Point(757, 10);
+            picbtnSearch.Margin = new Padding(0);
             picbtnSearch.Name = "picbtnSearch";
             picbtnSearch.Size = new Size(31, 32);
             picbtnSearch.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -90,8 +90,9 @@
             panelRoomList.AutoScroll = true;
             panelRoomList.Controls.Add(RoomList);
             panelRoomList.Location = new Point(6, 48);
+            panelRoomList.Margin = new Padding(0);
             panelRoomList.Name = "panelRoomList";
-            panelRoomList.Size = new Size(781, 269);
+            panelRoomList.Size = new Size(782, 305);
             panelRoomList.TabIndex = 9;
             // 
             // RoomList
@@ -100,8 +101,9 @@
             RoomList.BorderStyle = BorderStyle.FixedSingle;
             RoomList.FlowDirection = FlowDirection.TopDown;
             RoomList.Location = new Point(0, 0);
+            RoomList.Margin = new Padding(0);
             RoomList.Name = "RoomList";
-            RoomList.Size = new Size(778, 266);
+            RoomList.Size = new Size(782, 305);
             RoomList.TabIndex = 5;
             RoomList.WrapContents = false;
             // 
@@ -113,7 +115,8 @@
             btnCreateRoom.FlatStyle = FlatStyle.Flat;
             btnCreateRoom.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCreateRoom.ForeColor = Color.Gainsboro;
-            btnCreateRoom.Location = new Point(613, 15);
+            btnCreateRoom.Location = new Point(617, 0);
+            btnCreateRoom.Margin = new Padding(0);
             btnCreateRoom.Name = "btnCreateRoom";
             btnCreateRoom.Size = new Size(165, 47);
             btnCreateRoom.TabIndex = 12;
@@ -131,21 +134,24 @@
             panelInfo.Controls.Add(buttonToggleReady);
             panelInfo.Controls.Add(buttonJoinRoom);
             panelInfo.Controls.Add(btnCreateRoom);
-            panelInfo.Location = new Point(6, 320);
+            panelInfo.Location = new Point(6, 353);
+            panelInfo.Margin = new Padding(0);
             panelInfo.Name = "panelInfo";
-            panelInfo.Size = new Size(782, 118);
+            panelInfo.Size = new Size(782, 94);
             panelInfo.TabIndex = 13;
             // 
             // PlayerList
             // 
             PlayerList.Anchor = AnchorStyles.Bottom;
             PlayerList.AutoScroll = true;
-            PlayerList.BorderStyle = BorderStyle.FixedSingle;
+            PlayerList.BackColor = SystemColors.Control;
             PlayerList.FlowDirection = FlowDirection.TopDown;
-            PlayerList.Font = new Font("Segoe UI", 14.25F);
-            PlayerList.Location = new Point(280, 68);
+            PlayerList.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold);
+            PlayerList.ForeColor = Color.FromArgb(51, 51, 76);
+            PlayerList.Location = new Point(143, 47);
+            PlayerList.Margin = new Padding(0);
             PlayerList.Name = "PlayerList";
-            PlayerList.Size = new Size(162, 47);
+            PlayerList.Size = new Size(312, 47);
             PlayerList.TabIndex = 25;
             PlayerList.WrapContents = false;
             // 
@@ -154,35 +160,37 @@
             label2.Anchor = AnchorStyles.Bottom;
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.Black;
-            label2.Location = new Point(196, 80);
+            label2.ForeColor = Color.FromArgb(51, 51, 76);
+            label2.Location = new Point(50, 59);
             label2.Name = "label2";
-            label2.Size = new Size(78, 24);
+            label2.Size = new Size(90, 24);
             label2.TabIndex = 23;
-            label2.Text = "Players";
+            label2.Text = "Players: ";
             // 
             // RoomCode
             // 
             RoomCode.Anchor = AnchorStyles.Bottom;
-            RoomCode.BorderStyle = BorderStyle.FixedSingle;
-            RoomCode.Font = new Font("Segoe UI", 14.25F);
-            RoomCode.Location = new Point(280, 24);
+            RoomCode.BorderStyle = BorderStyle.None;
+            RoomCode.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold);
+            RoomCode.ForeColor = Color.FromArgb(51, 51, 76);
+            RoomCode.Location = new Point(143, 17);
             RoomCode.Name = "RoomCode";
             RoomCode.ReadOnly = true;
-            RoomCode.Size = new Size(162, 33);
+            RoomCode.Size = new Size(98, 22);
             RoomCode.TabIndex = 18;
+            RoomCode.TextAlign = HorizontalAlignment.Center;
             // 
             // label3
             // 
             label3.Anchor = AnchorStyles.Bottom;
             label3.AutoSize = true;
             label3.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.Black;
-            label3.Location = new Point(153, 27);
+            label3.ForeColor = Color.FromArgb(51, 51, 76);
+            label3.Location = new Point(10, 17);
             label3.Name = "label3";
-            label3.Size = new Size(121, 24);
+            label3.Size = new Size(127, 24);
             label3.TabIndex = 17;
-            label3.Text = "Room Code";
+            label3.Text = "Room Code:";
             // 
             // buttonLeaveRoom
             // 
@@ -192,7 +200,8 @@
             buttonLeaveRoom.FlatStyle = FlatStyle.Flat;
             buttonLeaveRoom.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buttonLeaveRoom.ForeColor = Color.Gainsboro;
-            buttonLeaveRoom.Location = new Point(613, 68);
+            buttonLeaveRoom.Location = new Point(617, 47);
+            buttonLeaveRoom.Margin = new Padding(0);
             buttonLeaveRoom.Name = "buttonLeaveRoom";
             buttonLeaveRoom.Size = new Size(165, 47);
             buttonLeaveRoom.TabIndex = 16;
@@ -208,7 +217,8 @@
             buttonToggleReady.FlatStyle = FlatStyle.Flat;
             buttonToggleReady.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buttonToggleReady.ForeColor = Color.Gainsboro;
-            buttonToggleReady.Location = new Point(448, 68);
+            buttonToggleReady.Location = new Point(455, 47);
+            buttonToggleReady.Margin = new Padding(0);
             buttonToggleReady.Name = "buttonToggleReady";
             buttonToggleReady.Size = new Size(162, 47);
             buttonToggleReady.TabIndex = 15;
@@ -224,7 +234,8 @@
             buttonJoinRoom.FlatStyle = FlatStyle.Flat;
             buttonJoinRoom.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buttonJoinRoom.ForeColor = Color.Gainsboro;
-            buttonJoinRoom.Location = new Point(448, 15);
+            buttonJoinRoom.Location = new Point(455, 0);
+            buttonJoinRoom.Margin = new Padding(0);
             buttonJoinRoom.Name = "buttonJoinRoom";
             buttonJoinRoom.Size = new Size(162, 47);
             buttonJoinRoom.TabIndex = 14;
@@ -232,28 +243,17 @@
             buttonJoinRoom.UseVisualStyleBackColor = false;
             buttonJoinRoom.Click += buttonJoinRoom_Click;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.Black;
-            label1.Location = new Point(6, 1);
-            label1.Name = "label1";
-            label1.Size = new Size(113, 24);
-            label1.TabIndex = 14;
-            label1.Text = "Find Room";
-            // 
             // GameLobby
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            Controls.Add(picbtnSearch);
             Controls.Add(panelInfo);
             Controls.Add(panelSearchBar);
             Controls.Add(panelRoomList);
-            
+            Margin = new Padding(0);
             Name = "GameLobby";
-            Text = "GameLobby";
+            Size = new Size(800, 450);
             panelSearchBar.ResumeLayout(false);
             panelSearchBar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picbtnSearch).EndInit();
@@ -273,7 +273,6 @@
         private Button btnCreateRoom;
         private Panel panelInfo;
         private Button buttonJoinRoom;
-        private Label label1;
         private Button buttonToggleReady;
         private Button buttonLeaveRoom;
         private Label label3;

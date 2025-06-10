@@ -17,10 +17,12 @@ namespace Do_An
         private string? currentGameCode;
         private string? selectedGameCode;
         private bool isInGame = false;
+        private bool colorswitch= false;
         public GameLobby(ObjectId _userId)
         {
             userId = _userId;
             InitializeComponent();
+            LoadTheme();
             ConnectToSignalR();
         }
         private async void ConnectToSignalR()
@@ -85,9 +87,9 @@ namespace Do_An
                     {
                         var label = new Label
                         {
-                            Text = $"{name} - {(ready ? "✅ Ready" : "❌ Not Ready")}",
+                            Text = $"{name} - {(ready ? "    Ready ✅" : "Not Ready ❌")}",
                             AutoSize = true,
-                            Font = new Font("Segoe UI", 12)
+                            Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0)
                         };
                         PlayerList.Controls.Add(label);
                     }
@@ -173,9 +175,12 @@ namespace Do_An
         private void AddRoomToList(string gameCode)
         {
             var panel = new Panel { Height = 40, Width = RoomList.Width, Tag = gameCode };
-            var label = new Label { Text = $"Room {gameCode}", AutoSize = true, Left = 10, Top = 10 };
+            var label = new Label { Text = $"Room {gameCode}", AutoSize = true, Left = 10, Top = 10, Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0)};
             panel.Controls.Add(label);
             panel.Click += (_, __) => HighlightRoom(panel, gameCode);
+            if (colorswitch) panel.BackColor= Color.LightGray;
+            else panel.BackColor = Color.White;
+            colorswitch = !colorswitch;
             label.Click += (_, __) => HighlightRoom(panel, gameCode);
             RoomList.Controls.Add(panel);
         }
@@ -217,7 +222,22 @@ namespace Do_An
                 MessageBox.Show($"No room found with code: {searchCode}");
             }
         }
-
+        private void LoadTheme()
+        {
+            foreach (Control btns in this.Controls)
+            {
+                if (btns.GetType() == typeof(Button))
+                {
+                    Button btn = (Button)btns;
+                    btn.BackColor = ThemeColor.PrimaryColor;
+                    btn.ForeColor = Color.White;
+                    btn.FlatAppearance.BorderColor = ThemeColor.SecondaryColor;
+                }
+            }
+            picbtnSearch.BackColor = ThemeColor.PrimaryColor;
+            label2.ForeColor = ThemeColor.PrimaryColor;
+            label3.ForeColor = ThemeColor.PrimaryColor;
+        }
 
         public bool IsConnected => connection?.State == HubConnectionState.Connected;
     }

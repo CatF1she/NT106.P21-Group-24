@@ -11,7 +11,7 @@ namespace FrontEnd
         // Màu cố định cho từng chức năng
         public static readonly Dictionary<string, string> FunctionColorMap = new()
         {
-            { "Play", "#3F51B5" },
+            { "GameLobby", "#3F51B5" },
             { "Leaderboard", "#009688" },
             { "Profile", "#F57F22" },
             { "Settings", "#607D8B" },
