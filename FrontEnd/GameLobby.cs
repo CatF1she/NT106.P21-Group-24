@@ -17,7 +17,7 @@ namespace Do_An
         private string? currentGameCode;
         private string? selectedGameCode;
         private bool isInGame = false;
-        private bool colorswitch= false;
+        private bool colorswitch = false;
         public GameLobby(ObjectId _userId)
         {
             userId = _userId;
@@ -175,10 +175,10 @@ namespace Do_An
         private void AddRoomToList(string gameCode)
         {
             var panel = new Panel { Height = 40, Width = RoomList.Width, Tag = gameCode };
-            var label = new Label { Text = $"Room {gameCode}", AutoSize = true, Left = 10, Top = 10, Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0)};
+            var label = new Label { Text = $"Room {gameCode}", AutoSize = true, Left = 10, Top = 10, Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0) };
             panel.Controls.Add(label);
             panel.Click += (_, __) => HighlightRoom(panel, gameCode);
-            if (colorswitch) panel.BackColor= Color.LightGray;
+            if (colorswitch) panel.BackColor = Color.LightGray;
             else panel.BackColor = Color.White;
             colorswitch = !colorswitch;
             label.Click += (_, __) => HighlightRoom(panel, gameCode);
@@ -224,6 +224,9 @@ namespace Do_An
         }
         private void LoadTheme()
         {
+            Color color = ThemeColor.GetFunctionColor("GameLobby");
+            ThemeColor.PrimaryColor = color;
+            ThemeColor.SecondaryColor = ThemeColor.ChangeColorBrightness(color, -0.3);
             foreach (Control btns in this.Controls)
             {
                 if (btns.GetType() == typeof(Button))
@@ -237,6 +240,11 @@ namespace Do_An
             picbtnSearch.BackColor = ThemeColor.PrimaryColor;
             label2.ForeColor = ThemeColor.PrimaryColor;
             label3.ForeColor = ThemeColor.PrimaryColor;
+        }
+
+        private void GameLobby_Load(object sender, EventArgs e)
+        {
+
         }
 
         public bool IsConnected => connection?.State == HubConnectionState.Connected;

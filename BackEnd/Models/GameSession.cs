@@ -30,7 +30,7 @@ namespace BackEnd.Models
         public string? WinnerPlayerId { get; set; }
 
         [BsonElement("board")]
-        public int[,] Board { get; set; } = new int[Constants.chessboard_height, Constants.chessboard_width];
+        public int[,] Board { get; set; } = new int[25,25];
 
         [BsonElement("moves")]
         public List<Move> Moves { get; set; } = new();

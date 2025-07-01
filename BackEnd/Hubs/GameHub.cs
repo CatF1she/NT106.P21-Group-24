@@ -144,7 +144,7 @@ namespace BackEnd.Hubs
                 PlayerOId = players[1],
                 CurrentTurn = true,
                 IsFinished = false,
-                Board = new int[Constants.chessboard_height, Constants.chessboard_width],
+                Board = new int[25,25],
                 Moves = []
             };
 
