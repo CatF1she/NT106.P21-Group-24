@@ -63,7 +63,9 @@ namespace FrontEnd
                         FlatStyle = FlatStyle.Flat,
                         BackColor = Color.White
                     };
-
+                    btn.FlatAppearance.BorderSize = 0;
+                    btn.FlatAppearance.MouseOverBackColor = btn.BackColor;
+                    btn.FlatAppearance.MouseDownBackColor = btn.BackColor;
                     btn.Click += async (sender, e) =>
                     {
                         if (sender is Button clicked && clicked.BackgroundImage == null && connection?.State == HubConnectionState.Connected)

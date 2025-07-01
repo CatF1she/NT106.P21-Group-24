@@ -38,5 +38,12 @@ namespace BackEnd.Services
                 Console.WriteLine($"[MongoDB] SaveAsync ERROR: {ex.Message}");
             }
         }
+        public async Task<List<GameSession>> GetAllActiveSessionsForPlayerAsync(string playerId)
+        {
+            return await _games.Find(s =>
+                !s.IsFinished &&
+                (s.PlayerXId == playerId || s.PlayerOId == playerId)
+            ).ToListAsync();
+        }
     }
 }

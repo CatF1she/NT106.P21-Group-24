@@ -175,8 +175,27 @@ namespace BackEnd.Hubs
                 }
             }
 
+            // Handle disconnect from an active game
+            var sessions = await _gameService.GetAllActiveSessionsForPlayerAsync(userId);
+            foreach (var session in sessions)
+            {
+                if (!session.IsFinished)
+                {
+                    session.IsFinished = true;
+
+                    var winnerId = session.PlayerXId == userId ? session.PlayerOId : session.PlayerXId;
+                    session.WinnerPlayerId = winnerId;
+
+                    await Clients.Group(session.Id.ToString()).SendAsync("GameWon", session.PlayerXId == winnerId ? "PlayerX" : "PlayerO");
+                    await _userService.IncrementMatchStatsAsync(winnerId, true);
+                    await _userService.IncrementMatchStatsAsync(userId, false);
+                    await _gameService.SaveAsync(session);
+                }
+            }
+
             await base.OnDisconnectedAsync(exception);
         }
+
 
         public async Task JoinGame(string sessionId)
         {

@@ -41,13 +41,13 @@
             // 
             // tableLayoutPanelGame
             // 
+            tableLayoutPanelGame.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanelGame.ColumnCount = 2;
             tableLayoutPanelGame.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
             tableLayoutPanelGame.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tableLayoutPanelGame.Controls.Add(panel1, 0, 0);
             tableLayoutPanelGame.Controls.Add(panelClose, 1, 0);
             tableLayoutPanelGame.Controls.Add(tableLayoutChessBoard, 0, 1);
-            tableLayoutPanelGame.Dock = DockStyle.Fill;
             tableLayoutPanelGame.Location = new Point(0, 0);
             tableLayoutPanelGame.Margin = new Padding(0);
             tableLayoutPanelGame.Name = "tableLayoutPanelGame";
@@ -126,16 +126,18 @@
             // 
             // tableLayoutChessBoard
             // 
+            tableLayoutChessBoard.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutChessBoard.ColumnCount = 2;
             tableLayoutChessBoard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutChessBoard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutChessBoard.Dock = DockStyle.Fill;
-            tableLayoutChessBoard.Location = new Point(3, 63);
+            tableLayoutChessBoard.Location = new Point(0, 60);
+            tableLayoutChessBoard.Margin = new Padding(0);
             tableLayoutChessBoard.Name = "tableLayoutChessBoard";
             tableLayoutChessBoard.RowCount = 2;
             tableLayoutChessBoard.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutChessBoard.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutChessBoard.Size = new Size(634, 384);
+            tableLayoutChessBoard.Size = new Size(640, 390);
             tableLayoutChessBoard.TabIndex = 2;
             // 
             // Game
