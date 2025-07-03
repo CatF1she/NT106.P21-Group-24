@@ -41,14 +41,14 @@
             labelPlayerOMatchPlayed = new Label();
             pictureBoxPlayerO = new PictureBox();
             flowLayoutPanelGameStat = new FlowLayoutPanel();
+            labelTimeRemaining = new Label();
+            progressTurnTimer = new ProgressBar();
+            labelCurrentTurn = new Label();
             flowLayoutPanelPlayerX = new FlowLayoutPanel();
             labelPlayerXName = new Label();
             labelPlayerXWinRate = new Label();
             labelPlayerXMatchPlayed = new Label();
             pictureBoxPlayerX = new PictureBox();
-            progressBarTimeRemaining = new ProgressBar();
-            labelTimeRemaining = new Label();
-            labelCurrentTurn = new Label();
             tableLayoutPanelGame.SuspendLayout();
             panelHeader.SuspendLayout();
             tableLayoutPanelMenu.SuspendLayout();
@@ -233,7 +233,7 @@
             // 
             tableLayoutPanelMenu.SetColumnSpan(flowLayoutPanelGameStat, 2);
             flowLayoutPanelGameStat.Controls.Add(labelTimeRemaining);
-            flowLayoutPanelGameStat.Controls.Add(progressBarTimeRemaining);
+            flowLayoutPanelGameStat.Controls.Add(progressTurnTimer);
             flowLayoutPanelGameStat.Controls.Add(labelCurrentTurn);
             flowLayoutPanelGameStat.Dock = DockStyle.Fill;
             flowLayoutPanelGameStat.FlowDirection = FlowDirection.TopDown;
@@ -242,6 +242,38 @@
             flowLayoutPanelGameStat.Name = "flowLayoutPanelGameStat";
             flowLayoutPanelGameStat.Size = new Size(158, 286);
             flowLayoutPanelGameStat.TabIndex = 0;
+            // 
+            // labelTimeRemaining
+            // 
+            labelTimeRemaining.AutoSize = true;
+            labelTimeRemaining.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelTimeRemaining.Location = new Point(0, 0);
+            labelTimeRemaining.Margin = new Padding(0);
+            labelTimeRemaining.Name = "labelTimeRemaining";
+            labelTimeRemaining.Size = new Size(100, 15);
+            labelTimeRemaining.TabIndex = 1;
+            labelTimeRemaining.Text = "Time remaining: ";
+            // 
+            // progressTurnTimer
+            // 
+            progressTurnTimer.Location = new Point(0, 15);
+            progressTurnTimer.Margin = new Padding(0);
+            progressTurnTimer.Maximum = 1000;
+            progressTurnTimer.Name = "progressTurnTimer";
+            progressTurnTimer.Size = new Size(100, 23);
+            progressTurnTimer.TabIndex = 0;
+            progressTurnTimer.Value = 1000;
+            // 
+            // labelCurrentTurn
+            // 
+            labelCurrentTurn.AutoSize = true;
+            labelCurrentTurn.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelCurrentTurn.Location = new Point(0, 38);
+            labelCurrentTurn.Margin = new Padding(0);
+            labelCurrentTurn.Name = "labelCurrentTurn";
+            labelCurrentTurn.Size = new Size(83, 15);
+            labelCurrentTurn.TabIndex = 2;
+            labelCurrentTurn.Text = "Current turn: ";
             // 
             // flowLayoutPanelPlayerX
             // 
@@ -299,36 +331,6 @@
             pictureBoxPlayerX.TabIndex = 2;
             pictureBoxPlayerX.TabStop = false;
             // 
-            // progressBarTimeRemaining
-            // 
-            progressBarTimeRemaining.Location = new Point(0, 15);
-            progressBarTimeRemaining.Margin = new Padding(0);
-            progressBarTimeRemaining.Name = "progressBarTimeRemaining";
-            progressBarTimeRemaining.Size = new Size(100, 23);
-            progressBarTimeRemaining.TabIndex = 0;
-            // 
-            // labelTimeRemaining
-            // 
-            labelTimeRemaining.AutoSize = true;
-            labelTimeRemaining.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            labelTimeRemaining.Location = new Point(0, 0);
-            labelTimeRemaining.Margin = new Padding(0);
-            labelTimeRemaining.Name = "labelTimeRemaining";
-            labelTimeRemaining.Size = new Size(100, 15);
-            labelTimeRemaining.TabIndex = 1;
-            labelTimeRemaining.Text = "Time remaining: ";
-            // 
-            // labelCurrentTurn
-            // 
-            labelCurrentTurn.AutoSize = true;
-            labelCurrentTurn.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            labelCurrentTurn.Location = new Point(0, 38);
-            labelCurrentTurn.Margin = new Padding(0);
-            labelCurrentTurn.Name = "labelCurrentTurn";
-            labelCurrentTurn.Size = new Size(83, 15);
-            labelCurrentTurn.TabIndex = 2;
-            labelCurrentTurn.Text = "Current turn: ";
-            // 
             // Game
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -373,7 +375,7 @@
         private Label labelPlayerOMatchPlayed;
         private Label labelPlayerXMatchPlayed;
         private Label labelTimeRemaining;
-        private ProgressBar progressBarTimeRemaining;
+        private ProgressBar progressTurnTimer;
         private Label labelCurrentTurn;
     }
 }

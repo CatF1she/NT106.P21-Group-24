@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrontEnd;
+using BackEnd.Models;
 
 namespace Do_An
 {
@@ -46,22 +47,27 @@ namespace Do_An
 
         private void RegisterHandlers()
         {
-            connection.On<string>("StartGame", sessionId =>
+            connection.On<StartGameArgs>("StartGame", args =>
             {
-                if (isInGame) return; // prevent duplicates
+                if (isInGame) return;
                 isInGame = true;
 
                 Invoke(() =>
                 {
-                    var mainMenu = this.FindForm();
-                    mainMenu?.Hide();
+                    this.FindForm()?.Hide();
 
-                    var gameForm = new Game(sessionId, userId!.Value);
+                    var gameForm = new Game(
+                        args.SessionId,
+                        userId!.Value,  
+                        args.PlayerX,       
+                        args.PlayerO        
+                    );
+
                     gameForm.FormClosed += async (_, __) =>
                     {
                         isInGame = false;
-                        mainMenu?.Show();
-                        this.ResetLobby();
+                        this.FindForm()?.Show();
+                        ResetLobby();
                         try
                         {
                             var rooms = await connection.InvokeAsync<List<string>>("GetActiveRooms");
@@ -72,10 +78,10 @@ namespace Do_An
                             MessageBox.Show("Failed to refresh rooms: " + ex.Message);
                         }
                     };
-
                     gameForm.Show();
                 });
-            }); ;
+            });
+
 
 
             connection.On<Dictionary<string, bool>>("UpdateReadyStatus", playerStatus =>

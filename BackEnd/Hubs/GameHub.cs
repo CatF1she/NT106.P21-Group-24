@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BackEnd.Models;
 using BackEnd.Services;
+using System.Runtime.CompilerServices;
 
 namespace BackEnd.Hubs
 {
@@ -34,7 +35,7 @@ namespace BackEnd.Hubs
         public async Task<string?> CreateRoom()
         {
             var userId = GetUserId();
-            if (userId == null) return null;
+            if (userId == null) return null;    
 
             var random = new Random();
             string gameCode;
@@ -112,6 +113,7 @@ namespace BackEnd.Hubs
                 await CreateGameSession(gameCode);
 
                 // Notify lobby to remove the room
+                await Task.Delay(500);
                 RoomPlayers.Remove(gameCode);
                 await Clients.All.SendAsync("RoomRemoved", gameCode);
             }
@@ -138,19 +140,45 @@ namespace BackEnd.Hubs
             var players = RoomPlayers[gameCode].Keys.ToList();
             if (players.Count != 2) return;
 
+            var playerXId = players[0];
+            var playerOId = players[1];
+
+            var playerX = await _userService.GetByIdAsync(playerXId);
+            var playerO = await _userService.GetByIdAsync(playerOId);
+            if (playerX == null || playerO == null) return;
+
             var session = new GameSession
             {
-                PlayerXId = players[0],
-                PlayerOId = players[1],
+                PlayerXId = playerXId,
+                PlayerOId = playerOId,
                 CurrentTurn = true,
                 IsFinished = false,
-                Board = new int[25,25],
+                Board = new int[25, 25],
                 Moves = []
             };
-
             await _gameService.SaveAsync(session);
-            await Clients.Group(gameCode).SendAsync("StartGame", session.Id.ToString());
+            await Clients.Group(gameCode).SendAsync("StartGame", new
+            {
+                SessionId = session.Id.ToString(),
+                PlayerX = new PlayerInfo
+                {
+                    Id = playerXId,
+                    Username = playerX.Username,
+                    MatchPlayed = playerX.MatchPlayed,
+                    MatchWon = playerX.MatchWon,
+                    ProfilePic = playerX.ProfilePictureUrl
+                },
+                PlayerO = new PlayerInfo
+                {
+                    Id = playerOId,
+                    Username = playerO.Username,
+                    MatchPlayed = playerO.MatchPlayed,
+                    MatchWon = playerO.MatchWon,
+                    ProfilePic = playerO.ProfilePictureUrl
+                }
+            });
         }
+
 
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
@@ -212,6 +240,8 @@ namespace BackEnd.Hubs
 
         public async Task MakeMove(string sessionId, int x, int y, string playerId)
         {
+            bool skip = false;
+            if (x == 69 && y == 69) skip = true;
             Console.WriteLine($"[MakeMove] Move request from {playerId} at ({x}, {y}) for session {sessionId}");
 
             var game = await _gameService.GetByIdAsync(sessionId);
@@ -221,7 +251,7 @@ namespace BackEnd.Hubs
                 return;
             }
 
-            if (game.Board[y, x] != 0)
+            if (!skip && game.Board[y, x] != 0)
             {
                 Console.WriteLine("[MakeMove] Invalid move, cell already occupied.");
                 return;
@@ -242,7 +272,7 @@ namespace BackEnd.Hubs
 
             await Clients.Group(sessionId).SendAsync("ReceiveMove", x, y, game.CurrentTurn ? "PlayerX" : "PlayerO");
 
-            if (CheckWin(game.Board, x, y, symbol))
+            if (!skip && CheckWin(game.Board, x, y, symbol))
             {
                 game.IsFinished = true;
                 game.WinnerPlayerId = playerId;

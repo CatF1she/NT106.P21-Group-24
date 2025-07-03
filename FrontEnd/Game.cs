@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿using BackEnd.Models;
+using Microsoft.AspNetCore.SignalR.Client;
 using MongoDB.Bson;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace FrontEnd
 {
@@ -13,14 +15,29 @@ namespace FrontEnd
         private string playerId;
         private Image? xImage;
         private Image? oImage;
-
-        public Game(string sessionId, ObjectId _playerId)
+        private bool AmIPlayerX=false;
+        private readonly PlayerInfo? _playerX;
+        private readonly PlayerInfo? _playerO;
+        private Timer turnTimer;
+        private int timerIntervalMs = 100; // update every 100ms
+        private int totalTurnTimeMs = 10000; // 10 seconds
+        private int timeRemainingMs;
+        public Game(string sessionId, ObjectId _playerId, PlayerInfo playerX, PlayerInfo playerO)
         {
             gameId = sessionId;
             playerId = _playerId.ToString();
+            _playerX = playerX;
+            _playerO = playerO;
             InitializeComponent();
+            labelPlayerXName.Text = $"Player X: {_playerX.Username}";
+            labelPlayerXWinRate.Text = $"Win rate: {_playerX.MatchWon*100/_playerX.MatchPlayed:0.##}%";
+            labelPlayerXMatchPlayed.Text = $"Match Played: {_playerX.MatchPlayed}";
+            labelPlayerOName.Text = $"Player O: {_playerO.Username}";
+            labelPlayerOWinRate.Text = $"Win rate: {_playerO.MatchWon*100/_playerO.MatchPlayed:0.##}%";
+            labelPlayerOMatchPlayed.Text = $"Played: {_playerO.MatchPlayed}";
+            if (playerId == _playerX.Id) AmIPlayerX = true;
             //enable double buffering for Game.cs and tablelayoutChessBoard
-             typeof(TableLayoutPanel)
+            typeof(TableLayoutPanel)
             .GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
             ?.SetValue(tableLayoutChessBoard, true, null);
 
@@ -30,11 +47,39 @@ namespace FrontEnd
             ConnectToSignalR();
         }
 
-        private void LoadImages()
+        private async void LoadImages()
         {
             xImage = Image.FromFile("Resources/x.png");
             oImage = Image.FromFile("Resources/o.png");
+            await LoadImageAsync(pictureBoxPlayerX, _playerX.ProfilePic);
+            await LoadImageAsync(pictureBoxPlayerO, _playerO.ProfilePic);
         }
+        private async Task LoadImageAsync(PictureBox pictureBox, string? url)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(url))
+                {
+                    using var httpClient = new HttpClient();
+                    var imageBytes = await httpClient.GetByteArrayAsync(url);
+
+                    using var stream = new MemoryStream(imageBytes);
+                    pictureBox.Image = Image.FromStream(stream);
+                    pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[Image Load Error] {ex.Message}");
+            }
+
+            // Fallback image if URL is null or download fails
+           pictureBox.Image = Image.FromFile("Resources/o.png");
+           pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            
+        }
+
 
         private void DrawChessBoard()
         {
@@ -95,11 +140,19 @@ namespace FrontEnd
                 Invoke(() =>
                 {
                     var btn = GetButtonAt(x, y);
-                    if (btn != null && btn.BackgroundImage == null)
+                    if (btn != null && btn.BackgroundImage == null && x != 69 && y != 69)
                     {
                         btn.BackgroundImage = (player == "PlayerX") ? xImage : oImage;
                         btn.BackgroundImageLayout = ImageLayout.Stretch;
                         btn.Enabled = false;
+                    }
+                    string nextTurn = (player == "PlayerX") ? "Player O" : "Player X";
+                    labelCurrentTurn.Text = $"{nextTurn}'s Turn";
+                    if ((AmIPlayerX && nextTurn == "Player X") || (!AmIPlayerX && nextTurn == "Player O")) StartTurnTimer();
+                    else
+                    {
+                        turnTimer?.Stop();
+                        progressTurnTimer.Value= progressTurnTimer.Maximum;
                     }
                 });
             });
@@ -169,5 +222,33 @@ namespace FrontEnd
         {
             this.WindowState = FormWindowState.Minimized;
         }
+        private void StartTurnTimer()
+        {
+            timeRemainingMs = totalTurnTimeMs;
+            progressTurnTimer.Value = progressTurnTimer.Maximum;
+
+            turnTimer?.Stop();
+            turnTimer = new Timer();
+            turnTimer.Interval = timerIntervalMs;
+            turnTimer.Tick += TurnTimer_Tick;
+            turnTimer.Start();
+        }
+        private async void TurnTimer_Tick(object? sender, EventArgs e)
+        {
+            timeRemainingMs -= timerIntervalMs;
+            if (timeRemainingMs <= 0)
+            {
+                turnTimer.Stop();
+                progressTurnTimer.Value = 0;
+
+                // Send fake move to skip turn
+                await connection.InvokeAsync("MakeMove", gameId, 69, 69, playerId);
+                return;
+            }
+
+            // Update progress bar
+            progressTurnTimer.Value = Math.Max(0, progressTurnTimer.Maximum * timeRemainingMs / totalTurnTimeMs);
+        }
+
     }
 }

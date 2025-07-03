@@ -2,6 +2,7 @@
 {
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
+
     public class User
     {
         [BsonId]
@@ -16,10 +17,14 @@
 
         public int MatchPlayed { get; set; }
         public int MatchWon { get; set; }
+
         [BsonElement("ELO")]
         public double WinRate { get; set; }
 
         [BsonElement("email")]
         public string Email { get; set; } = null!;
+
+        [BsonElement("profilePicture")]
+        public string? ProfilePictureUrl { get; set; }
     }
 }
