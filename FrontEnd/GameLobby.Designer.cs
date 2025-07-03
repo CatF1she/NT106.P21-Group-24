@@ -166,7 +166,6 @@
             // 
             // PlayerList
             // 
-            PlayerList.AutoScroll = true;
             PlayerList.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             PlayerList.BackColor = SystemColors.Control;
             PlayerList.Dock = DockStyle.Fill;
@@ -209,7 +208,6 @@
             RoomCode.ReadOnly = true;
             RoomCode.Size = new Size(304, 22);
             RoomCode.TabIndex = 18;
-            RoomCode.TextAlign = HorizontalAlignment.Center;
             // 
             // label3
             // 
