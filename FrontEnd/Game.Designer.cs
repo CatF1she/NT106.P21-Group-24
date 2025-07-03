@@ -28,49 +28,140 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panelChessBoard = new Panel();
-            panelInfo = new Panel();
-            panelChat = new Panel();
+            tableLayoutPanelGame = new TableLayoutPanel();
+            panel1 = new Panel();
+            panelClose = new Panel();
+            btnMinimize = new Button();
+            btnMaximize = new Button();
+            btnClose = new Button();
+            tableLayoutChessBoard = new TableLayoutPanel();
+            tableLayoutPanelGame.SuspendLayout();
+            panelClose.SuspendLayout();
             SuspendLayout();
             // 
-            // panelChessBoard
+            // tableLayoutPanelGame
             // 
-            panelChessBoard.Location = new Point(0, 18);
-            panelChessBoard.Name = "panelChessBoard";
-            panelChessBoard.Size = new Size(750, 750);
-            panelChessBoard.TabIndex = 0;
+            tableLayoutPanelGame.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanelGame.ColumnCount = 2;
+            tableLayoutPanelGame.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
+            tableLayoutPanelGame.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanelGame.Controls.Add(panel1, 0, 0);
+            tableLayoutPanelGame.Controls.Add(panelClose, 1, 0);
+            tableLayoutPanelGame.Controls.Add(tableLayoutChessBoard, 0, 1);
+            tableLayoutPanelGame.Location = new Point(0, 0);
+            tableLayoutPanelGame.Margin = new Padding(0);
+            tableLayoutPanelGame.Name = "tableLayoutPanelGame";
+            tableLayoutPanelGame.RowCount = 2;
+            tableLayoutPanelGame.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tableLayoutPanelGame.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanelGame.Size = new Size(800, 450);
+            tableLayoutPanelGame.TabIndex = 0;
             // 
-            // panelInfo
+            // panel1
             // 
-            panelInfo.Location = new Point(756, 18);
-            panelInfo.Name = "panelInfo";
-            panelInfo.Size = new Size(256, 375);
-            panelInfo.TabIndex = 1;
+            panel1.BackColor = Color.FromArgb(63, 81, 181);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(640, 60);
+            panel1.TabIndex = 1;
             // 
-            // panelChat
+            // panelClose
             // 
-            panelChat.Location = new Point(756, 399);
-            panelChat.Name = "panelChat";
-            panelChat.Size = new Size(256, 369);
-            panelChat.TabIndex = 2;
+            panelClose.BackColor = Color.FromArgb(63, 81, 181);
+            panelClose.Controls.Add(btnMinimize);
+            panelClose.Controls.Add(btnMaximize);
+            panelClose.Controls.Add(btnClose);
+            panelClose.Location = new Point(640, 0);
+            panelClose.Margin = new Padding(0);
+            panelClose.Name = "panelClose";
+            panelClose.Size = new Size(160, 60);
+            panelClose.TabIndex = 0;
+            // 
+            // btnMinimize
+            // 
+            btnMinimize.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMinimize.FlatAppearance.BorderSize = 0;
+            btnMinimize.FlatStyle = FlatStyle.Flat;
+            btnMinimize.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnMinimize.ForeColor = Color.White;
+            btnMinimize.Location = new Point(43, 0);
+            btnMinimize.Name = "btnMinimize";
+            btnMinimize.Size = new Size(35, 29);
+            btnMinimize.TabIndex = 8;
+            btnMinimize.Text = "O";
+            btnMinimize.UseVisualStyleBackColor = true;
+            btnMinimize.Click += btnMinimize_Click;
+            // 
+            // btnMaximize
+            // 
+            btnMaximize.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMaximize.FlatAppearance.BorderSize = 0;
+            btnMaximize.FlatStyle = FlatStyle.Flat;
+            btnMaximize.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnMaximize.ForeColor = Color.White;
+            btnMaximize.Location = new Point(84, 0);
+            btnMaximize.Name = "btnMaximize";
+            btnMaximize.Size = new Size(35, 29);
+            btnMaximize.TabIndex = 7;
+            btnMaximize.Text = "O";
+            btnMaximize.UseVisualStyleBackColor = true;
+            btnMaximize.Click += btnMaximize_Click;
+            // 
+            // btnClose
+            // 
+            btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnClose.ForeColor = Color.White;
+            btnClose.Location = new Point(125, 0);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(35, 29);
+            btnClose.TabIndex = 6;
+            btnClose.Text = "O";
+            btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
+            // 
+            // tableLayoutChessBoard
+            // 
+            tableLayoutChessBoard.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            tableLayoutChessBoard.ColumnCount = 2;
+            tableLayoutChessBoard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutChessBoard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutChessBoard.Dock = DockStyle.Fill;
+            tableLayoutChessBoard.Location = new Point(0, 60);
+            tableLayoutChessBoard.Margin = new Padding(0);
+            tableLayoutChessBoard.Name = "tableLayoutChessBoard";
+            tableLayoutChessBoard.RowCount = 2;
+            tableLayoutChessBoard.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutChessBoard.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutChessBoard.Size = new Size(640, 390);
+            tableLayoutChessBoard.TabIndex = 2;
             // 
             // Game
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1024, 768);
-            Controls.Add(panelChat);
-            Controls.Add(panelInfo);
-            Controls.Add(panelChessBoard);
+            ClientSize = new Size(800, 450);
+            Controls.Add(tableLayoutPanelGame);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Game";
             Text = "Game";
+            tableLayoutPanelGame.ResumeLayout(false);
+            panelClose.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
-        public Panel panelChessBoard;
-        private Panel panelInfo;
-        private Panel panelChat;
+
+        private TableLayoutPanel tableLayoutPanelGame;
+        private Panel panelClose;
+        private Panel panel1;
+        private Button btnClose;
+        private Button btnMaximize;
+        private Button btnMinimize;
+        private TableLayoutPanel tableLayoutChessBoard;
     }
 }

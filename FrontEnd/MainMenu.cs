@@ -73,23 +73,41 @@ namespace FrontEnd.Resources
             }
         }
 
-        private void OpenChildForm(Form childForm, object btnSender)
+        private void OpenChildForm(object child, object btnSender)
         {
+            // Clear previous content
             if (activateForm != null)
             {
                 activateForm.Close();
+                activateForm = null;
             }
-            ActivateButton(btnSender, childForm.Text);
-            activateForm = childForm;
-            childForm.TopLevel = false;
-            childForm.FormBorderStyle = FormBorderStyle.None;
-            childForm.Dock = DockStyle.Fill;
-            this.panelDesktopPane.Controls.Add(childForm);
-            this.panelDesktopPane.Tag = childForm;
-            childForm.BringToFront();
-            childForm.Show();
-            lbTitle.Text = childForm.Text;
+            panelDesktopPane.Controls.Clear();
+
+            // Handle UserControl
+            if (child is UserControl uc)
+            {
+                ActivateButton(btnSender, uc.Name);
+                uc.Dock = DockStyle.Fill;
+                panelDesktopPane.Controls.Add(uc);
+                uc.BringToFront();
+                lbTitle.Text = uc.Name;
+            }
+            // Handle Form
+            else if (child is Form form)
+            {
+                ActivateButton(btnSender, form.Text);
+                activateForm = form;
+                form.TopLevel = false;
+                form.FormBorderStyle = FormBorderStyle.None;
+                form.Dock = DockStyle.Fill;
+                panelDesktopPane.Controls.Add(form);
+                panelDesktopPane.Tag = form;
+                form.BringToFront();
+                form.Show();
+                lbTitle.Text = form.Text;
+            }
         }
+
 
         private void btnPlay_Click(object sender, EventArgs e)
         {

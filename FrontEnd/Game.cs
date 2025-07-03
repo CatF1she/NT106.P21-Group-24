@@ -1,8 +1,4 @@
-﻿// =======================
-// Updated Game.cs
-// =======================
-
-using Microsoft.AspNetCore.SignalR.Client;
+﻿using Microsoft.AspNetCore.SignalR.Client;
 using MongoDB.Bson;
 using System;
 using System.Drawing;
@@ -15,14 +11,20 @@ namespace FrontEnd
         private HubConnection? connection;
         private string gameId;
         private string playerId;
-        private Image xImage;
-        private Image oImage;
+        private Image? xImage;
+        private Image? oImage;
 
         public Game(string sessionId, ObjectId _playerId)
         {
             gameId = sessionId;
             playerId = _playerId.ToString();
             InitializeComponent();
+            //enable double buffering for Game.cs and tablelayoutChessBoard
+             typeof(TableLayoutPanel)
+            .GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            ?.SetValue(tableLayoutChessBoard, true, null);
+
+            this.DoubleBuffered = true;
             DrawChessBoard();
             LoadImages();
             ConnectToSignalR();
@@ -36,31 +38,50 @@ namespace FrontEnd
 
         private void DrawChessBoard()
         {
-            panelChessBoard.Controls.Clear();
-            for (int i = 0; i < Constants.chessboard_height; i++)
+            tableLayoutChessBoard.SuspendLayout();
+            tableLayoutChessBoard.Controls.Clear();
+            tableLayoutChessBoard.ColumnCount = 25;
+            tableLayoutChessBoard.RowCount = 25;
+            tableLayoutChessBoard.ColumnStyles.Clear();
+            tableLayoutChessBoard.RowStyles.Clear();
+
+            for (int i = 0; i < 25; i++)
             {
-                for (int j = 0; j < Constants.chessboard_width; j++)
+                tableLayoutChessBoard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / 25));
+                tableLayoutChessBoard.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / 25));
+            }
+
+            for (int row = 0; row < 25; row++)
+            {
+                for (int col = 0; col < 25; col++)
                 {
-                    Button btn = new Button
+                    var btn = new Button
                     {
-                        Width = Constants.chess_width,
-                        Height = Constants.chess_height,
-                        Location = new Point(j * Constants.chess_width, i * Constants.chess_height),
-                        Tag = new Point(j, i)
+                        Dock = DockStyle.Fill,
+                        Margin = new Padding(0),
+                        Tag = new Point(col, row),
+                        FlatStyle = FlatStyle.Flat,
+                        BackColor = Color.White
                     };
+                    btn.FlatAppearance.BorderSize = 0;
+                    btn.FlatAppearance.MouseOverBackColor = btn.BackColor;
+                    btn.FlatAppearance.MouseDownBackColor = btn.BackColor;
                     btn.Click += async (sender, e) =>
                     {
-                        var clicked = sender as Button;
-                        if (clicked != null && clicked.BackgroundImage == null && connection?.State == HubConnectionState.Connected)
+                        if (sender is Button clicked && clicked.BackgroundImage == null && connection?.State == HubConnectionState.Connected)
                         {
                             Point pos = (Point)clicked.Tag;
                             await connection.InvokeAsync("MakeMove", gameId, pos.X, pos.Y, playerId);
                         }
                     };
-                    panelChessBoard.Controls.Add(btn);
+
+                    tableLayoutChessBoard.Controls.Add(btn, col, row);
                 }
             }
+
+            tableLayoutChessBoard.ResumeLayout();
         }
+
 
         private async void ConnectToSignalR()
         {
@@ -105,7 +126,7 @@ namespace FrontEnd
 
         private Button? GetButtonAt(int x, int y)
         {
-            foreach (Control ctrl in panelChessBoard.Controls)
+            foreach (Control ctrl in tableLayoutChessBoard.Controls)
             {
                 if (ctrl is Button btn && btn.Tag is Point pt && pt.X == x && pt.Y == y)
                 {
@@ -115,15 +136,38 @@ namespace FrontEnd
             return null;
         }
 
+
         private void DisableAllButtons()
         {
-            foreach (Control ctrl in panelChessBoard.Controls)
+            foreach (Control ctrl in tableLayoutChessBoard.Controls)
             {
                 if (ctrl is Button btn)
                 {
                     btn.Enabled = false;
                 }
             }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnMaximize_Click(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void btnMinimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }
