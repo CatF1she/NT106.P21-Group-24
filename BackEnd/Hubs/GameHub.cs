@@ -251,7 +251,7 @@ namespace BackEnd.Hubs
                 return;
             }
 
-            if (!skip && game.Board[y, x] != 0)
+            if (!skip && (game.Board[y, x] != 0 || x>=25 || x<0 || y>=25 || y<0))
             {
                 Console.WriteLine("[MakeMove] Invalid move, cell already occupied.");
                 return;
@@ -265,7 +265,7 @@ namespace BackEnd.Hubs
             }
 
             int symbol = game.CurrentTurn ? 1 : 2;
-            game.Board[y, x] = symbol;
+            if (!skip) game.Board[y, x] = symbol;
 
             game.Moves.Add(new Move { X = x, Y = y, PlayerId = playerId });
             Console.WriteLine($"[MakeMove] Move registered. Turn: {(game.CurrentTurn ? "X" : "O")}");
