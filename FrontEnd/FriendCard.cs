@@ -1,7 +1,7 @@
 ﻿using BackEnd.Models;
 using BackEnd.Services;
 using FrontEnd;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.SignalR.Client;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -18,20 +18,81 @@ namespace Do_An
 {
     public partial class FriendCard : UserControl
     {
+        private HubConnection? _connection;
+        private ObjectId currentUserId;
+        private ObjectId targetUserId;
+        private string friendshipStatus = "none";
+        public event Action<string, bool>? FriendActionClicked;
+
         public FriendCard()
         {
             InitializeComponent();
         }
 
-        private ObjectId currentUserId;
-        private ObjectId targetUserId;
-        private string friendshipStatus = "none";
-        public event Action<string, bool>? FriendActionClicked; // string: targetId, bool: isFriend
+        private async Task ConnectToSignalR()
+        {
+            if (_connection?.State == HubConnectionState.Connected) return;
 
-        public void SetFriendData(User user, ObjectId currentUserId)
+            _connection = new HubConnectionBuilder()
+                .WithUrl($"http://localhost:8000/friendhub?userId={currentUserId}")
+                .WithAutomaticReconnect()
+                .Build();
+
+            RegisterHandlers();
+
+            try
+            {
+                await _connection.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Connection to friend service failed: " + ex.Message);
+            }
+        }
+
+        private void RegisterHandlers()
+        {
+            if (_connection == null) return;
+
+            _connection.On<string>("FriendRequestAccepted", (accepterId) =>
+            {
+                if (accepterId == targetUserId.ToString() && IsHandleCreated)
+                {
+                    BeginInvoke(new Action(() =>
+                    {
+                        if (!IsDisposed)
+                        {
+                            friendshipStatus = "accepted";
+                            btnAction.Text = "Unfriend";
+                            FriendActionClicked?.Invoke(targetUserId.ToString(), true);
+                        }
+                    }));
+                }
+            });
+
+            _connection.On<string>("FriendRequestRejected", (rejecterId) =>
+            {
+                if (rejecterId == targetUserId.ToString() && IsHandleCreated)
+                {
+                    BeginInvoke(new Action(() =>
+                    {
+                        if (!IsDisposed)
+                        {
+                            friendshipStatus = "none";
+                            btnAction.Text = "Add Friend";
+                            FriendActionClicked?.Invoke(targetUserId.ToString(), false);
+                        }
+                    }));
+                }
+            });
+        }
+
+        public async void SetFriendData(User user, ObjectId currentUserId)
         {
             this.currentUserId = currentUserId;
             this.targetUserId = user.Id;
+
+            await ConnectToSignalR();
 
             var db = new DatabaseConnection();
             var friendships = db.GetFriendShipsCollection();
@@ -73,56 +134,64 @@ namespace Do_An
                 case "accepted":
                     btnAction.Text = "Unfriend";
                     break;
-            }    
+            }
         }
 
-        private void btnAction_Click(object sender, EventArgs e)
+        private async void btnAction_Click(object sender, EventArgs e)
         {
-            var db = new DatabaseConnection();
-            var friendships = db.GetFriendShipsCollection();
-
-            var filter = Builders<BsonDocument>.Filter.Or(
-                Builders<BsonDocument>.Filter.And(
-                    Builders<BsonDocument>.Filter.Eq("User1Id", currentUserId),
-                    Builders<BsonDocument>.Filter.Eq("User2Id", targetUserId)
-                ),
-                Builders<BsonDocument>.Filter.And(
-                    Builders<BsonDocument>.Filter.Eq("User1Id", targetUserId),
-                    Builders<BsonDocument>.Filter.Eq("User2Id", currentUserId)
-                )
-            );
-
-            var existing = friendships.Find(filter).FirstOrDefault();
+            if (_connection?.State != HubConnectionState.Connected)
+            {
+                MessageBox.Show("Not connected to friend service. Please try again.");
+                return;
+            }
 
             switch (friendshipStatus)
             {
                 case "none":
-                    var newFriend = new BsonDocument
-                    {
-                        { "User1Id", currentUserId },
-                        { "User2Id", targetUserId },
-                        { "status", "pending" }
-                    };
-                    friendships.InsertOne(newFriend);
+                    await _connection.InvokeAsync("SendFriendRequest", targetUserId.ToString());
                     friendshipStatus = "pending";
                     btnAction.Text = "Pending";
                     break;
+
                 case "accepted":
-                    friendships.DeleteOne(Builders<BsonDocument>.Filter.Eq("_id", existing["_id"]));
+                    var db = new DatabaseConnection();
+                    var friendships = db.GetFriendShipsCollection();
+                    var filter = Builders<BsonDocument>.Filter.Or(
+                        Builders<BsonDocument>.Filter.And(
+                            Builders<BsonDocument>.Filter.Eq("User1Id", currentUserId),
+                            Builders<BsonDocument>.Filter.Eq("User2Id", targetUserId)
+                        ),
+                        Builders<BsonDocument>.Filter.And(
+                            Builders<BsonDocument>.Filter.Eq("User1Id", targetUserId),
+                            Builders<BsonDocument>.Filter.Eq("User2Id", currentUserId)
+                        )
+                    );
+                    friendships.DeleteOne(filter);
                     btnAction.Text = "Add Friend";
                     friendshipStatus = "none";
                     break;
+
                 case "pending":
-                    friendships.DeleteOne(Builders<BsonDocument>.Filter.Eq("_id", existing["_id"]));
+                    var dbConn = new DatabaseConnection();
+                    var friendshipsColl = dbConn.GetFriendShipsCollection();
+                    var pendingFilter = Builders<BsonDocument>.Filter.Or(
+                        Builders<BsonDocument>.Filter.And(
+                            Builders<BsonDocument>.Filter.Eq("User1Id", currentUserId),
+                            Builders<BsonDocument>.Filter.Eq("User2Id", targetUserId)
+                        ),
+                        Builders<BsonDocument>.Filter.And(
+                            Builders<BsonDocument>.Filter.Eq("User1Id", targetUserId),
+                            Builders<BsonDocument>.Filter.Eq("User2Id", currentUserId)
+                        )
+                    );
+                    friendshipsColl.DeleteOne(pendingFilter);
                     btnAction.Text = "Add Friend";
                     friendshipStatus = "none";
                     break;
             }
 
-            // Gửi event để form cha biết thay đổi
             FriendActionClicked?.Invoke(targetUserId.ToString(), friendshipStatus == "accepted");
         }
-
 
         private void FriendCard_Load(object sender, EventArgs e)
         {
