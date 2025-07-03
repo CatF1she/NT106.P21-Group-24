@@ -1,5 +1,6 @@
 ﻿using BackEnd.Services;
 using FrontEnd;
+using Microsoft.AspNetCore.SignalR.Client;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -17,9 +18,11 @@ namespace Do_An
 {
     public partial class Notification : UserControl
     {
+        private HubConnection? _connection;
         public event Action<ObjectId>? FriendAccepted;
         private ObjectId requestId;
         private string senderName;
+        private string senderId;
 
         public Notification()
         {
@@ -28,34 +31,107 @@ namespace Do_An
             btnRefuse.Click += btnRefuse_Click;
         }
 
-        public void SetFriendRequest(ObjectId requestId, string senderName)
+        private async Task ConnectToSignalR(string userId)
+        {
+            if (_connection?.State == HubConnectionState.Connected) return;
+
+            _connection = new HubConnectionBuilder()
+                .WithUrl($"http://localhost:8000/friendhub?userId={userId}")
+                .WithAutomaticReconnect()
+                .Build();
+
+            try
+            {
+                await _connection.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                if (IsHandleCreated)
+                {
+                    BeginInvoke(new Action(() =>
+                    {
+                        if (!IsDisposed)
+                        {
+                            MessageBox.Show("Connection to friend service failed: " + ex.Message);
+                        }
+                    }));
+                }
+            }
+        }
+
+        public async void SetFriendRequest(ObjectId requestId, string senderId, string senderName, string currentUserId)
         {
             this.requestId = requestId;
             this.senderName = senderName;
+            this.senderId = senderId;
             lblMessage.Text = $"{senderName} wants to make friend with you.";
+
+            await ConnectToSignalR(currentUserId);
         }
 
-        private void btnAccept_Click(object? sender, EventArgs e)
+        private async void btnAccept_Click(object? sender, EventArgs e)
         {
-            var db = new DatabaseConnection();
-            var friendships = db.GetFriendShipsCollection();
-            var filter = Builders<BsonDocument>.Filter.Eq("_id", requestId);
-            var update = Builders<BsonDocument>.Update.Set("status", "accepted");
-            friendships.UpdateOne(filter, update);
+            if (_connection?.State != HubConnectionState.Connected)
+            {
+                MessageBox.Show("Not connected to friend service. Please try again.");
+                return;
+            }
 
-            FriendAccepted?.Invoke(requestId);
-            this.Dispose();
+            try
+            {
+                await _connection.InvokeAsync("AcceptFriendRequest", requestId.ToString());
+                FriendAccepted?.Invoke(requestId);
+                if (!IsDisposed)
+                {
+                    Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (IsHandleCreated)
+                {
+                    BeginInvoke(new Action(() =>
+                    {
+                        if (!IsDisposed)
+                        {
+                            MessageBox.Show("Failed to accept friend request: " + ex.Message);
+                        }
+                    }));
+                }
+            }
         }
 
-        private void btnRefuse_Click(object? sender, EventArgs e)
+        private async void btnRefuse_Click(object? sender, EventArgs e)
         {
-            var db = new DatabaseConnection();
-            var friendships = db.GetFriendShipsCollection();
-            var filter = Builders<BsonDocument>.Filter.Eq("_id", requestId);
-            friendships.DeleteOne(filter);
+            if (_connection?.State != HubConnectionState.Connected)
+            {
+                MessageBox.Show("Not connected to friend service. Please try again.");
+                return;
+            }
 
-            this.Dispose();
+            try
+            {
+                await _connection.InvokeAsync("RejectFriendRequest", requestId.ToString());
+                if (!IsDisposed)
+                {
+                    Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (IsHandleCreated)
+                {
+                    BeginInvoke(new Action(() =>
+                    {
+                        if (!IsDisposed)
+                        {
+                            MessageBox.Show("Failed to reject friend request: " + ex.Message);
+                        }
+                    }));
+                }
+            }
         }
+
         private void LoadTheme()
         {
             foreach (Control btns in this.Controls)

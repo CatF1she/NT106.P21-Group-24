@@ -1,6 +1,7 @@
 ﻿using Amazon.Runtime.Internal.Util;
 using BackEnd.Services;
 using FrontEnd;
+using Microsoft.AspNetCore.SignalR.Client;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -17,13 +18,66 @@ namespace Do_An
 {
     public partial class NotificationPage : Form
     {
-        private ObjectId currentUserId; // truyền vào khi khởi tạo
+        private HubConnection? _connection;
+        private ObjectId currentUserId;
 
         public NotificationPage(ObjectId currentUserId)
         {
             InitializeComponent();
             this.currentUserId = currentUserId;
+            this.Load += NotificationPage_Load;
+        }
+
+        private async void NotificationPage_Load(object sender, EventArgs e)
+        {
+            await ConnectToSignalR();
             LoadNotifications();
+        }
+
+        private async Task ConnectToSignalR()
+        {
+            _connection = new HubConnectionBuilder()
+                .WithUrl($"http://localhost:8000/friendhub?userId={currentUserId}")
+                .WithAutomaticReconnect()
+                .Build();
+
+            RegisterHandlers();
+
+            try
+            {
+                await _connection.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Connection to friend service failed: " + ex.Message);
+            }
+        }
+
+        private void RegisterHandlers()
+        {
+            if (_connection == null) return;
+
+            _connection.On<string, string, string>("ReceiveFriendRequest", (requestId, senderId, senderName) =>
+            {
+                if (IsHandleCreated)
+                {
+                    BeginInvoke(new Action(() =>
+                    {
+                        var notification = new Notification();
+                        notification.SetFriendRequest(
+                            ObjectId.Parse(requestId),
+                            senderId,
+                            senderName,
+                            currentUserId.ToString()
+                        );
+                        notification.FriendAccepted += (id) => { /* Handle friend acceptance if needed */ };
+                        if (!panelNotifications.IsDisposed)
+                        {
+                            panelNotifications.Controls.Add(notification);
+                        }
+                    }));
+                }
+            });
         }
 
         private void LoadNotifications()
@@ -41,13 +95,30 @@ namespace Do_An
                 var users = db.GetUsersCollection();
                 var sender = users.Find(Builders<BsonDocument>.Filter.Eq("_id", req["User1Id"])).FirstOrDefault();
                 string senderName = sender != null && sender.Contains("username") ? sender["username"].AsString : "Unknown";
+                string senderId = req["User1Id"].AsObjectId.ToString();
 
                 var notification = new Notification();
-                notification.SetFriendRequest(req["_id"].AsObjectId, senderName);
-                notification.FriendAccepted += (id) => { /* Cập nhật lại giao diện nếu cần */ };
+                notification.SetFriendRequest(
+                    req["_id"].AsObjectId,
+                    senderId,
+                    senderName,
+                    currentUserId.ToString()
+                );
+                notification.FriendAccepted += (id) => { /* Handle friend acceptance if needed */ };
                 panelNotifications.Controls.Add(notification);
             }
         }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            if (_connection != null)
+            {
+                _connection.StopAsync().Wait();
+                _connection.DisposeAsync().AsTask().Wait();
+            }
+        }
+
         private void LoadTheme()
         {
             foreach (Control btns in this.Controls)
@@ -67,5 +138,4 @@ namespace Do_An
             LoadTheme();
         }
     }
-
 }

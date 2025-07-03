@@ -33,11 +33,14 @@ builder.Services.AddSingleton(sp =>
 // Register custom services
 builder.Services.AddSingleton<GameSessionService>();
 builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<DatabaseConnection>();
+
 // Register SignalR
 builder.Services.AddSignalR();
 
 var app = builder.Build();
 app.MapHub<GameHub>("/gamehub"); // This is the endpoint the client will connect to
+app.MapHub<FriendHub>("/friendhub"); // Friend hub endpoint
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
