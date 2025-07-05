@@ -64,9 +64,9 @@ namespace FrontEnd
                     using var httpClient = new HttpClient();
                     var imageBytes = await httpClient.GetByteArrayAsync(url);
 
-                    using var stream = new MemoryStream(imageBytes);
+                    var stream = new MemoryStream(imageBytes); // do not dispose!
                     pictureBox.Image = Image.FromStream(stream);
-                    pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                    pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     return;
                 }
             }
@@ -75,11 +75,10 @@ namespace FrontEnd
                 Console.WriteLine($"[Image Load Error] {ex.Message}");
             }
 
-            // Fallback image if URL is null or download fails
-           pictureBox.Image = Image.FromFile("Resources/o.png");
-           pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            
+            pictureBox.Image = Image.FromFile("Resources/o.png");
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
         }
+
 
 
         private void DrawChessBoard()
