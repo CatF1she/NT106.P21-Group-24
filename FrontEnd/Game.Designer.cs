@@ -105,6 +105,8 @@
             panelHeader.Name = "panelHeader";
             panelHeader.Size = new Size(800, 60);
             panelHeader.TabIndex = 0;
+            panelHeader.MouseDown += panelHeader_MouseDown;
+
             // 
             // btnMinimize
             // 

@@ -5,6 +5,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
+using System.Runtime.InteropServices;
 
 namespace FrontEnd
 {
@@ -51,8 +52,8 @@ namespace FrontEnd
         {
             xImage = Image.FromFile("Resources/x.png");
             oImage = Image.FromFile("Resources/o.png");
-            await LoadImageAsync(pictureBoxPlayerX, _playerX.ProfilePic);
-            await LoadImageAsync(pictureBoxPlayerO, _playerO.ProfilePic);
+            await LoadImageAsync(pictureBoxPlayerX, _playerX?.ProfilePic);
+            await LoadImageAsync(pictureBoxPlayerO, _playerO?.ProfilePic);
         }
         private async Task LoadImageAsync(PictureBox pictureBox, string? url)
         {
@@ -65,7 +66,7 @@ namespace FrontEnd
 
                     using var stream = new MemoryStream(imageBytes);
                     pictureBox.Image = Image.FromStream(stream);
-                    pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                     return;
                 }
             }
@@ -106,7 +107,8 @@ namespace FrontEnd
                         Margin = new Padding(0),
                         Tag = new Point(col, row),
                         FlatStyle = FlatStyle.Flat,
-                        BackColor = Color.White
+                        BackColor = Color.White,
+                        TabStop = false,
                     };
                     btn.FlatAppearance.BorderSize = 0;
                     btn.FlatAppearance.MouseOverBackColor = btn.BackColor;
@@ -145,6 +147,19 @@ namespace FrontEnd
                         btn.BackgroundImage = (player == "PlayerX") ? xImage : oImage;
                         btn.BackgroundImageLayout = ImageLayout.Stretch;
                         btn.Enabled = false;
+                        // Highlight it
+                        Color originalColor = btn.BackColor;
+                        btn.BackColor = Color.LightYellow;
+
+                        // Reset color after 1 second
+                        var highlightTimer = new Timer { Interval = 1000 };
+                        highlightTimer.Tick += (s, args) =>
+                        {
+                            btn.BackColor = originalColor;
+                            highlightTimer.Stop();
+                            highlightTimer.Dispose();
+                        };
+                        highlightTimer.Start();
                     }
                     string nextTurn = (player == "PlayerX") ? "Player O" : "Player X";
                     labelCurrentTurn.Text = $"{nextTurn}'s Turn";
@@ -249,6 +264,24 @@ namespace FrontEnd
             // Update progress bar
             progressTurnTimer.Value = Math.Max(0, progressTurnTimer.Maximum * timeRemainingMs / totalTurnTimeMs);
         }
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+        private void panelHeader_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
 
     }
+
 }
