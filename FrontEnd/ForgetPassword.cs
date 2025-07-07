@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrontEnd.Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,13 @@ namespace FrontEnd
         public ForgetPassword()
         {
             InitializeComponent();
+        }
+
+        private void lbBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Login login = new Login();
+            login.Show();
         }
     }
 }

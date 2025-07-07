@@ -126,7 +126,7 @@ namespace FrontEnd.Resources
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender, "Settings");
+            OpenChildForm(new ClientSettings(currentUserId), sender);
         }
         private void btnFriends_Click(object sender, EventArgs e)
         {

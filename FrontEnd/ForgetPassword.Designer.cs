@@ -164,6 +164,7 @@
             lbBack.Size = new Size(52, 25);
             lbBack.TabIndex = 18;
             lbBack.Text = "Back";
+            lbBack.Click += lbBack_Click;
             // 
             // ForgetPassword
             // 
