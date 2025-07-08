@@ -1,4 +1,6 @@
-﻿namespace FrontEnd
+﻿using System.Windows.Forms;
+
+namespace FrontEnd
 {
     partial class UserProfile
     {
@@ -37,7 +39,7 @@
             lbMatchNum = new Label();
             lbMatchWon = new Label();
             lbEmail = new Label();
-            lbELO = new Label();
+            lbWinRate = new Label();
             flowLayoutGames = new FlowLayoutPanel();
             panel1 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
@@ -52,7 +54,7 @@
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Margin = new Padding(0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(143, 98);
+            pictureBox1.Size = new Size(150, 150);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -61,7 +63,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            label1.Location = new Point(149, 0);
+            label1.Location = new Point(153, 3);
             label1.Name = "label1";
             label1.Size = new Size(103, 25);
             label1.TabIndex = 1;
@@ -71,7 +73,7 @@
             // 
             lbUsername.AutoSize = true;
             lbUsername.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            lbUsername.Location = new Point(343, 0);
+            lbUsername.Location = new Point(347, 3);
             lbUsername.Name = "lbUsername";
             lbUsername.Size = new Size(124, 25);
             lbUsername.TabIndex = 2;
@@ -81,17 +83,17 @@
             // 
             Winrate.AutoSize = true;
             Winrate.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            Winrate.Location = new Point(149, 76);
+            Winrate.Location = new Point(153, 28);
             Winrate.Name = "Winrate";
-            Winrate.Size = new Size(49, 25);
+            Winrate.Size = new Size(90, 25);
             Winrate.TabIndex = 3;
-            Winrate.Text = "ELO:";
+            Winrate.Text = "Win rate:";
             // 
             // lbMatchWonNum
             // 
             lbMatchWonNum.AutoSize = true;
             lbMatchWonNum.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            lbMatchWonNum.Location = new Point(343, 51);
+            lbMatchWonNum.Location = new Point(347, 54);
             lbMatchWonNum.Name = "lbMatchWonNum";
             lbMatchWonNum.Size = new Size(23, 25);
             lbMatchWonNum.TabIndex = 4;
@@ -101,7 +103,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            label5.Location = new Point(149, 26);
+            label5.Location = new Point(153, 79);
             label5.Name = "label5";
             label5.Size = new Size(157, 25);
             label5.TabIndex = 5;
@@ -111,7 +113,7 @@
             // 
             lbMatchNum.AutoSize = true;
             lbMatchNum.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            lbMatchNum.Location = new Point(343, 26);
+            lbMatchNum.Location = new Point(347, 79);
             lbMatchNum.Name = "lbMatchNum";
             lbMatchNum.Size = new Size(23, 25);
             lbMatchNum.TabIndex = 6;
@@ -121,7 +123,7 @@
             // 
             lbMatchWon.AutoSize = true;
             lbMatchWon.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            lbMatchWon.Location = new Point(149, 51);
+            lbMatchWon.Location = new Point(153, 54);
             lbMatchWon.Name = "lbMatchWon";
             lbMatchWon.Size = new Size(118, 25);
             lbMatchWon.TabIndex = 8;
@@ -131,25 +133,26 @@
             // 
             lbEmail.AutoSize = true;
             lbEmail.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            lbEmail.Location = new Point(0, 101);
+            lbEmail.Location = new Point(153, 104);
             lbEmail.Name = "lbEmail";
             lbEmail.Size = new Size(139, 25);
             lbEmail.TabIndex = 9;
             lbEmail.Text = "Email address: ";
             // 
-            // lbELO
+            // lbWinRate
             // 
-            lbELO.AutoSize = true;
-            lbELO.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            lbELO.Location = new Point(343, 76);
-            lbELO.Name = "lbELO";
-            lbELO.Size = new Size(23, 25);
-            lbELO.TabIndex = 10;
-            lbELO.Text = "0";
+            lbWinRate.AutoSize = true;
+            lbWinRate.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lbWinRate.Location = new Point(347, 28);
+            lbWinRate.Name = "lbWinRate";
+            lbWinRate.Size = new Size(23, 25);
+            lbWinRate.TabIndex = 10;
+            lbWinRate.Text = "0";
             // 
             // flowLayoutGames
             // 
             flowLayoutGames.AutoScroll = true;
+            flowLayoutGames.WrapContents = false;
             flowLayoutGames.Dock = DockStyle.Fill;
             flowLayoutGames.FlowDirection = FlowDirection.TopDown;
             flowLayoutGames.Location = new Point(0, 200);
@@ -157,7 +160,6 @@
             flowLayoutGames.Name = "flowLayoutGames";
             flowLayoutGames.Size = new Size(640, 190);
             flowLayoutGames.TabIndex = 11;
-            flowLayoutGames.WrapContents = false;
             // 
             // panel1
             // 
@@ -165,7 +167,7 @@
             panel1.Controls.Add(label1);
             panel1.Controls.Add(lbMatchWon);
             panel1.Controls.Add(lbMatchWonNum);
-            panel1.Controls.Add(lbELO);
+            panel1.Controls.Add(lbWinRate);
             panel1.Controls.Add(Winrate);
             panel1.Controls.Add(lbMatchNum);
             panel1.Controls.Add(lbUsername);
@@ -244,5 +246,6 @@
         private Panel panel1;
         private TableLayoutPanel tableLayoutPanel1;
         private Label label2;
+        private Label lbWinRate;
     }
 }

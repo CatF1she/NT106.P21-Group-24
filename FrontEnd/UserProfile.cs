@@ -34,7 +34,10 @@ namespace FrontEnd
                 lbUsername.Text = $"{user["username"]}";
                 lbMatchNum.Text = $"{user.GetValue("MatchPlayed", 0)}";
                 lbMatchWonNum.Text = $"{user.GetValue("MatchWon", 0)}";
-                lbELO.Text = $"{user.GetValue("ELO", 0)}%";
+                int matchWon = user.GetValue("MatchWon", 0).ToInt32();
+                int matchPlayed = user.GetValue("MatchPlayed", 1).ToInt32();
+                int winRate = (matchPlayed == 0) ? 0 : (matchWon * 100 / matchPlayed);
+                lbWinRate.Text = $"{winRate}%";
                 lbEmail.Text = $"Email: {user["email"]}";
                 await LoadImageAsync(pictureBox1, user.GetValue("profilePicture", "").AsString);
                 await LoadGameSessionsAsync(userId);
@@ -55,7 +58,7 @@ namespace FrontEnd
                     var imageBytes = await httpClient.GetByteArrayAsync(url);
                     var stream = new MemoryStream(imageBytes); // Do not dispose
                     pictureBox.Image = Image.FromStream(stream);
-                    pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                     return;
                 }
             }

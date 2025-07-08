@@ -31,32 +31,33 @@
             tableLayoutPanelGame = new TableLayoutPanel();
             tableLayoutChessBoard = new TableLayoutPanel();
             panelHeader = new Panel();
+            labelPlayerName = new Label();
             btnMinimize = new Button();
             btnMaximize = new Button();
             btnClose = new Button();
             tableLayoutPanelMenu = new TableLayoutPanel();
+            flowLayoutPanelGameStat = new FlowLayoutPanel();
+            labelTimeRemaining = new Label();
+            progressTurnTimer = new ProgressBar();
+            labelCurrentTurn = new Label();
+            pictureBoxPlayerX = new PictureBox();
             flowLayoutPanelPLayerO = new FlowLayoutPanel();
             labelPlayerOName = new Label();
             labelPlayerOWinRate = new Label();
             labelPlayerOMatchPlayed = new Label();
+            pictureBoxPlayerO = new PictureBox();
             flowLayoutPanelPlayerX = new FlowLayoutPanel();
             labelPlayerXName = new Label();
             labelPlayerXWinRate = new Label();
             labelPlayerXMatchPlayed = new Label();
-            pictureBoxPlayerX = new PictureBox();
-            labelCurrentTurn = new Label();
-            progressTurnTimer = new ProgressBar();
-            labelTimeRemaining = new Label();
-            flowLayoutPanelGameStat = new FlowLayoutPanel();
-            pictureBoxPlayerO = new PictureBox();
             tableLayoutPanelGame.SuspendLayout();
             panelHeader.SuspendLayout();
             tableLayoutPanelMenu.SuspendLayout();
-            flowLayoutPanelPLayerO.SuspendLayout();
-            flowLayoutPanelPlayerX.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxPlayerX).BeginInit();
             flowLayoutPanelGameStat.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxPlayerX).BeginInit();
+            flowLayoutPanelPLayerO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPlayerO).BeginInit();
+            flowLayoutPanelPlayerX.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanelGame
@@ -95,6 +96,7 @@
             // 
             panelHeader.BackColor = Color.FromArgb(63, 81, 181);
             tableLayoutPanelGame.SetColumnSpan(panelHeader, 2);
+            panelHeader.Controls.Add(labelPlayerName);
             panelHeader.Controls.Add(btnMinimize);
             panelHeader.Controls.Add(btnMaximize);
             panelHeader.Controls.Add(btnClose);
@@ -106,6 +108,19 @@
             panelHeader.Size = new Size(800, 60);
             panelHeader.TabIndex = 0;
             panelHeader.MouseDown += panelHeader_MouseDown;
+            // 
+            // labelPlayerName
+            // 
+            labelPlayerName.AutoSize = true;
+            labelPlayerName.Dock = DockStyle.Left;
+            labelPlayerName.Font = new Font("Segoe UI", 25F, FontStyle.Bold);
+            labelPlayerName.ForeColor = SystemColors.Control;
+            labelPlayerName.Location = new Point(0, 0);
+            labelPlayerName.Margin = new Padding(0);
+            labelPlayerName.Name = "labelPlayerName";
+            labelPlayerName.Size = new Size(318, 46);
+            labelPlayerName.TabIndex = 1;
+            labelPlayerName.Text = "Player's name here";
             // 
             // btnMinimize
             // 
@@ -175,6 +190,62 @@
             tableLayoutPanelMenu.Size = new Size(160, 390);
             tableLayoutPanelMenu.TabIndex = 3;
             // 
+            // flowLayoutPanelGameStat
+            // 
+            flowLayoutPanelGameStat.Controls.Add(labelTimeRemaining);
+            flowLayoutPanelGameStat.Controls.Add(progressTurnTimer);
+            flowLayoutPanelGameStat.Controls.Add(labelCurrentTurn);
+            flowLayoutPanelGameStat.Dock = DockStyle.Fill;
+            flowLayoutPanelGameStat.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanelGameStat.Location = new Point(1, 313);
+            flowLayoutPanelGameStat.Margin = new Padding(0);
+            flowLayoutPanelGameStat.Name = "flowLayoutPanelGameStat";
+            flowLayoutPanelGameStat.Size = new Size(158, 76);
+            flowLayoutPanelGameStat.TabIndex = 0;
+            // 
+            // labelTimeRemaining
+            // 
+            labelTimeRemaining.AutoSize = true;
+            labelTimeRemaining.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelTimeRemaining.Location = new Point(0, 0);
+            labelTimeRemaining.Margin = new Padding(0);
+            labelTimeRemaining.Name = "labelTimeRemaining";
+            labelTimeRemaining.Size = new Size(100, 15);
+            labelTimeRemaining.TabIndex = 1;
+            labelTimeRemaining.Text = "Time remaining: ";
+            // 
+            // progressTurnTimer
+            // 
+            progressTurnTimer.Location = new Point(0, 15);
+            progressTurnTimer.Margin = new Padding(0);
+            progressTurnTimer.Maximum = 1000;
+            progressTurnTimer.Name = "progressTurnTimer";
+            progressTurnTimer.Size = new Size(100, 23);
+            progressTurnTimer.TabIndex = 0;
+            progressTurnTimer.Value = 1000;
+            // 
+            // labelCurrentTurn
+            // 
+            labelCurrentTurn.AutoSize = true;
+            labelCurrentTurn.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelCurrentTurn.Location = new Point(0, 38);
+            labelCurrentTurn.Margin = new Padding(0);
+            labelCurrentTurn.Name = "labelCurrentTurn";
+            labelCurrentTurn.Size = new Size(90, 15);
+            labelCurrentTurn.TabIndex = 2;
+            labelCurrentTurn.Text = "Player X's turn ";
+            // 
+            // pictureBoxPlayerX
+            // 
+            pictureBoxPlayerX.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBoxPlayerX.Dock = DockStyle.Fill;
+            pictureBoxPlayerX.Location = new Point(1, 1);
+            pictureBoxPlayerX.Margin = new Padding(0);
+            pictureBoxPlayerX.Name = "pictureBoxPlayerX";
+            pictureBoxPlayerX.Size = new Size(158, 104);
+            pictureBoxPlayerX.TabIndex = 2;
+            pictureBoxPlayerX.TabStop = false;
+            // 
             // flowLayoutPanelPLayerO
             // 
             flowLayoutPanelPLayerO.Controls.Add(labelPlayerOName);
@@ -220,6 +291,17 @@
             labelPlayerOMatchPlayed.Size = new Size(87, 15);
             labelPlayerOMatchPlayed.TabIndex = 2;
             labelPlayerOMatchPlayed.Text = "Match played: ";
+            // 
+            // pictureBoxPlayerO
+            // 
+            pictureBoxPlayerO.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBoxPlayerO.Dock = DockStyle.Fill;
+            pictureBoxPlayerO.Location = new Point(1, 157);
+            pictureBoxPlayerO.Margin = new Padding(0);
+            pictureBoxPlayerO.Name = "pictureBoxPlayerO";
+            pictureBoxPlayerO.Size = new Size(158, 104);
+            pictureBoxPlayerO.TabIndex = 3;
+            pictureBoxPlayerO.TabStop = false;
             // 
             // flowLayoutPanelPlayerX
             // 
@@ -267,71 +349,6 @@
             labelPlayerXMatchPlayed.TabIndex = 2;
             labelPlayerXMatchPlayed.Text = "Match played: ";
             // 
-            // pictureBoxPlayerX
-            // 
-            pictureBoxPlayerX.Dock = DockStyle.Fill;
-            pictureBoxPlayerX.Location = new Point(1, 1);
-            pictureBoxPlayerX.Margin = new Padding(0);
-            pictureBoxPlayerX.Name = "pictureBoxPlayerX";
-            pictureBoxPlayerX.Size = new Size(158, 104);
-            pictureBoxPlayerX.TabIndex = 2;
-            pictureBoxPlayerX.TabStop = false;
-            // 
-            // labelCurrentTurn
-            // 
-            labelCurrentTurn.AutoSize = true;
-            labelCurrentTurn.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            labelCurrentTurn.Location = new Point(0, 38);
-            labelCurrentTurn.Margin = new Padding(0);
-            labelCurrentTurn.Name = "labelCurrentTurn";
-            labelCurrentTurn.Size = new Size(83, 15);
-            labelCurrentTurn.TabIndex = 2;
-            labelCurrentTurn.Text = "Current turn: ";
-            // 
-            // progressTurnTimer
-            // 
-            progressTurnTimer.Location = new Point(0, 15);
-            progressTurnTimer.Margin = new Padding(0);
-            progressTurnTimer.Maximum = 1000;
-            progressTurnTimer.Name = "progressTurnTimer";
-            progressTurnTimer.Size = new Size(100, 23);
-            progressTurnTimer.TabIndex = 0;
-            progressTurnTimer.Value = 1000;
-            // 
-            // labelTimeRemaining
-            // 
-            labelTimeRemaining.AutoSize = true;
-            labelTimeRemaining.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            labelTimeRemaining.Location = new Point(0, 0);
-            labelTimeRemaining.Margin = new Padding(0);
-            labelTimeRemaining.Name = "labelTimeRemaining";
-            labelTimeRemaining.Size = new Size(100, 15);
-            labelTimeRemaining.TabIndex = 1;
-            labelTimeRemaining.Text = "Time remaining: ";
-            // 
-            // flowLayoutPanelGameStat
-            // 
-            flowLayoutPanelGameStat.Controls.Add(labelTimeRemaining);
-            flowLayoutPanelGameStat.Controls.Add(progressTurnTimer);
-            flowLayoutPanelGameStat.Controls.Add(labelCurrentTurn);
-            flowLayoutPanelGameStat.Dock = DockStyle.Fill;
-            flowLayoutPanelGameStat.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanelGameStat.Location = new Point(1, 313);
-            flowLayoutPanelGameStat.Margin = new Padding(0);
-            flowLayoutPanelGameStat.Name = "flowLayoutPanelGameStat";
-            flowLayoutPanelGameStat.Size = new Size(158, 76);
-            flowLayoutPanelGameStat.TabIndex = 0;
-            // 
-            // pictureBoxPlayerO
-            // 
-            pictureBoxPlayerO.Dock = DockStyle.Fill;
-            pictureBoxPlayerO.Location = new Point(1, 157);
-            pictureBoxPlayerO.Margin = new Padding(0);
-            pictureBoxPlayerO.Name = "pictureBoxPlayerO";
-            pictureBoxPlayerO.Size = new Size(158, 104);
-            pictureBoxPlayerO.TabIndex = 3;
-            pictureBoxPlayerO.TabStop = false;
-            // 
             // Game
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -343,15 +360,16 @@
             Text = "Game";
             tableLayoutPanelGame.ResumeLayout(false);
             panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
             tableLayoutPanelMenu.ResumeLayout(false);
-            flowLayoutPanelPLayerO.ResumeLayout(false);
-            flowLayoutPanelPLayerO.PerformLayout();
-            flowLayoutPanelPlayerX.ResumeLayout(false);
-            flowLayoutPanelPlayerX.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxPlayerX).EndInit();
             flowLayoutPanelGameStat.ResumeLayout(false);
             flowLayoutPanelGameStat.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxPlayerX).EndInit();
+            flowLayoutPanelPLayerO.ResumeLayout(false);
+            flowLayoutPanelPLayerO.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPlayerO).EndInit();
+            flowLayoutPanelPlayerX.ResumeLayout(false);
+            flowLayoutPanelPlayerX.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -378,5 +396,6 @@
         private Label labelCurrentTurn;
         private PictureBox pictureBoxPlayerX;
         private PictureBox pictureBoxPlayerO;
+        private Label labelPlayerName;
     }
 }

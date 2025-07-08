@@ -36,11 +36,17 @@ namespace FrontEnd
             labelPlayerOName.Text = $"Player O: {_playerO.Username}";
             labelPlayerOWinRate.Text = $"Win rate: {_playerO.MatchWon*100/_playerO.MatchPlayed:0.##}%";
             labelPlayerOMatchPlayed.Text = $"Played: {_playerO.MatchPlayed}";
-            if (playerId == _playerX.Id) AmIPlayerX = true;
+            if (playerId == _playerX.Id)
+            {
+                AmIPlayerX = true;
+                labelPlayerName.Text = _playerX.Username + "'s game";
+            }
+            else labelPlayerName.Text = _playerO.Username + "'s game";
             //enable double buffering for Game.cs and tablelayoutChessBoard
+
             typeof(TableLayoutPanel)
-            .GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-            ?.SetValue(tableLayoutChessBoard, true, null);
+                .GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                ?.SetValue(tableLayoutChessBoard, true, null);
 
             this.DoubleBuffered = true;
             DrawChessBoard();
@@ -66,7 +72,7 @@ namespace FrontEnd
 
                     var stream = new MemoryStream(imageBytes); // do not dispose!
                     pictureBox.Image = Image.FromStream(stream);
-                    pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                     return;
                 }
             }
@@ -279,6 +285,78 @@ namespace FrontEnd
                 SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
+
+        private const int WM_NCHITTEST = 0x84;
+        private const int HTBOTTOMRIGHT = 17;
+        private const int HTBOTTOMLEFT = 16;
+        private const int HTTOPRIGHT = 14;
+        private const int HTTOPLEFT = 13;
+        private const int HTLEFT = 10;
+        private const int HTRIGHT = 11;
+        private const int HTTOP = 12;
+        private const int HTBOTTOM = 15;
+        private const int BORDER_WIDTH = 8;
+
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+
+            if (m.Msg == WM_NCHITTEST)
+            {
+                Point cursor = PointToClient(Cursor.Position);
+                Cursor newCursor = Cursors.Default;
+
+                if (cursor.X <= BORDER_WIDTH)
+                {
+                    if (cursor.Y <= BORDER_WIDTH)
+                    {
+                        m.Result = (IntPtr)HTTOPLEFT;
+                        newCursor = Cursors.SizeNWSE;
+                    }
+                    else if (cursor.Y >= Height - BORDER_WIDTH)
+                    {
+                        m.Result = (IntPtr)HTBOTTOMLEFT;
+                        newCursor = Cursors.SizeNESW;
+                    }
+                    else
+                    {
+                        m.Result = (IntPtr)HTLEFT;
+                        newCursor = Cursors.SizeWE;
+                    }
+                }
+                else if (cursor.X >= Width - BORDER_WIDTH)
+                {
+                    if (cursor.Y <= BORDER_WIDTH)
+                    {
+                        m.Result = (IntPtr)HTTOPRIGHT;
+                        newCursor = Cursors.SizeNESW;
+                    }
+                    else if (cursor.Y >= Height - BORDER_WIDTH)
+                    {
+                        m.Result = (IntPtr)HTBOTTOMRIGHT;
+                        newCursor = Cursors.SizeNWSE;
+                    }
+                    else
+                    {
+                        m.Result = (IntPtr)HTRIGHT;
+                        newCursor = Cursors.SizeWE;
+                    }
+                }
+                else if (cursor.Y <= BORDER_WIDTH)
+                {
+                    m.Result = (IntPtr)HTTOP;
+                    newCursor = Cursors.SizeNS;
+                }
+                else if (cursor.Y >= Height - BORDER_WIDTH)
+                {
+                    m.Result = (IntPtr)HTBOTTOM;
+                    newCursor = Cursors.SizeNS;
+                }
+
+                Cursor.Current = newCursor;
+            }
+        }
+
 
 
     }
