@@ -23,6 +23,7 @@ namespace Do_An
         {
             userId = _userId;
             InitializeComponent();
+            RoomList.Resize += (_, __) => AdjustRoomLabelWidths();
             LoadTheme();
             ConnectToSignalR();
         }
@@ -170,26 +171,43 @@ namespace Do_An
             PlayerList.Controls.Clear();
         }
 
-        private void HighlightRoom(Control roomPanel, string gameCode)
+        private void HighlightRoom(Control label, string gameCode)
         {
-            foreach (Control panel in RoomList.Controls)
-                panel.BackColor = SystemColors.Control;
-            roomPanel.BackColor = Color.LightBlue;
+            foreach (Control ctrl in RoomList.Controls)
+            {
+                ctrl.BackColor = (ctrl is Label lbl && lbl.Tag?.ToString() != gameCode)
+                    ? SystemColors.Control
+                    : Color.LightBlue;
+            }
+
             selectedGameCode = gameCode;
+            RoomCode.Text = gameCode;
         }
+
 
         private void AddRoomToList(string gameCode)
         {
-            var panel = new Panel { Height = 40, Width = RoomList.Width, Tag = gameCode };
-            var label = new Label { Text = $"Room {gameCode}", AutoSize = true, Left = 10, Top = 10, Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0) };
-            panel.Controls.Add(label);
-            panel.Click += (_, __) => HighlightRoom(panel, gameCode);
-            if (colorswitch) panel.BackColor = Color.LightGray;
-            else panel.BackColor = Color.White;
+            var label = new Label
+            {
+                Text = $"Room {gameCode}",
+                AutoSize = false,
+                Height = 40,
+                Width = RoomList.ClientSize.Width - 20,
+                Font = new Font("Segoe UI", 14.25F, FontStyle.Bold),
+                BackColor = colorswitch ? Color.LightGray : Color.White,
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(10),
+                Margin = new Padding(5),
+                Tag = gameCode,
+                Cursor = Cursors.Hand
+            };
+
             colorswitch = !colorswitch;
-            label.Click += (_, __) => HighlightRoom(panel, gameCode);
-            RoomList.Controls.Add(panel);
+
+            label.Click += (_, __) => HighlightRoom(label, gameCode);
+            RoomList.Controls.Add(label);
         }
+
         private void UpdateRoomList(List<string> roomCodes)
         {
             RoomList.Controls.Clear();
@@ -251,6 +269,16 @@ namespace Do_An
         private void GameLobby_Load(object sender, EventArgs e)
         {
 
+        }
+        private void AdjustRoomLabelWidths()
+        {
+            foreach (Control ctrl in RoomList.Controls)
+            {
+                if (ctrl is Label lbl)
+                {
+                    lbl.Width = RoomList.ClientSize.Width - 20;
+                }
+            }
         }
 
         public bool IsConnected => connection?.State == HubConnectionState.Connected;

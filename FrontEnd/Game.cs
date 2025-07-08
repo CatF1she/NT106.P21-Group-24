@@ -76,7 +76,7 @@ namespace FrontEnd
             }
 
             pictureBox.Image = Image.FromFile("Resources/o.png");
-            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
 

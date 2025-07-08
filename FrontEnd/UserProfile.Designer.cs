@@ -40,16 +40,19 @@
             lbELO = new Label();
             flowLayoutGames = new FlowLayoutPanel();
             panel1 = new Panel();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
             // 
-            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
             pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Margin = new Padding(0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(100, 100);
+            pictureBox1.Size = new Size(143, 98);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -128,7 +131,7 @@
             // 
             lbEmail.AutoSize = true;
             lbEmail.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            lbEmail.Location = new Point(0, 121);
+            lbEmail.Location = new Point(0, 101);
             lbEmail.Name = "lbEmail";
             lbEmail.Size = new Size(139, 25);
             lbEmail.TabIndex = 9;
@@ -146,12 +149,15 @@
             // 
             // flowLayoutGames
             // 
-            flowLayoutGames.Dock = DockStyle.Bottom;
+            flowLayoutGames.AutoScroll = true;
+            flowLayoutGames.Dock = DockStyle.Fill;
             flowLayoutGames.FlowDirection = FlowDirection.TopDown;
-            flowLayoutGames.Location = new Point(0, 159);
+            flowLayoutGames.Location = new Point(0, 200);
+            flowLayoutGames.Margin = new Padding(0);
             flowLayoutGames.Name = "flowLayoutGames";
-            flowLayoutGames.Size = new Size(640, 231);
+            flowLayoutGames.Size = new Size(640, 190);
             flowLayoutGames.TabIndex = 11;
+            flowLayoutGames.WrapContents = false;
             // 
             // panel1
             // 
@@ -165,12 +171,43 @@
             panel1.Controls.Add(lbUsername);
             panel1.Controls.Add(lbEmail);
             panel1.Controls.Add(label5);
-            panel1.Dock = DockStyle.Top;
+            panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(640, 156);
+            panel1.Size = new Size(640, 150);
             panel1.TabIndex = 12;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(panel1, 0, 0);
+            tableLayoutPanel1.Controls.Add(flowLayoutGames, 0, 2);
+            tableLayoutPanel1.Controls.Add(label2, 0, 1);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 150F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(640, 390);
+            tableLayoutPanel1.TabIndex = 13;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Dock = DockStyle.Fill;
+            label2.Font = new Font("Segoe UI Semibold", 20F, FontStyle.Bold);
+            label2.ImageAlign = ContentAlignment.BottomLeft;
+            label2.Location = new Point(0, 150);
+            label2.Margin = new Padding(0);
+            label2.Name = "label2";
+            label2.Size = new Size(640, 50);
+            label2.TabIndex = 13;
+            label2.Text = "Match history:";
+            label2.TextAlign = ContentAlignment.BottomLeft;
             // 
             // UserProfile
             // 
@@ -178,8 +215,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(640, 390);
-            Controls.Add(panel1);
-            Controls.Add(flowLayoutGames);
+            Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "UserProfile";
             Text = "Profile";
@@ -187,6 +223,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -204,5 +242,7 @@
         private Label lbELO;
         private FlowLayoutPanel flowLayoutGames;
         private Panel panel1;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Label label2;
     }
 }
