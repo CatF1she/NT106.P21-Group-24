@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
-using BackEnd.Models;
+using MongoDB.Bson;
 using System.IO;
 using BackEnd.Models;
-using MongoDB.Bson;
 
 namespace BackEnd.Services
 {
@@ -32,6 +31,11 @@ namespace BackEnd.Services
         public IMongoCollection<BsonDocument> GetFriendShipsCollection()
         {
             return database.GetCollection<BsonDocument>("Friendships");
+        }
+
+        public IMongoCollection<GameSession> GetGameSessionsCollection()
+        {
+            return database.GetCollection<GameSession>("GameSessions");
         }
     }
 }
