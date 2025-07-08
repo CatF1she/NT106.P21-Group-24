@@ -44,6 +44,8 @@ namespace Do_An
         private void ClientSettings_Load(object sender, EventArgs e)
         {
             LoadTheme();
+            btnSFX.Checked = SettingVariable.SoundEffectsEnabled;
+            btnBGM.Checked = SettingVariable.BackgroundMusicEnabled;
         }
 
         private void btnChangeUserInfo_Click(object sender, EventArgs e)
@@ -51,5 +53,25 @@ namespace Do_An
             Change_User_Info change_User_Info = new Change_User_Info(userId);
             change_User_Info.ShowDialog();
         }
+
+        private void btnSFX_CheckedChanged(object sender, EventArgs e)
+        {
+           SettingVariable.SoundEffectsEnabled = btnSFX.Checked;
+        }
+
+        private void btnBGM_CheckedChanged(object sender, EventArgs e)
+        {
+            SettingVariable.BackgroundMusicEnabled = btnBGM.Checked;
+
+            if (btnBGM.Checked)
+            {
+                SoundManager.PlayBackgroundMusic();
+            }
+            else
+            {
+                SoundManager.StopBackgroundMusic();
+            }
+        }
+
     }
 }

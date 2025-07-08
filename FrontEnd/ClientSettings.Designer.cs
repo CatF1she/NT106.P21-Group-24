@@ -82,6 +82,7 @@
             btnSFX.Size = new Size(45, 22);
             btnSFX.TabIndex = 3;
             btnSFX.UseVisualStyleBackColor = true;
+            btnSFX.CheckedChanged += btnSFX_CheckedChanged;
             // 
             // btnBGM
             // 
@@ -94,6 +95,7 @@
             btnBGM.Size = new Size(45, 22);
             btnBGM.TabIndex = 4;
             btnBGM.UseVisualStyleBackColor = true;
+            btnBGM.CheckedChanged += btnBGM_CheckedChanged;
             // 
             // btnChangeUserInfo
             // 

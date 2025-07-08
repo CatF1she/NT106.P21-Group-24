@@ -112,34 +112,42 @@ namespace FrontEnd.Resources
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayClickSound();
             OpenChildForm(new GameLobby(currentUserId), sender);
         }
 
         private void btnLeaderboard_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayClickSound();
             ActivateButton(sender, "Leaderboard");
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayClickSound();
             OpenChildForm(new UserProfile(currentUserId), sender);
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayClickSound();
             OpenChildForm(new ClientSettings(currentUserId), sender);
         }
         private void btnFriends_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayClickSound();
             OpenChildForm(new FriendPage(currentUserId), sender);
         }
         private void btnClose_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayClickSound();
+            SoundManager.StopBackgroundMusic();
             Application.Exit();
         }
 
         private void btnMaximize_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayClickSound();
             if (WindowState == FormWindowState.Normal)
             {
                 this.WindowState = FormWindowState.Maximized;
@@ -152,6 +160,7 @@ namespace FrontEnd.Resources
 
         private void btnMinimize_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayClickSound();
             this.WindowState = FormWindowState.Minimized;
         }
 
@@ -163,11 +172,13 @@ namespace FrontEnd.Resources
 
         private void btnNotification_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayClickSound();
             OpenChildForm(new NotificationPage(currentUserId), sender);
         }
         private void MainMenu_Load(object sender, EventArgs e)
         {
             btnProfile.PerformClick();
+            SoundManager.PlayBackgroundMusic();
         }
 
     }
