@@ -31,6 +31,7 @@ namespace FrontEnd.Resources
             this.ControlBox = false;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
             this.currentUserId = userID;
+            this.Load += MainMenu_Load;
         }
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
@@ -164,5 +165,10 @@ namespace FrontEnd.Resources
         {
             OpenChildForm(new NotificationPage(currentUserId), sender);
         }
+        private void MainMenu_Load(object sender, EventArgs e)
+        {
+            btnProfile.PerformClick();
+        }
+
     }
 }
