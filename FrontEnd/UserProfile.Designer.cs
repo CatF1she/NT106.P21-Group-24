@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserProfile));
             pictureBox1 = new PictureBox();
             label1 = new Label();
             lbUsername = new Label();
@@ -45,7 +44,6 @@
             // pictureBox1
             // 
             pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(53, 37);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(100, 100);
@@ -99,9 +97,9 @@
             label5.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
             label5.Location = new Point(202, 63);
             label5.Name = "label5";
-            label5.Size = new Size(188, 25);
+            label5.Size = new Size(157, 25);
             label5.TabIndex = 5;
-            label5.Text = "Number of matches:";
+            label5.Text = "Matches played: ";
             // 
             // lbMatchNum
             // 

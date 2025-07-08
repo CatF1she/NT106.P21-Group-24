@@ -19,7 +19,7 @@
         public int MatchWon { get; set; }
 
         [BsonElement("ELO")]
-        public double WinRate { get; set; }
+        public double ELO { get; set; }
 
         [BsonElement("email")]
         public string Email { get; set; } = null!;

@@ -45,7 +45,7 @@ namespace Do_An
                     Username = doc["username"].AsString,
                     MatchPlayed = doc.GetValue("MatchPlayed", 0).ToInt32(),
                     MatchWon = doc.GetValue("MatchWon", 0).ToInt32(),
-                    WinRate = doc.GetValue("ELO", 0).ToInt32()
+                    ELO = doc.GetValue("ELO", 0).ToInt32()
                 }).ToList();
 
                 DisplayUsers(allUsers);

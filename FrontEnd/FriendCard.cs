@@ -121,7 +121,7 @@ namespace Do_An
             UserName.Text = $"{user.Username}";
             MatchPlayed.Text = $"Matches Played: {user.MatchPlayed}";
             MatchWon.Text = $"Matches Won: {user.MatchWon}";
-            WinRate.Text = $"Win Rate: {user.WinRate}%";
+            WinRate.Text = $"Win Rate: {user.ELO}%";
 
             switch (friendshipStatus)
             {
