@@ -47,10 +47,16 @@
             label4 = new Label();
             btnSave = new Button();
             label6 = new Label();
+            pictureBox1 = new PictureBox();
+            panel5 = new Panel();
+            txtProfileAvatarUrl = new TextBox();
+            label5 = new Label();
+            label7 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // txtConfirmPassword
@@ -58,17 +64,16 @@
             txtConfirmPassword.BorderStyle = BorderStyle.None;
             txtConfirmPassword.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtConfirmPassword.ForeColor = Color.FromArgb(0, 64, 64);
-            txtConfirmPassword.Location = new Point(218, 239);
-            txtConfirmPassword.Multiline = true;
+            txtConfirmPassword.Location = new Point(218, 320);
             txtConfirmPassword.Name = "txtConfirmPassword";
             txtConfirmPassword.PasswordChar = '*';
-            txtConfirmPassword.Size = new Size(456, 24);
+            txtConfirmPassword.Size = new Size(456, 17);
             txtConfirmPassword.TabIndex = 38;
             // 
             // panel3
             // 
             panel3.BackColor = Color.FromArgb(0, 64, 64);
-            panel3.Location = new Point(47, 269);
+            panel3.Location = new Point(47, 350);
             panel3.Name = "panel3";
             panel3.Size = new Size(627, 1);
             panel3.TabIndex = 37;
@@ -76,7 +81,7 @@
             // pictureBox4
             // 
             pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new Point(47, 232);
+            pictureBox4.Location = new Point(47, 313);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(21, 31);
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
@@ -88,17 +93,16 @@
             txtPassword.BorderStyle = BorderStyle.None;
             txtPassword.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtPassword.ForeColor = Color.FromArgb(0, 64, 64);
-            txtPassword.Location = new Point(218, 180);
-            txtPassword.Multiline = true;
+            txtPassword.Location = new Point(218, 261);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '*';
-            txtPassword.Size = new Size(456, 24);
+            txtPassword.Size = new Size(456, 17);
             txtPassword.TabIndex = 35;
             // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(0, 64, 64);
-            panel2.Location = new Point(47, 210);
+            panel2.Location = new Point(47, 291);
             panel2.Name = "panel2";
             panel2.Size = new Size(627, 1);
             panel2.TabIndex = 34;
@@ -106,7 +110,7 @@
             // pictureBox3
             // 
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(47, 173);
+            pictureBox3.Location = new Point(47, 254);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(21, 31);
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
@@ -118,10 +122,9 @@
             txtEmail.BorderStyle = BorderStyle.None;
             txtEmail.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtEmail.ForeColor = Color.FromArgb(0, 64, 64);
-            txtEmail.Location = new Point(218, 122);
-            txtEmail.Multiline = true;
+            txtEmail.Location = new Point(218, 203);
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(456, 24);
+            txtEmail.Size = new Size(456, 17);
             txtEmail.TabIndex = 31;
             // 
             // txtUsername
@@ -130,15 +133,14 @@
             txtUsername.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtUsername.ForeColor = Color.FromArgb(0, 64, 64);
             txtUsername.Location = new Point(218, 64);
-            txtUsername.Multiline = true;
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(456, 24);
+            txtUsername.Size = new Size(456, 17);
             txtUsername.TabIndex = 32;
             // 
             // panel4
             // 
             panel4.BackColor = Color.FromArgb(0, 64, 64);
-            panel4.Location = new Point(47, 152);
+            panel4.Location = new Point(47, 233);
             panel4.Name = "panel4";
             panel4.Size = new Size(627, 1);
             panel4.TabIndex = 28;
@@ -154,7 +156,7 @@
             // pictureBox5
             // 
             pictureBox5.Image = Properties.Resources.email;
-            pictureBox5.Location = new Point(47, 115);
+            pictureBox5.Location = new Point(47, 196);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(21, 31);
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
@@ -185,7 +187,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(74, 121);
+            label2.Location = new Point(74, 202);
             label2.Name = "label2";
             label2.Size = new Size(50, 20);
             label2.TabIndex = 40;
@@ -195,7 +197,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(74, 179);
+            label3.Location = new Point(74, 260);
             label3.Name = "label3";
             label3.Size = new Size(112, 20);
             label3.TabIndex = 41;
@@ -205,7 +207,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(74, 238);
+            label4.Location = new Point(74, 319);
             label4.Name = "label4";
             label4.Size = new Size(136, 20);
             label4.TabIndex = 42;
@@ -213,12 +215,13 @@
             // 
             // btnSave
             // 
+            btnSave.Anchor = AnchorStyles.Bottom;
             btnSave.BackColor = Color.FromArgb(0, 64, 64);
             btnSave.FlatAppearance.BorderSize = 0;
             btnSave.FlatStyle = FlatStyle.Flat;
             btnSave.Font = new Font("Bahnschrift", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(311, 300);
+            btnSave.Location = new Point(306, 369);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(109, 35);
             btnSave.TabIndex = 43;
@@ -237,16 +240,64 @@
             label6.TabIndex = 44;
             label6.Text = "User Information Adjustment";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.user;
+            pictureBox1.Location = new Point(47, 106);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(21, 31);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 27;
+            pictureBox1.TabStop = false;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.FromArgb(0, 64, 64);
+            panel5.Location = new Point(47, 177);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(627, 1);
+            panel5.TabIndex = 29;
+            // 
+            // txtProfileAvatarUrl
+            // 
+            txtProfileAvatarUrl.BorderStyle = BorderStyle.None;
+            txtProfileAvatarUrl.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtProfileAvatarUrl.ForeColor = Color.FromArgb(0, 64, 64);
+            txtProfileAvatarUrl.Location = new Point(218, 113);
+            txtProfileAvatarUrl.Name = "txtProfileAvatarUrl";
+            txtProfileAvatarUrl.Size = new Size(456, 17);
+            txtProfileAvatarUrl.TabIndex = 32;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(74, 112);
+            label5.Name = "label5";
+            label5.Size = new Size(59, 20);
+            label5.TabIndex = 39;
+            label5.Text = "Avatar:";
+            // 
+            // label7
+            // 
+            label7.Location = new Point(47, 140);
+            label7.Name = "label7";
+            label7.Size = new Size(627, 34);
+            label7.TabIndex = 45;
+            label7.Text = "Disclamer: Because I (Phong) am so dumb and cannot save user avatar using storage, please insert a link that leads to your avatar. For example: https://www.example.com/avatar.img";
+            // 
             // Change_User_Info
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(720, 347);
+            ClientSize = new Size(720, 413);
+            Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(btnSave);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
+            Controls.Add(label5);
             Controls.Add(label1);
             Controls.Add(txtConfirmPassword);
             Controls.Add(panel3);
@@ -255,11 +306,15 @@
             Controls.Add(panel2);
             Controls.Add(pictureBox3);
             Controls.Add(txtEmail);
+            Controls.Add(txtProfileAvatarUrl);
             Controls.Add(txtUsername);
+            Controls.Add(panel5);
             Controls.Add(panel4);
             Controls.Add(panel1);
+            Controls.Add(pictureBox1);
             Controls.Add(pictureBox5);
             Controls.Add(pictureBox2);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "Change_User_Info";
             Text = "Change User Information";
             Load += Change_User_Info_Load;
@@ -267,6 +322,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -290,5 +346,10 @@
         private Label label4;
         private Button btnSave;
         private Label label6;
+        private PictureBox pictureBox1;
+        private Panel panel5;
+        private TextBox txtProfileAvatarUrl;
+        private Label label5;
+        private Label label7;
     }
 }

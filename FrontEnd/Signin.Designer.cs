@@ -59,9 +59,8 @@
             txtUsername.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtUsername.ForeColor = Color.FromArgb(0, 64, 64);
             txtUsername.Location = new Point(55, 171);
-            txtUsername.Multiline = true;
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(209, 24);
+            txtUsername.Size = new Size(209, 17);
             txtUsername.TabIndex = 19;
             txtUsername.KeyPress += txtUsername_KeyPress;
             // 
@@ -150,10 +149,9 @@
             txtpassword.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtpassword.ForeColor = Color.FromArgb(0, 64, 64);
             txtpassword.Location = new Point(55, 287);
-            txtpassword.Multiline = true;
             txtpassword.Name = "txtpassword";
             txtpassword.PasswordChar = '*';
-            txtpassword.Size = new Size(209, 24);
+            txtpassword.Size = new Size(209, 17);
             txtpassword.TabIndex = 22;
             txtpassword.KeyPress += txtpassword_KeyPress;
             // 
@@ -181,10 +179,9 @@
             txtConfirmedPassword.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtConfirmedPassword.ForeColor = Color.FromArgb(0, 64, 64);
             txtConfirmedPassword.Location = new Point(55, 346);
-            txtConfirmedPassword.Multiline = true;
             txtConfirmedPassword.Name = "txtConfirmedPassword";
             txtConfirmedPassword.PasswordChar = '*';
-            txtConfirmedPassword.Size = new Size(209, 24);
+            txtConfirmedPassword.Size = new Size(209, 17);
             txtConfirmedPassword.TabIndex = 25;
             txtConfirmedPassword.KeyPress += txtConfirmedPassword_KeyPress;
             // 
@@ -230,9 +227,8 @@
             txtEmail.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtEmail.ForeColor = Color.FromArgb(0, 64, 64);
             txtEmail.Location = new Point(55, 229);
-            txtEmail.Multiline = true;
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(209, 24);
+            txtEmail.Size = new Size(209, 17);
             txtEmail.TabIndex = 19;
             txtEmail.KeyPress += txtUsername_KeyPress;
             // 

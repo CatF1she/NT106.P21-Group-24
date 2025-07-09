@@ -45,7 +45,8 @@ namespace Do_An
                     Username = doc["username"].AsString,
                     MatchPlayed = doc.GetValue("MatchPlayed", 0).ToInt32(),
                     MatchWon = doc.GetValue("MatchWon", 0).ToInt32(),
-                    ELO = doc.GetValue("ELO", 0).ToInt32()
+                    ELO = doc.GetValue("ELO", 0).ToInt32(),
+                    ProfilePictureUrl = doc.GetValue("profilePicture", "").AsString
                 }).ToList();
 
                 DisplayUsers(allUsers);
@@ -60,15 +61,37 @@ namespace Do_An
         private void DisplayUsers(List<User> users)
         {
             FriendList.Controls.Clear();
-            for (int i = 0; i < users.Count; i++)
+            // Sắp xếp: bạn bè lên đầu
+            var sortedUsers = users.OrderByDescending(u => IsFriend(u.Id)).ToList();
+            for (int i = 0; i < sortedUsers.Count; i++)
             {
                 var card = new FriendCard();
-                card.SetFriendData(users[i], currentUserId);
+                card.SetFriendData(sortedUsers[i], currentUserId);
                 card.Width = FriendList.Width - 25;
                 // Xen kẽ màu nền
                 card.BackColor = (i % 2 == 0) ? Color.LightGray : Color.White;
                 FriendList.Controls.Add(card);
             }
+            FriendList.PerformLayout();
+        }
+
+        // Hàm kiểm tra có phải bạn bè không (dựa vào bảng FriendShips)
+        private bool IsFriend(ObjectId userId)
+        {
+            var db = new DatabaseConnection();
+            var friendships = db.GetFriendShipsCollection();
+            var filter = Builders<MongoDB.Bson.BsonDocument>.Filter.Or(
+                Builders<MongoDB.Bson.BsonDocument>.Filter.And(
+                    Builders<MongoDB.Bson.BsonDocument>.Filter.Eq("User1Id", currentUserId),
+                    Builders<MongoDB.Bson.BsonDocument>.Filter.Eq("User2Id", userId)
+                ),
+                Builders<MongoDB.Bson.BsonDocument>.Filter.And(
+                    Builders<MongoDB.Bson.BsonDocument>.Filter.Eq("User1Id", userId),
+                    Builders<MongoDB.Bson.BsonDocument>.Filter.Eq("User2Id", currentUserId)
+                )
+            );
+            var existing = friendships.Find(filter).FirstOrDefault();
+            return existing != null && existing.Contains("status") && existing["status"].AsString == "accepted";
         }
 
 

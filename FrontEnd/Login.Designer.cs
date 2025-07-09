@@ -146,26 +146,26 @@
             // 
             // txtUsername
             // 
+            txtUsername.BackColor = Color.White;
             txtUsername.BorderStyle = BorderStyle.None;
             txtUsername.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtUsername.ForeColor = Color.FromArgb(0, 64, 64);
             txtUsername.Location = new Point(57, 165);
-            txtUsername.Multiline = true;
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(209, 24);
+            txtUsername.Size = new Size(209, 17);
             txtUsername.TabIndex = 10;
             txtUsername.KeyDown += txtUsername_KeyDown;
             // 
             // txtpassword
             // 
+            txtpassword.BackColor = Color.White;
             txtpassword.BorderStyle = BorderStyle.None;
             txtpassword.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtpassword.ForeColor = Color.FromArgb(0, 64, 64);
             txtpassword.Location = new Point(57, 232);
-            txtpassword.Multiline = true;
             txtpassword.Name = "txtpassword";
             txtpassword.PasswordChar = '*';
-            txtpassword.Size = new Size(209, 24);
+            txtpassword.Size = new Size(209, 17);
             txtpassword.TabIndex = 11;
             txtpassword.KeyDown += txtpassword_KeyDown;
             // 

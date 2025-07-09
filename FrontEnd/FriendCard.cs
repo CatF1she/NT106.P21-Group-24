@@ -27,6 +27,13 @@ namespace Do_An
         public FriendCard()
         {
             InitializeComponent();
+            this.MinimumSize = new Size(524, 53); // Đảm bảo card không bị co lại
+        }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            this.PerformLayout();
         }
 
         private async Task ConnectToSignalR()
@@ -134,6 +141,39 @@ namespace Do_An
                 case "accepted":
                     btnAction.Text = "Unfriend";
                     break;
+            }
+
+            // Cập nhật avatar giống Leaderboard (fix lỗi GDI+)
+            if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
+            {
+                try
+                {
+                    using (var httpClient = new System.Net.Http.HttpClient())
+                    {
+                        var imageBytes = await httpClient.GetByteArrayAsync(user.ProfilePictureUrl);
+                        if (imageBytes != null && imageBytes.Length > 0)
+                        {
+                            var ms = new System.IO.MemoryStream(imageBytes); // KHÔNG dispose!
+                            UserAvatar.Image = Image.FromStream(ms);
+                        }
+                        else
+                        {
+                            UserAvatar.Image = Properties.Resources.user;
+                        }
+                    }
+                }
+                catch
+                {
+                    UserAvatar.Image = Properties.Resources.user;
+                }
+            }
+            else
+            {
+                UserAvatar.Image = Properties.Resources.user;
+            }
+            if (UserAvatar.Image == null)
+            {
+                UserAvatar.Image = Properties.Resources.user;
             }
         }
 

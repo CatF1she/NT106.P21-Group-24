@@ -97,6 +97,32 @@ namespace Do_An
                 updatePassword = true;
             }
 
+            // 4. Check Avatar URL
+            string newAvatarUrl = txtProfileAvatarUrl.Text.Trim();
+            bool updateAvatar = false;
+            if (!string.IsNullOrEmpty(newAvatarUrl))
+            {
+                string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp" };
+                bool isValid = false;
+                try
+                {
+                    var uri = new Uri(newAvatarUrl);
+                    string ext = System.IO.Path.GetExtension(uri.AbsolutePath).ToLower();
+                    isValid = allowedExtensions.Contains(ext);
+                }
+                catch
+                {
+                    isValid = false;
+                }
+                if (!isValid)
+                {
+                    MessageBox.Show("Invalid avatar URL! Please enter a valid image file URL (.jpg, .jpeg, .png, .gif, .bmp, .webp)");
+                    txtProfileAvatarUrl.Focus();
+                    return;
+                }
+                updateAvatar = true;
+            }
+
             // If valid, update info
             var update = Builders<BsonDocument>.Update
                 .Set("username", newUsername)
@@ -104,6 +130,10 @@ namespace Do_An
             if (updatePassword)
             {
                 update = update.Set("password", newPassword);
+            }
+            if (updateAvatar)
+            {
+                update = update.Set("profilePicture", newAvatarUrl);
             }
             users.UpdateOne(filter, update);
             MessageBox.Show("Information updated successfully!");

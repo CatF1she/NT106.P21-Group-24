@@ -74,9 +74,8 @@
             txtUsername.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtUsername.ForeColor = Color.FromArgb(0, 64, 64);
             txtUsername.Location = new Point(85, 100);
-            txtUsername.Multiline = true;
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(251, 24);
+            txtUsername.Size = new Size(251, 17);
             txtUsername.TabIndex = 9;
             // 
             // panel1
@@ -103,9 +102,8 @@
             txtpassword.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtpassword.ForeColor = Color.FromArgb(0, 64, 64);
             txtpassword.Location = new Point(85, 146);
-            txtpassword.Multiline = true;
             txtpassword.Name = "txtpassword";
-            txtpassword.Size = new Size(140, 24);
+            txtpassword.Size = new Size(140, 17);
             txtpassword.TabIndex = 12;
             // 
             // panel2

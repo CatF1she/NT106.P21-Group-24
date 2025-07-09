@@ -119,7 +119,7 @@ namespace FrontEnd.Resources
         private void btnLeaderboard_Click(object sender, EventArgs e)
         {
             SoundManager.PlayClickSound();
-            ActivateButton(sender, "Leaderboard");
+            OpenChildForm(new Leaderboard(currentUserId), sender);
         }
 
         private void btnProfile_Click(object sender, EventArgs e)

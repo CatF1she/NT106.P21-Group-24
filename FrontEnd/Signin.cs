@@ -32,7 +32,7 @@ namespace FrontEnd
             {
                 MessageBox.Show("Please fill in all fields");
                 return;
-            } 
+            }
 
             if (password != confirm)
             {
@@ -47,7 +47,8 @@ namespace FrontEnd
                 {"MatchPlayed", 0 },
                 {"MatchWon", 0 },
                 {"ELO", 0 },
-                {"email", email}
+                {"email", email},
+                {"profilePicture", "none"}
             };
             try
             {
