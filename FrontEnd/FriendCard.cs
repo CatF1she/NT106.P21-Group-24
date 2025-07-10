@@ -128,20 +128,27 @@ namespace Do_An
             UserName.Text = $"{user.Username}";
             MatchPlayed.Text = $"Matches Played: {user.MatchPlayed}";
             MatchWon.Text = $"Matches Won: {user.MatchWon}";
-            WinRate.Text = $"Win Rate: {user.ELO}%";
+            if (user.MatchPlayed > 0)
+            {
+                WinRate.Text = $"Win rate: {user.MatchWon * 100.0 / user.MatchPlayed:0.##}%";
+            }
+            else
+            {
+                WinRate.Text = "Win rate: 0%";
+            }
 
             switch (friendshipStatus)
-            {
-                case "none":
-                    btnAction.Text = "Add Friend";
-                    break;
-                case "pending":
-                    btnAction.Text = "Pending";
-                    break;
-                case "accepted":
-                    btnAction.Text = "Unfriend";
-                    break;
-            }
+                {
+                    case "none":
+                        btnAction.Text = "Add Friend";
+                        break;
+                    case "pending":
+                        btnAction.Text = "Pending";
+                        break;
+                    case "accepted":
+                        btnAction.Text = "Unfriend";
+                        break;
+                }
 
             // Cập nhật avatar giống Leaderboard (fix lỗi GDI+)
             if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
