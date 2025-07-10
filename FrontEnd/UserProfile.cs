@@ -1,5 +1,6 @@
 ﻿using BackEnd.Models;
 using BackEnd.Services;
+using Do_An;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -107,7 +108,8 @@ namespace FrontEnd
                 string matchInfo = $"vs {opponentName} • Match ended at: {session.UpdatedAt.ToLocalTime():g}";
 
                 var label = CreateSessionLabel($"{statusText}\n{matchInfo}",
-                    isFinished ? (didWin ? Color.LightGreen : Color.LightCoral) : Color.LightGray);
+                    isFinished ? (didWin ? Color.LightGreen : Color.LightCoral) : Color.LightGray,
+                    session.Id.ToString());
 
                 flowLayoutGames.Controls.Add(label);
             }
@@ -115,9 +117,9 @@ namespace FrontEnd
             AdjustLabelWidths();
         }
 
-        private Label CreateSessionLabel(string text, Color backColor)
+        private Label CreateSessionLabel(string text, Color backColor, string sessionId)
         {
-            return new Label
+            var label = new Label
             {
                 AutoSize = false,
                 Height = 60,
@@ -128,9 +130,22 @@ namespace FrontEnd
                 BorderStyle = BorderStyle.None,
                 TextAlign = ContentAlignment.MiddleLeft,
                 Padding = new Padding(1),
-                Margin = new Padding(1)
+                Margin = new Padding(1),
+                Cursor = Cursors.Hand,
+                Tag = sessionId
             };
+
+            label.Click += (sender, e) =>
+            {
+                if (sender is Label lbl && lbl.Tag is string id)
+                {
+                    new MatchHistory(userId, id).Show();
+                }
+            };
+
+            return label;
         }
+
 
         private void AdjustLabelWidths()
         {

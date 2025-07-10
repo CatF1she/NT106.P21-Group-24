@@ -214,11 +214,21 @@ namespace BackEnd.Hubs
                     var winnerId = session.PlayerXId == userId ? session.PlayerOId : session.PlayerXId;
                     session.WinnerPlayerId = winnerId;
 
+                    // Log a final move to indicate disconnection (101,101)
+                    session.Moves.Add(new Move
+                    {
+                        X = 101,
+                        Y = 101,
+                        PlayerId = userId,
+                        Time = DateTime.UtcNow
+                    });
+
                     await Clients.Group(session.Id.ToString()).SendAsync("GameWon", session.PlayerXId == winnerId ? "PlayerX" : "PlayerO");
                     await _userService.IncrementMatchStatsAsync(winnerId, true);
                     await _userService.IncrementMatchStatsAsync(userId, false);
                     await _gameService.SaveAsync(session);
                 }
+
             }
 
             await base.OnDisconnectedAsync(exception);
