@@ -1,5 +1,6 @@
 ﻿using Do_An;
 using NAudio.Wave;
+using SharpCompress.Compressors.LZMA;
 
 namespace FrontEnd
 {
@@ -7,9 +8,8 @@ namespace FrontEnd
     {
         private static IWavePlayer? outputDevice;
         private static AudioFileReader? audioFile;
+        private static LoopStream? loopStream;
         private static bool isBgmPlaying = false;
-
-        private static WaveOutEvent? clickPlayer;
 
         public static void PlayClickSound()
         {
@@ -23,12 +23,14 @@ namespace FrontEnd
                     using var player = new WaveOutEvent();
                     player.Init(audio);
                     player.Play();
-                    Thread.Sleep((int)audio.TotalTime.TotalMilliseconds); // wait until sound finishes
+                    Thread.Sleep((int)audio.TotalTime.TotalMilliseconds); // Wait for sound to finish
                 });
             }
-            catch { }
+            catch
+            {
+                // Optionally log error
+            }
         }
-
 
         public static void PlayBackgroundMusic()
         {
@@ -36,13 +38,22 @@ namespace FrontEnd
 
             try
             {
-                audioFile = new AudioFileReader("Resources/bgm.wav");
+                audioFile = new AudioFileReader("Resources/bgm.wav")
+                {
+                    Volume = 0.5f // Optional: set volume
+                };
+                loopStream = new LoopStream(audioFile); // Wrap in LoopStream
+
                 outputDevice = new WaveOutEvent();
-                outputDevice.Init(audioFile);
+                outputDevice.Init(loopStream);
                 outputDevice.Play();
+
                 isBgmPlaying = true;
             }
-            catch { }
+            catch
+            {
+                // Optionally log error
+            }
         }
 
         public static void StopBackgroundMusic()
@@ -51,12 +62,20 @@ namespace FrontEnd
             {
                 outputDevice?.Stop();
                 outputDevice?.Dispose();
-                audioFile?.Dispose();
                 outputDevice = null;
+
+                loopStream?.Dispose();
+                loopStream = null;
+
+                audioFile?.Dispose();
                 audioFile = null;
+
                 isBgmPlaying = false;
             }
-            catch { }
+            catch
+            {
+                // Optionally log error
+            }
         }
     }
 }

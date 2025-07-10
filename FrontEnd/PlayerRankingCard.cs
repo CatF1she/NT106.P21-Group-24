@@ -35,34 +35,7 @@ namespace Do_An
 
             SetScoreStyle(score);
             SetRankStyle(rank);
-
-            if (!string.IsNullOrEmpty(avatarUrl) && !avatarUrl.Equals("none", StringComparison.OrdinalIgnoreCase))
-            {
-                try
-                {
-                    using (var httpClient = new System.Net.Http.HttpClient())
-                    {
-                        var imageBytes = await httpClient.GetByteArrayAsync(avatarUrl);
-                        using (var ms = new System.IO.MemoryStream(imageBytes))
-                        using (var img = Image.FromStream(ms))
-                        {
-                            picUserAvatar.Image = new Bitmap(img);
-                        }
-                    }
-                }
-                catch
-                {
-                    picUserAvatar.Image = Properties.Resources.user;
-                }
-            }
-            else
-            {
-                picUserAvatar.Image = Properties.Resources.user;
-            }
-            if (picUserAvatar.Image == null)
-            {
-                picUserAvatar.Image = Properties.Resources.user;
-            }
+            await LoadImageAsync(picUserAvatar, avatarUrl);
         }
 
         private void SetScoreStyle(int score)
@@ -101,6 +74,35 @@ namespace Do_An
                 picRank.Image = Properties.Resources._3rd;
             }
         }
+        private async Task LoadImageAsync(PictureBox pictureBox, string? url)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(url) && !url.Equals("none", StringComparison.OrdinalIgnoreCase))
+                {
+                    using var httpClient = new System.Net.Http.HttpClient();
+                    var imageBytes = await httpClient.GetByteArrayAsync(url);
+                    var stream = new System.IO.MemoryStream(imageBytes); // DO NOT dispose!
+
+                    var img = Image.FromStream(stream);
+                    pictureBox.Image = img;
+                    pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                    if (ImageAnimator.CanAnimate(img))
+                        ImageAnimator.Animate(img, (s, e) => pictureBox.Invalidate());
+
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[Image Load Error] {ex.Message}");
+            }
+
+            pictureBox.Image = Properties.Resources.user;
+            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
     }
 }
 

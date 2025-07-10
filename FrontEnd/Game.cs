@@ -1,11 +1,13 @@
 ﻿using BackEnd.Models;
+using FrontEnd.Resources;
 using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.VisualBasic.ApplicationServices;
 using MongoDB.Bson;
 using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
-using System.Runtime.InteropServices;
 
 namespace FrontEnd
 {
@@ -14,6 +16,7 @@ namespace FrontEnd
         private HubConnection? connection;
         private string gameId;
         private string playerId;
+        private ObjectId userId;
         private Image? xImage;
         private Image? oImage;
         private bool AmIPlayerX=false;
@@ -26,6 +29,7 @@ namespace FrontEnd
         public Game(string sessionId, ObjectId _playerId, PlayerInfo playerX, PlayerInfo playerO)
         {
             gameId = sessionId;
+            userId = _playerId;
             playerId = _playerId.ToString();
             _playerX = playerX;
             _playerO = playerO;
@@ -181,8 +185,10 @@ namespace FrontEnd
             {
                 Invoke(() =>
                 {
-                    MessageBox.Show($"{winner} wins!", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    turnTimer?.Stop();
                     DisableAllButtons();
+                    MessageBox.Show($"{winner} wins!", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
                 });
             });
 
@@ -223,7 +229,7 @@ namespace FrontEnd
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void btnMaximize_Click(object sender, EventArgs e)
@@ -256,19 +262,30 @@ namespace FrontEnd
         private async void TurnTimer_Tick(object? sender, EventArgs e)
         {
             timeRemainingMs -= timerIntervalMs;
+
             if (timeRemainingMs <= 0)
             {
                 turnTimer.Stop();
                 progressTurnTimer.Value = 0;
 
-                // Send fake move to skip turn
-                await connection.InvokeAsync("MakeMove", gameId, 69, 69, playerId);
+                if (connection != null && connection.State == HubConnectionState.Connected)
+                {
+                    try
+                    {
+                        await connection.InvokeAsync("MakeMove", gameId, 69, 69, playerId);
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        // Ignore — this happens if form was closed while timer fired
+                    }
+                }
+
                 return;
             }
 
-            // Update progress bar
             progressTurnTimer.Value = Math.Max(0, progressTurnTimer.Maximum * timeRemainingMs / totalTurnTimeMs);
         }
+
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
@@ -356,6 +373,27 @@ namespace FrontEnd
                 Cursor.Current = newCursor;
             }
         }
+        protected override async void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+
+            if (connection != null)
+            {
+                try
+                {
+                    await connection.StopAsync();
+                    await connection.DisposeAsync();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error disconnecting: " + ex.Message);
+                }
+            }
+
+            var mainMenu = new MainMenu(userId);
+            mainMenu.Show();
+        }
+
 
 
 

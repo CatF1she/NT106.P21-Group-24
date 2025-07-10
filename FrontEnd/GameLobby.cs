@@ -55,31 +55,14 @@ namespace Do_An
 
                 Invoke(() =>
                 {
-                    this.FindForm()?.Hide();
-
                     var gameForm = new Game(
                         args.SessionId,
-                        userId!.Value,  
-                        args.PlayerX,       
-                        args.PlayerO        
+                        userId!.Value,
+                        args.PlayerX,
+                        args.PlayerO
                     );
-
-                    gameForm.FormClosed += async (_, __) =>
-                    {
-                        isInGame = false;
-                        this.FindForm()?.Show();
-                        ResetLobby();
-                        try
-                        {
-                            var rooms = await connection.InvokeAsync<List<string>>("GetActiveRooms");
-                            UpdateRoomList(rooms);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Failed to refresh rooms: " + ex.Message);
-                        }
-                    };
                     gameForm.Show();
+                    this.FindForm()?.Close();
                 });
             });
 
