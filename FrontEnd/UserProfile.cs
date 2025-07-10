@@ -63,7 +63,7 @@ namespace FrontEnd
                 Console.WriteLine($"[Image Load Error] {ex.Message}");
             }
 
-            pictureBox.Image = Image.FromFile("Resources/x.png");
+            pictureBox.Image = Do_An.Properties.Resources.user;
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
@@ -78,7 +78,11 @@ namespace FrontEnd
                 Builders<GameSession>.Filter.Eq(gs => gs.PlayerOId, playerId.ToString())
             );
 
-            var sessions = await sessionsCollection.Find(filter).ToListAsync();
+            var sessions = await sessionsCollection
+            .Find(filter)
+            .SortByDescending(s => s.UpdatedAt)
+            .ToListAsync();
+
             flowLayoutGames.Controls.Clear();
 
             foreach (var session in sessions)

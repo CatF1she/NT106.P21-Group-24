@@ -90,7 +90,7 @@ namespace FrontEnd
                 Console.WriteLine($"[Image Load Error] {ex.Message}");
             }
 
-            pictureBox.Image = Image.FromFile("Resources/o.png");
+            pictureBox.Image = Do_An.Properties.Resources.user;
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
@@ -177,12 +177,18 @@ namespace FrontEnd
                     }
                     string nextTurn = (player == "PlayerX") ? "Player O" : "Player X";
                     labelCurrentTurn.Text = $"{nextTurn}'s Turn";
-                    if ((AmIPlayerX && nextTurn == "Player X") || (!AmIPlayerX && nextTurn == "Player O")) StartTurnTimer();
+                    if ((AmIPlayerX && nextTurn == "Player X") || (!AmIPlayerX && nextTurn == "Player O"))
+                    {
+                        EnableAllButtons();
+                        StartTurnTimer();
+                    }
                     else
                     {
+                        DisableAllButtons();
                         turnTimer?.Stop();
-                        progressTurnTimer.Value= progressTurnTimer.Maximum;
+                        progressTurnTimer.Value = progressTurnTimer.Maximum;
                     }
+
                 });
             });
 
@@ -228,6 +234,16 @@ namespace FrontEnd
                 if (ctrl is Button btn)
                 {
                     btn.Enabled = false;
+                }
+            }
+        }
+        private void EnableAllButtons()
+        {
+            foreach (Control ctrl in tableLayoutChessBoard.Controls)
+            {
+                if (ctrl is Button btn && btn.BackgroundImage == null)
+                {
+                    btn.Enabled = true;
                 }
             }
         }

@@ -224,6 +224,7 @@
             // picbtnSearch
             // 
             picbtnSearch.BackColor = SystemColors.ActiveCaption;
+            picbtnSearch.BorderStyle = BorderStyle.FixedSingle;
             picbtnSearch.Dock = DockStyle.Fill;
             picbtnSearch.Image = Properties.Resources.search_minimized;
             picbtnSearch.Location = new Point(770, 0);
@@ -271,13 +272,14 @@
             // 
             // SearchBar
             // 
-            SearchBar.BorderStyle = BorderStyle.FixedSingle;
-            SearchBar.Dock = DockStyle.Fill;
+            SearchBar.BackColor = SystemColors.Control;
+            SearchBar.BorderStyle = BorderStyle.None;
+            SearchBar.Dock = DockStyle.Bottom;
             SearchBar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            SearchBar.Location = new Point(0, 0);
+            SearchBar.Location = new Point(0, 8);
             SearchBar.Margin = new Padding(0);
             SearchBar.Name = "SearchBar";
-            SearchBar.Size = new Size(770, 29);
+            SearchBar.Size = new Size(770, 22);
             SearchBar.TabIndex = 0;
             // 
             // GameLobby
