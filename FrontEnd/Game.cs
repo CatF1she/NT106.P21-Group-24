@@ -147,7 +147,7 @@ namespace FrontEnd
         private async void ConnectToSignalR()
         {
             connection = new HubConnectionBuilder()
-                .WithUrl($"http://localhost:8000/gamehub?userId={playerId}")
+                .WithUrl($"https://nt106-p21-group-24.onrender.com/gamehub?userId={playerId}")
                 .WithAutomaticReconnect()
                 .Build();
 

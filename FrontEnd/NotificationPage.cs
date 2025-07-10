@@ -37,7 +37,7 @@ namespace Do_An
         private async Task ConnectToSignalR()
         {
             _connection = new HubConnectionBuilder()
-                .WithUrl($"http://localhost:8000/friendhub?userId={currentUserId}")
+                .WithUrl($"https://nt106-p21-group-24.onrender.com/friendhub?userId={currentUserId}")
                 .WithAutomaticReconnect()
                 .Build();
 

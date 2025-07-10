@@ -30,7 +30,7 @@ namespace Do_An
         private async void ConnectToSignalR()
         {
             connection = new HubConnectionBuilder()
-                .WithUrl($"http://localhost:8000/gamehub?userId={userId}")
+                .WithUrl($"https://nt106-p21-group-24.onrender.com/gamehub?userId={userId}")
                 .WithAutomaticReconnect()
                 .Build();
             RegisterHandlers();
