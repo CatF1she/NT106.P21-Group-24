@@ -35,10 +35,15 @@ namespace FrontEnd
             _playerO = playerO;
             InitializeComponent();
             labelPlayerXName.Text = $"Player X: {_playerX.Username}";
-            labelPlayerXWinRate.Text = $"Win rate: {_playerX.MatchWon*100/_playerX.MatchPlayed:0.##}%";
+            labelPlayerXWinRate.Text = _playerX.MatchPlayed == 0
+                ? "Win rate: 0%"
+                : $"Win rate: {_playerX.MatchWon * 100.0 / _playerX.MatchPlayed:0.##}%";
             labelPlayerXMatchPlayed.Text = $"Match Played: {_playerX.MatchPlayed}";
             labelPlayerOName.Text = $"Player O: {_playerO.Username}";
-            labelPlayerOWinRate.Text = $"Win rate: {_playerO.MatchWon*100/_playerO.MatchPlayed:0.##}%";
+            labelPlayerOWinRate.Text = _playerO.MatchPlayed == 0
+                ? "Win rate: 0%"
+                : $"Win rate: {_playerO.MatchWon * 100.0 / _playerO.MatchPlayed:0.##}%";
+
             labelPlayerOMatchPlayed.Text = $"Played: {_playerO.MatchPlayed}";
             if (playerId == _playerX.Id)
             {
