@@ -53,65 +53,77 @@ namespace Do_An
                 if (isInGame) return;
                 isInGame = true;
 
-                Invoke(() =>
+                if (this.IsHandleCreated)
                 {
-                    var gameForm = new Game(
-                        args.SessionId,
-                        userId!.Value,
-                        args.PlayerX,
-                        args.PlayerO
-                    );
-                    gameForm.Show();
-                    this.FindForm()?.Close();
-                });
+                    Invoke(() =>
+                    {
+                        var gameForm = new Game(
+                            args.SessionId,
+                            userId!.Value,
+                            args.PlayerX,
+                            args.PlayerO
+                        );
+                        gameForm.Show();
+                        this.FindForm()?.Close();
+                    });
+                }
             });
-
-
 
             connection.On<Dictionary<string, bool>>("UpdateReadyStatus", playerStatus =>
             {
-                Invoke(() =>
+                if (this.IsHandleCreated)
                 {
-                    PlayerList.Controls.Clear();
-                    foreach (var (name, ready) in playerStatus)
+                    Invoke(() =>
                     {
-                        var label = new Label
+                        PlayerList.Controls.Clear();
+                        foreach (var (name, ready) in playerStatus)
                         {
-                            Text = $"{name} - {(ready ? "    Ready ✅" : "Not Ready ❌")}",
-                            AutoSize = true,
-                            Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0)
-                        };
-                        PlayerList.Controls.Add(label);
-                    }
-                });
+                            var label = new Label
+                            {
+                                Text = $"{name} - {(ready ? "    Ready ✅" : "Not Ready ❌")}",
+                                AutoSize = true,
+                                Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0)
+                            };
+                            PlayerList.Controls.Add(label);
+                        }
+                    });
+                }
             });
+
             connection.On<string>("RoomCreated", roomCode =>
             {
-                Invoke(() => AddRoomToList(roomCode));
+                if (this.IsHandleCreated)
+                {
+                    Invoke(() => AddRoomToList(roomCode));
+                }
             });
+
             connection.On<string>("RoomRemoved", roomCode =>
             {
-                Invoke(() =>
+                if (this.IsHandleCreated)
                 {
-                    foreach (Control panel in RoomList.Controls)
+                    Invoke(() =>
                     {
-                        if (panel.Tag?.ToString() == roomCode)
+                        foreach (Control panel in RoomList.Controls)
                         {
-                            RoomList.Controls.Remove(panel);
-                            break;
+                            if (panel.Tag?.ToString() == roomCode)
+                            {
+                                RoomList.Controls.Remove(panel);
+                                break;
+                            }
                         }
-                    }
 
-                    if (selectedGameCode == roomCode)
-                    {
-                        selectedGameCode = null;
-                        RoomCode.Text = "";
-                        PlayerList.Controls.Clear();
-                    }
-                });
+                        if (selectedGameCode == roomCode)
+                        {
+                            selectedGameCode = null;
+                            RoomCode.Text = "";
+                            PlayerList.Controls.Clear();
+                        }
+                    });
+                }
             });
-
         }
+
         public void ResetLobby()
         {
             currentGameCode = null;

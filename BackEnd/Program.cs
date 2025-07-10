@@ -39,7 +39,7 @@ builder.Services.AddSingleton<DatabaseConnection>();
 builder.Services.AddSignalR();
 
 var app = builder.Build();
-app.MapHub<GameHub>("/gamehub"); // This is the endpoint the client will connect to
+app.MapHub<GameHub>("/gamehub"); 
 app.MapHub<FriendHub>("/friendhub"); // Friend hub endpoint
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

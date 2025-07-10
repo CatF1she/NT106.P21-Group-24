@@ -41,10 +41,6 @@ namespace FrontEnd
                 lbEmail.Text = $"Email: {user["email"]}";
                 await LoadImageAsync(pictureBox1, user.GetValue("profilePicture", "").AsString);
                 await LoadGameSessionsAsync(userId);
-
-                // Test label (also resizable)
-                var testLabel = CreateSessionLabel("There is no match history. Let's play a game!", Color.LightBlue);
-                flowLayoutGames.Controls.Add(testLabel);
             }
         }
 
