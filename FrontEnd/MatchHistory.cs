@@ -40,7 +40,13 @@ namespace Do_An
                 return;
             }
 
-            var allUserIds = session.Moves.Select(m => m.PlayerId).Distinct().ToList();
+            // Collect all relevant user IDs
+            var allUserIds = session.Moves.Select(m => m.PlayerId).ToList();
+            if (!string.IsNullOrEmpty(session.PlayerXId)) allUserIds.Add(session.PlayerXId);
+            if (!string.IsNullOrEmpty(session.PlayerOId)) allUserIds.Add(session.PlayerOId);
+            if (!string.IsNullOrEmpty(session.WinnerPlayerId)) allUserIds.Add(session.WinnerPlayerId);
+            allUserIds = allUserIds.Distinct().ToList();
+
             var userIdFilter = Builders<BsonDocument>.Filter.In("_id", allUserIds.Select(ObjectId.Parse));
             var userDocs = await users.Find(userIdFilter).ToListAsync();
 
@@ -50,48 +56,41 @@ namespace Do_An
             );
 
             string playerXName = playerNames.GetValueOrDefault(session.PlayerXId, "Unknown");
-            string playerOName = playerNames.GetValueOrDefault(session.PlayerOId ?? "", "Unknown");
-
-            string winnerName = playerNames.GetValueOrDefault(session.WinnerPlayerId ?? "", "Unknown");
+            string playerOName = playerNames.GetValueOrDefault(session.PlayerOId, "Unknown");
+            string winnerName = playerNames.GetValueOrDefault(session.WinnerPlayerId, "Unknown");
 
             flowLayoutPanelMoveList.Controls.Clear();
 
+            var lastMove = session.Moves.LastOrDefault();
             if (session.WinnerPlayerId == null || playerXName == "Unknown" || playerOName == "Unknown" || winnerName == "Unknown")
             {
                 labelSummary.Text = "⚠ Data error — winner undetermined";
             }
-            else if (session.Moves.LastOrDefault()?.X == 101 && session.Moves.LastOrDefault()?.Y == 101)
+            else if (lastMove?.X == 101 && lastMove?.Y == 101)
             {
                 string loserId = session.WinnerPlayerId == session.PlayerXId ? session.PlayerOId : session.PlayerXId;
                 string loserName = playerNames.GetValueOrDefault(loserId ?? "", "Unknown");
-                labelSummary.Text = $"{winnerName} won because {loserName} left the game.";
+                labelSummary.Text = $"{winnerName} won because {loserName} disconnected.";
+            }
+            else if (lastMove != null)
+            {
+                int[,] board = session.Board;
+                int x = lastMove.X;
+                int y = lastMove.Y;
+                int symbol = (lastMove.PlayerId == session.PlayerXId) ? 1 : 2;
+
+                string reason = "with 5 in a row";
+                if (IsWinning(board, x, y, symbol, out string direction))
+                    reason = $"with 5 {(symbol == 1 ? "X" : "O")} in a {direction} row";
+
+                labelSummary.Text = $"{winnerName} won {reason}";
             }
             else
             {
-                var lastMove = session.Moves.LastOrDefault();
-                if (lastMove != null)
-                {
-                    int[,] board = session.Board;
-                    int x = lastMove.X;
-                    int y = lastMove.Y;
-                    int symbol = (lastMove.PlayerId == session.PlayerXId) ? 1 : 2;
-
-                    string reason = "with 5 in a row";
-                    if (IsWinning(board, x, y, symbol, out string direction))
-                        reason = $"with 5 {(symbol == 1 ? "X" : "O")} in a {direction} row";
-
-                    labelSummary.Text = $"{winnerName} won {reason}";
-                }
-                else
-                {
-                    labelSummary.Text = $"{winnerName} won the game";
-                }
+                labelSummary.Text = $"{winnerName} won the game";
             }
 
-
-
-
-            // Render each move
+            // Render move list
             foreach (var move in session.Moves.OrderBy(m => m.Time))
             {
                 string movePlayerName = playerNames.GetValueOrDefault(move.PlayerId, "Unknown");
@@ -134,6 +133,7 @@ namespace Do_An
 
             AdjustLabelWidths();
         }
+
         private bool IsWinning(int[,] board, int x, int y, int player, out string direction)
         {
             if (Count(board, x, y, 1, 0, player) + Count(board, x, y, -1, 0, player) + 1 >= 5)
