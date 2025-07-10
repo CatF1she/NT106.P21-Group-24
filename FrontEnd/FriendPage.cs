@@ -18,6 +18,7 @@ namespace Do_An
     public partial class FriendPage : Form
     {
         private readonly ObjectId currentUserId;
+        public event Action<ObjectId>? ViewUserProfileRequested;
         public FriendPage(ObjectId userID)
         {
             InitializeComponent();
@@ -61,19 +62,25 @@ namespace Do_An
         private void DisplayUsers(List<User> users)
         {
             FriendList.Controls.Clear();
-            // Sắp xếp: bạn bè lên đầu
             var sortedUsers = users.OrderByDescending(u => IsFriend(u.Id)).ToList();
             for (int i = 0; i < sortedUsers.Count; i++)
             {
                 var card = new FriendCard();
                 card.SetFriendData(sortedUsers[i], currentUserId);
                 card.Width = FriendList.Width - 25;
-                // Xen kẽ màu nền
                 card.BackColor = (i % 2 == 0) ? Color.LightGray : Color.White;
+
+                // 🔥 Hook event
+                card.ViewProfileClicked += (friendId) =>
+                {
+                    ViewUserProfileRequested?.Invoke(friendId);
+                };
+
                 FriendList.Controls.Add(card);
             }
             FriendList.PerformLayout();
         }
+
 
         // Hàm kiểm tra có phải bạn bè không (dựa vào bảng FriendShips)
         private bool IsFriend(ObjectId userId)

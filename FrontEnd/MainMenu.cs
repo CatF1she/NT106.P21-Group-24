@@ -136,8 +136,17 @@ namespace FrontEnd.Resources
         private void btnFriends_Click(object sender, EventArgs e)
         {
             SoundManager.PlayClickSound();
-            OpenChildForm(new FriendPage(currentUserId), sender);
+            var friendPage = new FriendPage(currentUserId);
+
+            //Listen for profile view requests
+            friendPage.ViewUserProfileRequested += (friendId) =>
+            {
+                OpenChildForm(new UserProfile(friendId), null);
+            };
+
+            OpenChildForm(friendPage, sender);
         }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             SoundManager.PlayClickSound();

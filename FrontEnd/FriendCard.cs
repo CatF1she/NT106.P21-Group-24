@@ -1,4 +1,6 @@
-﻿using BackEnd.Models;
+﻿// FriendCard.cs
+
+using BackEnd.Models;
 using BackEnd.Services;
 using FrontEnd;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -23,11 +25,17 @@ namespace Do_An
         private ObjectId targetUserId;
         private string friendshipStatus = "none";
         public event Action<string, bool>? FriendActionClicked;
+        public event Action<ObjectId>? ViewProfileClicked;
 
         public FriendCard()
         {
             InitializeComponent();
-            this.MinimumSize = new Size(524, 53); // Đảm bảo card không bị co lại
+            this.MinimumSize = new Size(524, 53);
+        }
+
+        private void BtnViewProfile_Click(object sender, EventArgs e)
+        {
+            ViewProfileClicked?.Invoke(targetUserId);
         }
 
         protected override void OnVisibleChanged(EventArgs e)
@@ -71,6 +79,7 @@ namespace Do_An
                         {
                             friendshipStatus = "accepted";
                             btnAction.Text = "Unfriend";
+                            btnViewProfile.Visible = true;
                             FriendActionClicked?.Invoke(targetUserId.ToString(), true);
                         }
                     }));
@@ -87,6 +96,7 @@ namespace Do_An
                         {
                             friendshipStatus = "none";
                             btnAction.Text = "Add Friend";
+                            btnViewProfile.Visible = false;
                             FriendActionClicked?.Invoke(targetUserId.ToString(), false);
                         }
                     }));
@@ -128,29 +138,26 @@ namespace Do_An
             UserName.Text = $"{user.Username}";
             MatchPlayed.Text = $"Matches Played: {user.MatchPlayed}";
             MatchWon.Text = $"Matches Won: {user.MatchWon}";
-            if (user.MatchPlayed > 0)
-            {
-                WinRate.Text = $"Win rate: {user.MatchWon * 100.0 / user.MatchPlayed:0.##}%";
-            }
-            else
-            {
-                WinRate.Text = "Win rate: 0%";
-            }
+            WinRate.Text = user.MatchPlayed > 0 ?
+                $"Win rate: {user.MatchWon * 100.0 / user.MatchPlayed:0.##}%" :
+                "Win rate: 0%";
 
             switch (friendshipStatus)
-                {
-                    case "none":
-                        btnAction.Text = "Add Friend";
-                        break;
-                    case "pending":
-                        btnAction.Text = "Pending";
-                        break;
-                    case "accepted":
-                        btnAction.Text = "Unfriend";
-                        break;
-                }
+            {
+                case "none":
+                    btnAction.Text = "Add Friend";
+                    btnViewProfile.Visible = false;
+                    break;
+                case "pending":
+                    btnAction.Text = "Pending";
+                    btnViewProfile.Visible = false;
+                    break;
+                case "accepted":
+                    btnAction.Text = "Unfriend";
+                    btnViewProfile.Visible = true;
+                    break;
+            }
 
-            // Cập nhật avatar giống Leaderboard (fix lỗi GDI+)
             if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
             {
                 try
@@ -160,7 +167,7 @@ namespace Do_An
                         var imageBytes = await httpClient.GetByteArrayAsync(user.ProfilePictureUrl);
                         if (imageBytes != null && imageBytes.Length > 0)
                         {
-                            var ms = new System.IO.MemoryStream(imageBytes); // KHÔNG dispose!
+                            var ms = new System.IO.MemoryStream(imageBytes);
                             UserAvatar.Image = Image.FromStream(ms);
                         }
                         else
@@ -175,10 +182,6 @@ namespace Do_An
                 }
             }
             else
-            {
-                UserAvatar.Image = Properties.Resources.user;
-            }
-            if (UserAvatar.Image == null)
             {
                 UserAvatar.Image = Properties.Resources.user;
             }
@@ -198,6 +201,7 @@ namespace Do_An
                     await _connection.InvokeAsync("SendFriendRequest", targetUserId.ToString());
                     friendshipStatus = "pending";
                     btnAction.Text = "Pending";
+                    btnViewProfile.Visible = false;
                     break;
 
                 case "accepted":
@@ -216,6 +220,7 @@ namespace Do_An
                     friendships.DeleteOne(filter);
                     btnAction.Text = "Add Friend";
                     friendshipStatus = "none";
+                    btnViewProfile.Visible = false;
                     break;
 
                 case "pending":
@@ -234,6 +239,7 @@ namespace Do_An
                     friendshipsColl.DeleteOne(pendingFilter);
                     btnAction.Text = "Add Friend";
                     friendshipStatus = "none";
+                    btnViewProfile.Visible = false;
                     break;
             }
 
@@ -244,6 +250,7 @@ namespace Do_An
         {
             LoadTheme();
         }
+
         private void LoadTheme()
         {
             foreach (Control btns in this.Controls)

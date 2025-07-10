@@ -42,6 +42,7 @@
             MatchWon = new Label();
             WinRate = new Label();
             btnAction = new Button();
+            btnViewProfile = new Button();
             ((System.ComponentModel.ISupportInitialize)UserAvatar).BeginInit();
             SuspendLayout();
             // 
@@ -68,7 +69,7 @@
             // MatchPlayed
             // 
             MatchPlayed.AutoSize = true;
-            MatchPlayed.Location = new Point(53, 32);
+            MatchPlayed.Location = new Point(143, 8);
             MatchPlayed.Name = "MatchPlayed";
             MatchPlayed.Size = new Size(85, 15);
             MatchPlayed.TabIndex = 2;
@@ -77,7 +78,7 @@
             // MatchWon
             // 
             MatchWon.AutoSize = true;
-            MatchWon.Location = new Point(191, 32);
+            MatchWon.Location = new Point(143, 32);
             MatchWon.Name = "MatchWon";
             MatchWon.Size = new Size(75, 15);
             MatchWon.TabIndex = 3;
@@ -86,7 +87,7 @@
             // WinRate
             // 
             WinRate.AutoSize = true;
-            WinRate.Location = new Point(308, 32);
+            WinRate.Location = new Point(53, 32);
             WinRate.Name = "WinRate";
             WinRate.Size = new Size(57, 15);
             WinRate.TabIndex = 4;
@@ -108,11 +109,30 @@
             btnAction.UseVisualStyleBackColor = false;
             btnAction.Click += btnAction_Click;
             // 
+            // btnViewProfile
+            // 
+            btnViewProfile.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnViewProfile.BackColor = Color.FromArgb(51, 51, 76);
+            btnViewProfile.FlatAppearance.BorderSize = 0;
+            btnViewProfile.FlatStyle = FlatStyle.Flat;
+            btnViewProfile.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnViewProfile.ForeColor = Color.Gainsboro;
+            btnViewProfile.Location = new Point(253, 3);
+            btnViewProfile.Name = "btnViewProfile";
+            btnViewProfile.Size = new Size(131, 47);
+            btnViewProfile.TabIndex = 6;
+            btnViewProfile.Text = "View Profile";
+            btnViewProfile.UseVisualStyleBackColor = false;
+            btnViewProfile.Visible = false;
+            btnViewProfile.Click += BtnViewProfile_Click;
+
+            // 
             // FriendCard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Menu;
+            Controls.Add(btnViewProfile);
             Controls.Add(btnAction);
             Controls.Add(WinRate);
             Controls.Add(MatchWon);
@@ -135,5 +155,6 @@
         private Label MatchWon;
         private Label WinRate;
         private Button btnAction;
+        private Button btnViewProfile;
     }
 }
