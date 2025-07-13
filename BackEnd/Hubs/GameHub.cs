@@ -157,7 +157,7 @@ namespace BackEnd.Hubs
                 Moves = []
             };
             await _gameService.SaveAsync(session);
-            await Clients.Group(gameCode).SendAsync("StartGame", new
+            await Clients.Group(gameCode).SendAsync("StartGame", new StartGameArgs
             {
                 SessionId = session.Id.ToString(),
                 PlayerX = new PlayerInfo
