@@ -26,6 +26,7 @@ namespace FrontEnd
         private int timerIntervalMs = 100; // update every 100ms
         private int totalTurnTimeMs = 10000; // 10 seconds
         private int timeRemainingMs;
+        private Button lastHighlightedButton = null;
         public Game(string sessionId, ObjectId _playerId, PlayerInfo playerX, PlayerInfo playerO)
         {
             gameId = sessionId;
@@ -120,13 +121,15 @@ namespace FrontEnd
                         Dock = DockStyle.Fill,
                         Margin = new Padding(0),
                         Tag = new Point(col, row),
-                        FlatStyle = FlatStyle.Flat,
                         BackColor = Color.White,
                         TabStop = false,
                     };
+                    btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderSize = 0;
+                    btn.FlatAppearance.BorderColor = Color.Transparent;
                     btn.FlatAppearance.MouseOverBackColor = btn.BackColor;
                     btn.FlatAppearance.MouseDownBackColor = btn.BackColor;
+                    btn.BackgroundImageLayout = ImageLayout.Stretch;
                     btn.Click += async (sender, e) =>
                     {
                         if (sender is Button clicked && clicked.BackgroundImage == null && connection?.State == HubConnectionState.Connected)
@@ -158,22 +161,25 @@ namespace FrontEnd
                     var btn = GetButtonAt(x, y);
                     if (btn != null && btn.BackgroundImage == null && x != 69 && y != 69)
                     {
+                        // Set image and disable
                         btn.BackgroundImage = (player == "PlayerX") ? xImage : oImage;
                         btn.BackgroundImageLayout = ImageLayout.Stretch;
                         btn.Enabled = false;
-                        // Highlight it
-                        Color originalColor = btn.BackColor;
-                        btn.BackColor = Color.LightYellow;
 
-                        // Reset color after 1 second
-                        var highlightTimer = new Timer { Interval = 1000 };
-                        highlightTimer.Tick += (s, args) =>
+                        // Remove border from previously highlighted button
+                        if (lastHighlightedButton != null)
                         {
-                            btn.BackColor = originalColor;
-                            highlightTimer.Stop();
-                            highlightTimer.Dispose();
-                        };
-                        highlightTimer.Start();
+                            lastHighlightedButton.FlatAppearance.BorderSize = 0;
+                            lastHighlightedButton.FlatAppearance.BorderColor = Color.Transparent;
+                        }
+
+                        // Highlight current button with red border
+                        btn.FlatAppearance.BorderSize = 2;
+                        btn.FlatAppearance.BorderColor = Color.Red;
+
+
+                        // Update tracker
+                        lastHighlightedButton = btn;
                     }
                     string nextTurn = (player == "PlayerX") ? "Player O" : "Player X";
                     labelCurrentTurn.Text = $"{nextTurn}'s Turn";
